@@ -158,3 +158,8 @@ Git 官方中文版
 #
 
 原文链接：[http://www.cnblogs.com/over140/p/4548410.html](http://www.cnblogs.com/over140/p/4548410.html)
+
+### 推荐教程 ###
+
+- 廖雪峰的Git教程  [http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
+- git使用简易指南 [http://www.bootcss.com/p/git-guide/](http://www.bootcss.com/p/git-guide/)
