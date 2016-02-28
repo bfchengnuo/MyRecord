@@ -1,6 +1,6 @@
 # Android Studio目录结构 #
 
-![](https://github.com/bfchengnuo/bf_blog/blob/master/Android开发学习笔记/资料/img/01.png)
+![](https://github.com/bfchengnuo/MyRecord/blob/master/Android开发学习笔记/资料/img/01.png)
 
 【= = 好复杂的样子】
 
@@ -74,7 +74,7 @@ gradlew相关的文件就是和Gradle Wrapper有关。我们对除了app文件�
 
 这些就是外部文件相关的一些文件的介绍。我们来看下更重要的app模块里的文件
 
-![](https://github.com/bfchengnuo/bf_blog/blob/master/Android开发学习笔记/资料/img/02.png)
+![](https://github.com/bfchengnuo/MyRecord/blob/master/Android开发学习笔记/资料/img/02.png)
 
 这是app模块下的文件目录结构，介绍下他们的用途
 
