@@ -1,5 +1,5 @@
 
-### 真正的勇士，敢于直面惨淡的warning，敢于正视淋漓的error。
+### 学习ing
 
 BY: bfchengnuo
 
@@ -15,6 +15,7 @@ BY: bfchengnuo
 
 [VBOX无法启动问题](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/VBOX%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E9%97%AE%E9%A2%98.md "VBOX无法启动问题")
 
+[chrome使用第三方扩展](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/chrome使用第三方扩展.md)
 
 ### 软件推荐
 
