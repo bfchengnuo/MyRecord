@@ -17,6 +17,8 @@ BY: bfchengnuo
 
 [chrome使用第三方扩展](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/chrome使用第三方扩展.md)
 
+[win常用快捷键](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/常用快捷键.md)
+
 ### 软件推荐
 
 [快速启动工具](https://github.com/bfchengnuo/MyRecord/blob/master/软件/快速启动工具.md "快速启动工具")
