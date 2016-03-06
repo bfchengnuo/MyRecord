@@ -3,7 +3,7 @@
 <br >
 <br >
 
-![](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/img/01.jpg)
+![](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/img/01.jpg)
 
 <br >
 
