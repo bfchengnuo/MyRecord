@@ -1,3 +1,6 @@
+![](https://github.com/bfchengnuo/MyRecord/blob/master/img%2Flove.png)
+
+<br >
 
 ### 学习ing
 
@@ -7,17 +10,23 @@ BY: bfchengnuo
 
 ### 笔记
 
-[Git 简易手册](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/Git%20%E7%AE%80%E6%98%93%E6%89%8B%E5%86%8C.md "Git 简易手册")
+1. [Git 简易手册](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/Git%20%E7%AE%80%E6%98%93%E6%89%8B%E5%86%8C.md "Git 简易手册")
 
-[Git乱码解决方案](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/Git%E4%B9%B1%E7%A0%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.md "Git乱码解决方案")
+2. [Git乱码解决方案](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/Git%E4%B9%B1%E7%A0%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.md "Git乱码解决方案")
 
-[SSH连接VBOX的ubuntu](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/SSH%E8%BF%9E%E6%8E%A5VBOX%E7%9A%84ubuntu.md "SSH连接VBOX的ubuntu")
+3. [SSH连接VBOX的ubuntu](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/SSH%E8%BF%9E%E6%8E%A5VBOX%E7%9A%84ubuntu.md "SSH连接VBOX的ubuntu")
 
-[VBOX无法启动问题](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/VBOX%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E9%97%AE%E9%A2%98.md "VBOX无法启动问题")
+4. [VBOX无法启动问题](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/VBOX%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E9%97%AE%E9%A2%98.md "VBOX无法启动问题")
 
-[chrome使用第三方扩展](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/chrome使用第三方扩展.md)
+5. [chrome使用第三方扩展](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/chrome使用第三方扩展.md)
 
-[win常用快捷键](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/常用快捷键.md)
+6. [win常用快捷键](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/常用快捷键.md)
+
+7. [闪屏问题](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/闪屏问题.md)
+
+8. [Genymotion模拟器无法启动](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/Genymotion模拟器无法启动.md)
+
+9. [AS实时渲染老是弹提示](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/AS实时渲染报错.md)
 
 ### 软件推荐
 
