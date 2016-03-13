@@ -30,6 +30,10 @@
 
 >ctrl + shift + o
 
+复制行
+
+>alt + ctrl + ↑/↓
+
 移动代码
 
 >alt + ↑/↓
