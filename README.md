@@ -42,14 +42,18 @@ BY: bfchengnuo
 
 [Sublime Text 3使用](https://github.com/bfchengnuo/MyRecord/blob/master/软件/Sublime Text 3使用.md "Sublime Text 3使用")
 
-### Android学习笔记
+### 学习记录
 
 - **资料**
 
-	[AS目录结构](https://github.com/bfchengnuo/MyRecord/blob/master/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%96%99/AS%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.md "AS目录结构")
+	[AS目录结构](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2FAS%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.md "AS目录结构")
 	
-	[AndroidStudio快捷键汇总](https://github.com/bfchengnuo/MyRecord/blob/master/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%96%99/AndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%B1%87%E6%80%BB.md "AndroidStudio快捷键汇总")
+	[AndroidStudio快捷键汇总](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2FAndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%B1%87%E6%80%BB.md "AndroidStudio快捷键汇总")
+	
+	[继承，覆盖，抽象类，和多态-----Java](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2F%E7%BB%A7%E6%89%BF%EF%BC%8C%E8%A6%86%E7%9B%96%EF%BC%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB%EF%BC%8C%E5%92%8C%E5%A4%9A%E6%80%81.md)
 
 - **笔记**
 
-	[AS我学习的快捷键](https://github.com/bfchengnuo/MyRecord/blob/master/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/AS%E5%BF%AB%E6%8D%B7%E9%94%AEK.md)
+	[AS我学习的快捷键](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2FAS%E5%BF%AB%E6%8D%B7%E9%94%AEK.md)
+	
+	[抽象类和接口----Java](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3java.md)
