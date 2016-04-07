@@ -24,6 +24,8 @@ BY: bfchengnuo
 
 - [Git乱码解决方案](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/Git%E4%B9%B1%E7%A0%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.md "Git乱码解决方案")
 
+- [MySQL 服务无法启动解决以及安装](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0/MySQL服务无法启动解决以及安装.md)
+
 - [SSH连接VBOX的ubuntu](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/SSH%E8%BF%9E%E6%8E%A5VBOX%E7%9A%84ubuntu.md "SSH连接VBOX的ubuntu")
 
 - [VBOX无法启动问题](https://github.com/bfchengnuo/MyRecord/blob/master/%E7%AC%94%E8%AE%B0/VBOX%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E9%97%AE%E9%A2%98.md "VBOX无法启动问题")
@@ -46,11 +48,16 @@ BY: bfchengnuo
 
 - **资料**
 
+
+	[AndroidStudio快捷键汇总](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2FAndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%B1%87%E6%80%BB.md "AndroidStudio快捷键汇总")
+
 	[AS目录结构](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2FAS%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.md "AS目录结构")
 	
-	[AndroidStudio快捷键汇总](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2FAndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%B1%87%E6%80%BB.md "AndroidStudio快捷键汇总")
 	
 	[继承，覆盖，抽象类，和多态-----Java](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2F%E7%BB%A7%E6%89%BF%EF%BC%8C%E8%A6%86%E7%9B%96%EF%BC%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB%EF%BC%8C%E5%92%8C%E5%A4%9A%E6%80%81.md)
+	
+	
+	[关于命名规则](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2F%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.md "命名规则")
 
 - **笔记**
 
