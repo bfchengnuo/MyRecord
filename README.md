@@ -59,6 +59,8 @@ BY: bfchengnuo
 	
 	[关于命名规则](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2F%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.md "命名规则")
 
+	[设计模式-工厂模式Java](https://github.com/bfchengnuo/MyRecord/blob/master/设计模式-工厂模式Java.md)
+
 - **笔记**
 
 	[AS我学习的快捷键](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2FAS%E5%BF%AB%E6%8D%B7%E9%94%AEK.md)
