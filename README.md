@@ -59,7 +59,7 @@ BY: bfchengnuo
 	
 	[关于命名规则](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2F%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.md "命名规则")
 
-	[设计模式-工厂模式Java](https://github.com/bfchengnuo/MyRecord/blob/master/设计模式-工厂模式Java.md)
+	[设计模式-工厂模式Java](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8FJava.md)
 
 - **笔记**
 
