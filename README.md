@@ -61,6 +61,8 @@ BY: bfchengnuo
 
 	[设计模式-工厂模式Java](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8FJava.md)
 
+	[HTTP响应头和请求头信息对照表](http://tools.jb51.net/table/http_header) (外链)
+
 - **笔记**
 
 	[AS我学习的快捷键](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2FAS%E5%BF%AB%E6%8D%B7%E9%94%AEK.md)
