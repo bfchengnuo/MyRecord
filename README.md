@@ -48,6 +48,7 @@ BY: bfchengnuo
 
 - **资料**
 
+	[AndroidHTTP请求方式HttpURLConnection](https://github.com/bfchengnuo/MyRecord/blob/master/AndroidHTTP请求方式HttpURLConnection.md)
 
 	[AndroidStudio快捷键汇总](https://github.com/bfchengnuo/MyRecord/blob/master/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F%E8%B5%84%E6%96%99%2FAndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%B1%87%E6%80%BB.md "AndroidStudio快捷键汇总")
 
