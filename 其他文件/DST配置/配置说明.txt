@@ -1,0 +1,79 @@
+[MISC]
+max_snapshots = 6                  # 最大快照数，决定了可回滚的天数
+console_enabled = true             # 是否开启控制台
+ 
+[SHARD]
+shard_enabled = true               # 服务器共享，要开启洞穴服务器的必须启用
+bind_ip = 127.0.0.1                # 服务器监听的地址，当所有实例都运行在同一台机器时，可填写 127.0.0.1，会被 server .ini 覆盖
+master_ip = 127.0.0.1              # master 服务器的 IP，针对非 master 服务器，若与 master 服务器运行在同一台机器时，可填写 127.0.0.1，会被 server.ini 覆盖
+master_port = 10888                # 监听 master 服务器的 UDP 端口，所有连接至 master 服务器的非 master 服务器必须相同
+cluster_key = dst                  # 连接密码，每台服务器必须相同，会被 server.ini 覆盖
+ 
+[STEAM]
+steam_group_only = false           # 只允许某 Steam 组的成员加入
+steam_group_id = 0                 # 指定某个 Steam 组，填写组 ID
+steam_group_admins = false         # 开启后，Steam 组的管理员拥有服务器的管理权限
+ 
+[NETWORK]
+offline_server = false             # 离线服务器，只有局域网用户能加入，并且所有依赖于 Steam 的任何功能都无效，比如说饰品掉落
+tick_rate = 15                     # 每秒通信次数，越高游戏体验越好，但是会加大服务器负担
+whitelist_slots = 0                # 为白名单用户保留的游戏位
+cluster_password =                 # 游戏密码，不设置表示无密码
+cluster_name = ttionya test        # 游戏房间名称
+cluster_description = description  # 游戏房间描述
+lan_only_cluster = false           # 局域网游戏
+cluster_intention = madness        # 游戏偏好，可选 cooperative, competitive, social, or madness，随便设置，没卵用
+ 
+[GAMEPLAY]
+max_players = 16                   # 最大游戏人数
+pvp = true                         # 能不能攻击其他玩家，能不能给其他玩家喂屎
+game_mode = survival               # 游戏模式，可选 survival, endless or wilderness，与玩家死亡后的负面影响有关
+pause_when_empty = false           # 没人服务器暂停，刷天数必备
+vote_kick_enabled = false          # 投票踢人
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------
+
+[SHARD]
+is_master = true /false      # 是否是 master 服务器，只能存在一个 true，其他全是 false
+name = caves                 # 针对非 master 服务器的名称
+id = ???                     # 随机生成，不用加入该属性
+ 
+[STEAM]
+authentication_port = 8766   # Steam 用的端口，确保每个实例都不相同
+master_server_port = 27016   # Steam 用的端口，确保每个实例都不相同
+ 
+[NETWORK]
+server_port = 10999          # 监听的 UDP 端口，只能介于 10998 - 11018 之间，确保每个实例都不相同
+
+
+-------------------------------------------------------------------------------------------------------------
+c_sethealth(percent)
+#设置血量，括号里填百分比，0.9=90%
+c_setsanity(percent)
+#设置san值，括号里填百分比，0.9=90%
+c_sethunger(percent)
+#设置饱食度，括号里填百分比，0.9=90%
+c_godmode()
+#上帝模式
+c_speedmult(multiplier)
+#设置移动速度，一般1.2足够
+c_reset()
+#在不保存世界的情况下重载，会导致掉线
+c_regenerateworld()
+#删除当前世界并生成新世界
+c_save()
+#手动保存
+c_shutdown(true | false)
+#c_shutdown(true)或c_shutdown()保存游戏并关闭服务器，c_shutdown(false)不保存游戏直接关闭服务器
+c_rollback(count)
+#回档，count从1开始计算，回到之前保存的状态
+
+
+http://dont-starve-game.wikia.com/wiki/Console/Don%27t_Starve_Together_Commands
+
+升级：
+~/steamcmd/steamcmd.sh +login anonymous +force_install_dir ~/dst +app_update 343050 validate +quit
