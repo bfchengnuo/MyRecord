@@ -65,6 +65,6 @@ PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 OutputLayout
 
 正常情况下，从 IDEA 启动 Tomcat 是不能访问以前 webapps 里的应用的，如果需要，在服务器配置页面记得勾选 `Deploy applications configured in tomcat instance`
 
-或者可以在服务器的配置选择 deployment 然后进行手动添加
+或者可以在服务器的配置选择 deployment 然后进行手动添加要加载的 web 应用
 
 待补充...
