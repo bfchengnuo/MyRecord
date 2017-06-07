@@ -61,6 +61,21 @@ PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 OutputLayout
 >
 >   如果我们已经设置 **$CATALINA_BASE**，Tomcat 就会从该变量所对应的目录搜索得到 **server.xml**。
 
+## 关于编码
+
+今天创建 properties 文件用于国际化，发现中文获取出来的都是乱码，仔细一看右下角的编码是 GBK，最可气的是 TMD 是灰色的！不能改！
+这个故事告诉我们一定记得在设置里 File Encodings 中的最下面设置编码！要么设置 U8 要么勾选后面的转换编码选项！
+
+## 自动生成serialVersionUID
+
+这个具体的作用应该是用于**反序列化**的，具体应该用在什么地方我还不太清楚.....额
+
+打开开关为：Setting->Inspections->Serialization issues->Serializable class without ’serialVersionUID’ 
+
+选上以后，在你的 class 中：Alt+Enter 就会提示自动创建 serialVersionUID 了。
+
+其实可以直接搜 serialVersionUID 就行了....
+
 ## 其他
 
 正常情况下，从 IDEA 启动 Tomcat 是不能访问以前 webapps 里的应用的，如果需要，在服务器配置页面记得勾选 `Deploy applications configured in tomcat instance`
