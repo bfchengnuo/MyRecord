@@ -58,6 +58,22 @@ Install-Package MySql.Data.Entity.EF6
 >    set global optimizer_switch='derived_merge=OFF';
 > 3. Update the .edmx.
 
+## 创建控制器错误
+
+在创建控制器的时候，提示：运行所选代码生成器时出错:“调用的目标发生了异常。”
+
+原因大概是创建 EF 模型需要相应的驱动支持，而本机并没有安装，大概....
+> 看看 wiki？ https://zh.wikipedia.org/zh-cn/Entity_Framework
+
+**解决方案**
+使用 NuGet 安装相应的扩展包：
+如果是微软自家的数据库就安装 EntityFramework.sqlServerCompact
+如果是 MySQL 可以尝试：Entity Framework with MySQL （参考下面的最后一个链接）
+
 ## 参考
 
 http://www.cnblogs.com/Imaigne/p/4153397.html
+
+http://bbs.csdn.net/topics/392145081
+
+http://www.cnblogs.com/keatkeat/p/3995599.html
