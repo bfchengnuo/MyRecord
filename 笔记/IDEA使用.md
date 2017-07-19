@@ -76,6 +76,23 @@ PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 OutputLayout
 
 其实可以直接搜 serialVersionUID 就行了....
 
+## 重构相关
+
+提取代码功能应该是很常用的，比如抽取方法、属性到新类啊，抽取出一个接口啊
+
+这个在 Refactor->Extract 下，比如：
+
+Delegate：抽取方法、属性到新的类
+Interface：选中某些方法抽取成接口
+Superclass：选中某些方法抽取成基类
+
+## 查看类关系
+
+基本的可以使用 Ctrl + H 来查看继承关系，如果想要更直观的使用图标描述，IDEA 支持！
+
+选择类或者在代码中的类名上鼠标右键 **Diagrams** 一个是独立的视图一个是浮动视图，非常直观
+如果字太小看不清可以按住 Alt 键使用放大镜，真赞！
+
 ## 其他
 
 正常情况下，从 IDEA 启动 Tomcat 是不能访问以前 webapps 里的应用的，如果需要，在服务器配置页面记得勾选 `Deploy applications configured in tomcat instance`
