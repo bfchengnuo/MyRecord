@@ -37,6 +37,10 @@ Maven 仓库存的是各种各样的 jar 包，可以在本地搭建也可以在
 |--|--|-- java
 |--|--|-- resources
 
+Github 的渲染好像有点问题，那就来个图片：
+
+![](../img/maven.png)
+
 ## Maven常用命令
 
 -   `mvn clean` 清理编译后的文件，也就是 targen 目录
