@@ -93,6 +93,33 @@ Superclass：选中某些方法抽取成基类
 选择类或者在代码中的类名上鼠标右键 **Diagrams** 一个是独立的视图一个是浮动视图，非常直观
 如果字太小看不清可以按住 Alt 键使用放大镜，真赞！
 
+## 测试相关JUnit
+
+IDEA 自带一个 JUnit 插件，打开 Settings 窗口搜索 junit 可以看到插件页面，但是呢，该插件使其可以运行 JUnit 测试文件，但无法自动生成 JUnit 测试代码，如果需要自动生成测试代码，需要安装 **JUnitGenerator V2.0** 这个插件
+
+安装后，在需要测试的类文件里点击 `code->Generate` 就可以看到相关菜单了，我是习惯直接使用快捷键 Alt+Insert；或者你还可以直接在类上 Alt+Enter 就会出现相关的菜单
+
+选择 JUnit 4 生成的测试文件 @since 位置 Date 可能存在乱码，可配置 JUnit 模板更改日期格式，至于原因我也不知道，修改也很简单
+
+```java
+/** 
+* ${entry.className} Tester. 
+* 
+* @author <Authors name> 
+* @since <pre>$today</pre> 
+* @version 1.0 
+*/ 
+```
+
+就是修改 `* @since <pre>$today</pre> ` 这一行，把本来的 Date 改成 today 就可以了
+
+当然你还可以修改测试代码生成的位置默认是：`${SOURCEPATH}/test/${PACKAGE}/${FILENAME}` 可以改为`${SOURCEPATH}/../test/${PACKAGE}/${FILENAME}`
+
+>   **${SOURCEPATH}** ： 是到 src 这一层（可以通过下面的方法进行指定）
+>   **../** ：是退到上一层目录的意思
+
+PS：把一个目录设置位测试目录或者源文件目录只需要在目录上右键然后选择 **MarkDirectoryAs** 然后选择相应的选项即可
+
 ## 其他
 
 正常情况下，从 IDEA 启动 Tomcat 是不能访问以前 webapps 里的应用的，如果需要，在服务器配置页面记得勾选 `Deploy applications configured in tomcat instance`
