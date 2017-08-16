@@ -4,7 +4,7 @@ console_enabled = true             # 是否开启控制台
  
 [SHARD]
 shard_enabled = true               # 服务器共享，要开启洞穴服务器的必须启用
-bind_ip = 127.0.0.1                # 服务器监听的地址，当所有实例都运行在同一台机器时，可填写 127.0.0.1，会被 server .ini 覆盖
+bind_ip = 0.0.0.0                  # 服务器监听的地址，当所有实例都运行在同一台机器时，可填写 127.0.0.1，会被 server .ini 覆盖
 master_ip = 127.0.0.1              # master 服务器的 IP，针对非 master 服务器，若与 master 服务器运行在同一台机器时，可填写 127.0.0.1，会被 server.ini 覆盖
 master_port = 10888                # 监听 master 服务器的 UDP 端口，所有连接至 master 服务器的非 master 服务器必须相同
 cluster_key = dst                  # 连接密码，每台服务器必须相同，会被 server.ini 覆盖
