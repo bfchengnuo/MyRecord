@@ -12,17 +12,44 @@
 
 主要步骤为：
 
-1.  新建工程，选择 `Java Enterprise` 如有需要可以选择一些框架，比如 SSH 
-2.  配置输出目录和库目录（IDEA 默认的输出目录很....不喜欢）
+1.  **新建工程**，选择 `Java Enterprise` 如有需要可以选择一些框架，比如 SSH 
+
+    ![](../img/idea-createWeb.png)
+
+2.  **配置输出目录和库目录**（IDEA 默认的输出目录很....不喜欢）
+
     在 `WEB-INF` 目录下新建 classes 目录和 lib 目录
-    在项目设置的 Modules 中的 Path 为 classes 目录
-    在项目设置的 Modules 中的 Dependencies 中添加库，目录为新建的 lib，类型是 jar Dir （这样 lib 下的库会在编译的时候输出）
-3.  配置web服务器
+
+    在项目设置的 Modules 中的 Path 为 classes 目录(编译后的输出目录)：
+
+    ![](../img/idea-Modules.png)
+
+    在项目设置的 Modules 中的 Dependencies 中添加库，目录为新建的 lib，类型是 jar Dir （这样 lib 下的库会在编译的时候输出）:
+
+    ![](../img/idea-Modules2.png)
+
+    在 `Artifacts > Output Layout` 中，将右侧 `Available Elements` 中的 `lib` 文件夹加入到左侧，使得 `lib` 中的文件会在编译的时候输出：
+
+    ![](../img/idea-lib.png)
+
+3.  **设置部署目录**
+    IntelliJ 默认的部署目录是当前工程目录下的 `out` 文件夹。即在写好代码并点击右上角的运行按钮后，IntelliJ 会将项目文件输出到当前项目目录下的 `out` 文件夹而不是 `webapps` 中，也就意味着，此时如果采用手动启动 Tomcat 服务的方式，是无法通过访问 `localhost:8080/myproject` 访问项目的
+
+    这里修改 `Artifacts > Output Directory` 为 `webapps/myproject`：
+
+    ![](../img/idea-output.png)
+
+4.  **配置web服务器**
     在运行的左边，点击 `Edit Configurations...` 取消 After launch ，我是不喜欢，勾上后点运行会自动打开浏览器
+
+    ![](../img/idea-tomcat.png)
+
     下面的网址中在后面加上本项目的名字，这个都知道哈，在 Deployment 中的右栏也写一下
     其他配置像 Tomcat 的路径啊就不说了，简单
 
-PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 OutputLayout 里点击 struts2 鼠标右键 put into lib
+    ![](../img/idea-tomcatContext.png)
+
+PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 Output Layout 里点击 struts2 鼠标右键 `put into lib`
 
 ## web项目的运行原理
 
@@ -42,8 +69,11 @@ PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 OutputLayout
 ---
 
 **下面就是正文了**
+
 首先 Intellij 会为每个 web 项目建立一个单独的文件夹，以 `“Unnamed_项目名”` 命名（可在 **.idea/workspace.xml** 中修改）。
+
 在每次启动项目时，它先将 tomcat 目录下原始的 `CATALINA_BASE` 目录拷贝一份**到该目录下**，也就是将当前 tomcat 的**配置文件**拷贝到 `“Unnamed_项目名”` 文件夹下。
+
 然后将 `CATALINA_BASE` 的路径修改为该目录的路径，**再在 `Unnamed_项目名/conf/Catalina/localhost` 下添加项目的配置文件，如 code.xml**，内容为
 
 ```xml
@@ -64,6 +94,7 @@ PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 OutputLayout
 ## 关于编码
 
 今天创建 properties 文件用于国际化，发现中文获取出来的都是乱码，仔细一看右下角的编码是 GBK，最可气的是 TMD 是灰色的！不能改！
+
 这个故事告诉我们一定记得在设置里 File Encodings 中的最下面设置编码！要么设置 U8 要么勾选后面的转换编码选项！
 
 ## 自动生成serialVersionUID
@@ -82,15 +113,16 @@ PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 OutputLayout
 
 这个在 Refactor->Extract 下，比如：
 
-Delegate：抽取方法、属性到新的类
-Interface：选中某些方法抽取成接口
-Superclass：选中某些方法抽取成基类
+-   Delegate：抽取方法、属性到新的类
+-   Interface：选中某些方法抽取成接口
+-   Superclass：选中某些方法抽取成基类
 
 ## 查看类关系
 
 基本的可以使用 Ctrl + H 来查看继承关系，如果想要更直观的使用图标描述，IDEA 支持！
 
 选择类或者在代码中的类名上鼠标右键 **Diagrams** 一个是独立的视图一个是浮动视图，非常直观
+
 如果字太小看不清可以按住 Alt 键使用放大镜，真赞！
 
 ## 测试相关JUnit
