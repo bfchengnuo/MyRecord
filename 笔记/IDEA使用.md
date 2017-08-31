@@ -91,6 +91,20 @@ PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 Output Layou
 >
 >   如果我们已经设置 **$CATALINA_BASE**，Tomcat 就会从该变量所对应的目录搜索得到 **server.xml**。
 
+## 逆向生成数据库实体
+
+1.  连接数据库
+    从右边的侧边栏进也行，从菜单的 view 里进也行，总之能找到 database 并添加相应的数据库就行；这里就没什么好说的了
+
+2.  **生成实体**
+    生成实体使用的是 IDEA 的 persistence 工具，可以从左下角的侧边栏找到或者从 view 中找到
+
+    如果是灰色的或者其他什么问题可以尝试在 **项目设置**中的 Module 中添加 JPA 模块，然后就是选择：**Generate Persistence Mapping ---> By Database Scheme**
+
+    ![](../img/idea-schema.png)
+
+需要注意的是，如果不配置 hibernate 的配置文件（或者 JPA 配置文件）也有可能是不会显示 persistence  工具的，或者生成的时候没法选择 `add to Session Factory` ；这个的意思就是将生成的实体添加 hibernate 的配置文件中
+
 ## 关于编码
 
 今天创建 properties 文件用于国际化，发现中文获取出来的都是乱码，仔细一看右下角的编码是 GBK，最可气的是 TMD 是灰色的！不能改！

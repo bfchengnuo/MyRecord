@@ -74,43 +74,80 @@
     该属性指定模板文件的后缀，该属性的默认属性值是 ftl。该属性还允许使用 ftl、vm 或 jsp，分别对应 FreeMarker、Velocity 和 JSP 模板
 -   **struts.multipart.saveDir**
     设置上传临时文件的默认目录
--   **struts.multipart.maxSize** 设置上传的临时文件的最大限制
--   **struts.objectFactory.spring.autoWire** 可选值（name, type, auto, constructor,name）（默认name），设置spring的自动装配方式，只有引入spring插件后才有效。
--   **struts.objectFactory.spring.autoWire.alwaysRespect** （默认false）设置是否总是以自动装配策略创建对象。
--   **struts.objectFactory.spring.useClassCache** （默认false）对象工厂是否使用类缓存，开发模式无效。
--   **struts.xslt.nocache** （默认为false）设置XsltResult是否不是用缓存。
--   **struts.custom.properties** 设置用户的自定义属性文件名列表（用，隔开）
--   **struts.custom.i18n.resources** 设置用户自定义的资源文件路径列表（用，隔开）
--   **struts.serve.static** （默认false） 设置是否支持静态资源请求（要求url在struts或static下）
--   **struts.serve.static.browserCache** （默认false） 是否在静态资源响应中设置缓存。只有在支持静态资源时有效。
--   **struts.el.throwExceptionOnFailure** （默认false）是否在解析el表达式或无法找到属性时抛出RuntimeException
--   **struts.ognl.logMissingProperties** （默认false）是否日志无发找到的属性
--   **struts.ognl.enableExpressionCache** 是否缓存ognl解析的表达式。
--   **struts.enable.DynamicMethodInvocation** （默认false）是否支持动态的方法调用,在URL上通过!method指定方法。
--   **struts.enable.SlashesInActionNames** 在URL中的Action段中是否支持斜线
--   **struts.mapper.alwaysSelectFullNamespace** （默认false） 是否总是用最后一个斜线前的URL段作为namespace
+-   **struts.multipart.maxSize**
+    设置上传的临时文件的最大限制
+-   **struts.objectFactory.spring.autoWire**
+    可选值（name, type, auto, constructor,name）（默认name），设置 spring 的自动装配方式，只有引入spring 插件后才有效。
+-   **struts.objectFactory.spring.autoWire.alwaysRespect** 
+    （默认false）设置是否总是以自动装配策略创建对象。
+-   **struts.objectFactory.spring.useClassCache** 
+    （默认false）对象工厂是否使用类缓存，开发模式无效。
+-   **struts.xslt.nocache** 
+    （默认为false）设置XsltResult是否不是用缓存。
+-   **struts.custom.properties** 
+    设置用户的自定义属性文件名列表（用，隔开）
+-   **struts.custom.i18n.resources** 
+    设置用户自定义的资源文件路径列表（用，隔开）
+-   **struts.serve.static** 
+    （默认false） 设置是否支持静态资源请求（要求url在struts或static下）
+-   **struts.serve.static.browserCache** 
+    （默认false） 是否在静态资源响应中设置缓存。只有在支持静态资源时有效。
+-   **struts.el.throwExceptionOnFailure** 
+    （默认false）是否在解析el表达式或无法找到属性时抛出RuntimeException
+-   **struts.ognl.logMissingProperties** 
+    （默认false）是否日志无发找到的属性
+-   **struts.ognl.enableExpressionCache** 
+    是否缓存ognl解析的表达式。
+-   **struts.enable.DynamicMethodInvocation** 
+    （默认false）是否支持动态的方法调用,在URL上通过!method指定方法。
+-   **struts.enable.SlashesInActionNames** 
+    在URL中的Action段中是否支持斜线
+-   **struts.mapper.alwaysSelectFullNamespace** 
+    （默认false） 是否总是用最后一个斜线前的URL段作为namespace
 
 ## 核心对象Constants
 
--   **struts.actionProxyFactory** 设置ActionProxy的实体工厂，该工厂同时也生成默认的ActionInvoctation
--   **struts.xworkConverter** 设置XWorkConverter对象，该对象用于获取各种类型的转换器。
--   **struts.unknownHandlerManager** 设置UnknownHandlerManager的实现类，用于处理无法找到方法等异常。
--   **struts.multipart.handler**  设置mutipartRequest的handler （默认是jakarta）对应类，org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest
--   **struts.mapper.class** 可选值（struts，composite，restful，restful2）设置URL解析且映射到ACTION的实现，（默认struts）.
--   **struts.mapper.prefixMapping** 通过URL前缀映射到对应的Mapper，格式为urlPrefix1:mapperName2,urlPrefix2:mapperName2。必须添加mapperClass为org.apache.struts2.dispatcher.mapper.PrefixBasedActionMapper，并指定struts.mapper.class为该mapper。
--   **struts.mapper.composite** 设置是否支持复合（多个）actionMapper，mapperName用逗号隔开。必须配置struts.mapper.class 为composite 才会生效
--   **struts.mapper.idParameterName** 用于Restful2ActionMapper作为URL中id所对应的parameterName
--   **struts.ognl.allowStaticMethodAccess** （默认false）设置ognl表达式是否支持静态方法。
--   **struts.configuration** 设置struts2的Settings类。（2.1.2后不再使用）
--   **struts.urlRenderer** 设置struts2的URL render（用于生成的URL），（默认struts），类名org.apache.struts2.components.ServletUrlRenderer
--   **struts.objectFactory** 设置struts2的对象工厂，默认（struts），类名org.apache.struts2.impl.StrutsObjectFactory，当引入struts2-spring插件之后，则被修改为org.apache.struts2.spring.StrutsSpringObjectFactory
--   **struts.xworkTextProvider** 设置struts2的资源文件内容提供类的实现。默认为com.opensymphony.xwork2.TextProviderSupport
--   **struts.actionValidatorManager** 设置ActionValidatorManager 的实现类。
--   **struts.valueStackFactory** 设置struts2的ValueStack工厂的实现。
--   **struts.reflectionProvider** 设置ReflectionProvider的实现类
--   **struts.reflectionContextFactory** 设置ReflectionContextFactory的实现类
--   **struts.patternMatcher** 设置PatternMatcher的实现类
--   **struts.staticContentLoader** 设置StaticContentLoader的实现类
+-   **struts.actionProxyFactory** 
+    设置 ActionProxy 的实体工厂，该工厂同时也生成默认的 ActionInvoctation
+-   **struts.xworkConverter** 
+    设置 XWorkConverter 对象，该对象用于获取各种类型的转换器。
+-   **struts.unknownHandlerManager** 
+    设置 UnknownHandlerManager 的实现类，用于处理无法找到方法等异常。
+-   **struts.multipart.handler** 
+    设置 mutipartRequest 的 handler （默认是 jakarta）对应类：
+    `org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest`
+-   **struts.mapper.class** 
+    可选值（struts，composite，restful，restful2）设置 URL 解析且映射到 ACTION 的实现，（默认struts）
+-   **struts.mapper.prefixMapping** 
+    通过 URL 前缀映射到对应的 Mapper，格式为 `urlPrefix1:mapperName2, urlPrefix2:mapperName2`。
+    必须添加 mapperClass 为 `org.apache.struts2.dispatcher.mapper.PrefixBasedActionMapper`，并指定 `struts.mapper.class` 为该 mapper。
+-   **struts.mapper.composite** 
+    设置是否支持复合（多个）actionMapper，mapperName 用逗号隔开。必须配置 `struts.mapper.class` 为 composite 才会生效
+-   **struts.mapper.idParameterName** 
+    用于 Restful2ActionMapper 作为 URL 中 id 所对应的 parameterName
+-   **struts.ognl.allowStaticMethodAccess** 
+    （默认false）设置 ognl 表达式是否支持静态方法。
+-   **struts.configuration** 
+    设置 struts2 的 Settings 类。（2.1.2后不再使用）
+-   **struts.urlRenderer** 
+    设置 struts2 的 URL render（用于生成的URL），（默认struts），类名
+    `org.apache.struts2.components.ServletUrlRenderer`
+-   **struts.objectFactory** 
+    设置 struts2 的对象工厂，默认（struts），类名 `org.apache.struts2.impl.StrutsObjectFactory`，当引入 struts2-spring 插件之后，则被修改为 `org.apache.struts2.spring.StrutsSpringObjectFactory`
+-   **struts.xworkTextProvider** 
+    设置 struts2 的资源文件内容提供类的实现。默认为 `com.opensymphony.xwork2.TextProviderSupport`
+-   **struts.actionValidatorManager** 
+    设置 ActionValidatorManager  的实现类。
+-   **struts.valueStackFactory** 
+    设置 struts2 的 ValueStack 工厂的实现。
+-   **struts.reflectionProvider** 
+    设置 ReflectionProvider 的实现类
+-   **struts.reflectionContextFactory** 
+    设置 ReflectionContextFactory 的实现类
+-   **struts.patternMatcher** 
+    设置 PatternMatcher 的实现类
+-   **struts.staticContentLoader** 
+    设置 StaticContentLoader 的实现类
 
 ## 参考
 
