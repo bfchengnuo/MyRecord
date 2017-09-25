@@ -141,7 +141,7 @@ Maven 会自动处理一些冲突，其遵循两个原则：
 ## 私服搭建
 
 关于局域网（私服）的搭建工具可以使用 **nexus**
-`nexus install/start` 可以安装、启动服务
+`nexus install/start` 可以安装、启动服务（nexus.properties 中可更改端口）
 
 启动后可以通过浏览器来访问管理界面，默认账户、密码为：admin / admin123
 

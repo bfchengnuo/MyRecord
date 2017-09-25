@@ -1,0 +1,28 @@
+request	== 请求
+response  == 响应
+servlet
+RequestDispatcher == 请求转发，调度、分发
+redirect == 重定向
+forward  == 转寄、发送
+validation == 校验、验证
+
+
+-----------------------------
+java关键字
+
+instanceof
+iterator  == 迭代器
+Iterable  == 可迭代的
+-----------------------------
+常用单词
+
+register == 注册
+source == 资源、源
+refactor == 重构
+References  == 参考、引用
+Declarations  == 声明
+refresh  ==  刷新
+profile
+compare  == 比较
+replace  == 更换、替代
+properties  == 属性
