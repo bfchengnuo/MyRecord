@@ -41,3 +41,13 @@ jar 包未部署...
 如果为 `<prop key="hibernate.current_session_context_class">thread</prop>` 则会报异常
 
 然而代码生成的是 thread ，所以就翻车了呗......
+
+## java.sql.SQLException: The server time zone value
+
+这个问题准确说是在整合 SSM 的时候遇到的，这就是欠的，原因是 **引用了最新的 MySQL 驱动** ，当时引用的是 6.0.3 版本，选了个最新的结果.....
+
+异常描述其实还是很清楚的，就是没有设置时区，然后就可以在 url 后面加上就可以了：
+
+`jdbcUrl=jdbc:mysql://localhost:3306/spring?serverTimezone=UTC`
+
+说是设置为 UTC+8 也是可以的，记得转义就行，不过目前还不清楚这玩意有啥用
