@@ -166,6 +166,15 @@ IDEA 自带一个 JUnit 插件，打开 Settings 窗口搜索 junit 可以看到
 
 PS：把一个目录设置位测试目录或者源文件目录只需要在目录上右键然后选择 **MarkDirectoryAs** 然后选择相应的选项即可
 
+## 新建Maven工程
+
+参考：http://blog.csdn.net/gallenzhang/article/details/51932152
+
+只需要注意在新建 Maven 的向导中的 Properties 中添加一个参数 `archetypeCatalog=internal`，不加这个参数，在 maven 生成骨架的时候将会非常慢，有时候直接卡住
+
+原因：archetypeCatalog 表示插件使用的 archetype 元数据，不加这个参数时默认为 remote，local，即中央仓库 archetype 元数据，由于中央
+仓库的 archetype 太多了所以导致很慢，指定 internal 来表示仅使用内部元数据
+
 ## 其他
 
 正常情况下，从 IDEA 启动 Tomcat 是不能访问以前 webapps 里的应用的，如果需要，在服务器配置页面记得勾选 `Deploy applications configured in tomcat instance`
