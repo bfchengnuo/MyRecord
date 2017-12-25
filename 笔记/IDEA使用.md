@@ -4,6 +4,8 @@
 
 总之，信 JB 就对了，软件做的棒！
 
+[TOC]
+
 ## 新建一个web工程
 
 >   感觉这篇已经写的很全了，我就文字说下简单的步骤
@@ -174,6 +176,32 @@ PS：把一个目录设置位测试目录或者源文件目录只需要在目录
 
 原因：archetypeCatalog 表示插件使用的 archetype 元数据，不加这个参数时默认为 remote，local，即中央仓库 archetype 元数据，由于中央
 仓库的 archetype 太多了所以导致很慢，指定 internal 来表示仅使用内部元数据
+
+## 设置忽略文件不提交
+
+### 文件还没有纳入版本管理
+
+这种通过 ignore 配置 
+
+`version control—-local changes—-configure ignored files`
+
+忽略文件分几大类：忽略某个文件夹、忽略某类文件（正则）、忽略某个文件
+
+就是 IDEA 下方的 version control 视图里左侧的复选框图标
+
+![](http://img.blog.csdn.net/20170710200237613?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2FuZ2p1bjUxNTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+### 文件已经纳入版本管理
+
+这种方法主要应对文件已经纳入版本管理，但不想再提交，比如，不小心提交的eclipse、intellij的文件，以后不想再提交了，这种就**通过 version control 的 changelist 来实现**。
+
+intellij 提供了 changelist 功能，可以对文件进行分类，提交时，只提交 active（活跃的）changelist
+
+点击左侧的 changelist 创建一个列表，可以起名为忽略，然后将 Default 里你不想提交的文件拖进来，然后只提交Default changelist 就可以了
+
+![](http://img.blog.csdn.net/20170710200512874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2FuZ2p1bjUxNTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+![](http://img.blog.csdn.net/20170710200856102?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2FuZ2p1bjUxNTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 ## 其他
 
