@@ -43,7 +43,7 @@ git config --golbal user.emil 'bfchengnuo@gmail.com'
 
 如果你之前在设置本地仓库和github连接的时候设置过**user.name**和**user.email**,那么你必须首先清楚掉该设置，因为不清楚掉该设置，两个账号在提交资料的时候，验证肯定冲突（只能设置一个全局的**user.name**和**user.email**，而你现在有两个账号就对应两个不同的）。
 
-```powershell
+```shell
 git config --global user.name "your_name"
 git config --global user.email  "your_email"
 ```
@@ -97,20 +97,22 @@ PS：个人认为，保留一个全局的配置也未尝不可
    ``` shell
    # 该文件用于配置私钥对应的服务器
    # Default github user(chping_2125@163.com)
-   Host git@github.com
-    HostName https://github.com
+   Host github.com
+    HostName github.com
     User git(loli@bfchengnuo.com)
+    PreferredAuthentications publickey
     IdentityFile ~/.ssh/id_rsa
 
     # second user(second@mail.com)
     # 建一个github别名，新建的帐号使用这个别名做克隆和更新
-   Host git@code.xxxxxxx.com
-    HostName https://code.xxxxxxx.com    #公司的gitlab
+   Host code.xxxxxxx.com
+    HostName code.xxxxxxx.com    #公司的gitlab
     User git
+    PreferredAuthentications publickey
     IdentityFile ~/.ssh/id_rsa_new
    ```
 
-   如果存在 config 文件的话，其实就是往这个config中添加一个Host：
+   PreferredAuthentications 设置的是认证方式为只要公钥验证，还可以使用密码或者混合认证，如果存在 config 文件的话，其实就是往这个config中添加一个Host：
 
    其规则就是：从上至下读取 **config** 的内容，在每个Host下寻找对应的私钥。你可以设置 Host 别名：
 
@@ -118,15 +120,17 @@ PS：个人认为，保留一个全局的配置也未尝不可
    # 该文件用于配置私钥对应的服务器
    # Default github user(chping_2125@163.com)
    Host git1    #############不同在这里
-    HostName https://github.com
+    HostName github.com
     User git
+    PreferredAuthentications publickey
     IdentityFile ~/.ssh/id_rsa
 
     # second user(second@mail.com)
     # 建一个github别名，新建的帐号使用这个别名做克隆和更新
    Host git2  #############不同在这里
-    HostName https://code.xxxxxxx.com    #公司的gitlab
+    HostName code.xxxxxxx.com    #公司的gitlab
     User git
+    PreferredAuthentications publickey
     IdentityFile ~/.ssh/id_rsa_new
    ```
 
@@ -157,6 +161,10 @@ Welcome to GitLab, chping!
 ## 一次性配置两个账号
 
 其实同理上面，先配置一个，在配置两一个。
+
+## 注意
+
+在提交的时候会发现用户名和邮箱显示不正常，这是这种方式带来的副作用，完美的解决方案我没找到，暂时可以在项目手动设置本地 git 配置来指定用户信息，就是最开始的那两句去掉 **golbal** 执行就可以了
 
 ## 参考
 
