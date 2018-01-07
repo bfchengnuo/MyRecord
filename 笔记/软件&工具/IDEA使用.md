@@ -16,7 +16,7 @@
 
 1.  **新建工程**，选择 `Java Enterprise` 如有需要可以选择一些框架，比如 SSH 
 
-    ![](../img/idea-createWeb.png)
+    ![](../../img/idea-createWeb.png)
 
 2.  **配置输出目录和库目录**（IDEA 默认的输出目录很....不喜欢）
 
@@ -24,32 +24,32 @@
 
     在项目设置的 Modules 中的 Path 为 classes 目录(编译后的输出目录)：
 
-    ![](../img/idea-Modules.png)
+    ![](../../img/idea-Modules.png)
 
     在项目设置的 Modules 中的 Dependencies 中添加库，目录为新建的 lib，类型是 jar Dir （这样 lib 下的库会在编译的时候输出）:
 
-    ![](../img/idea-Modules2.png)
+    ![](../../img/idea-Modules2.png)
 
     在 `Artifacts > Output Layout` 中，将右侧 `Available Elements` 中的 `lib` 文件夹加入到左侧，使得 `lib` 中的文件会在编译的时候输出：
 
-    ![](../img/idea-lib.png)
+    ![](../../img/idea-lib.png)
 
 3.  **设置部署目录**
     IntelliJ 默认的部署目录是当前工程目录下的 `out` 文件夹。即在写好代码并点击右上角的运行按钮后，IntelliJ 会将项目文件输出到当前项目目录下的 `out` 文件夹而不是 `webapps` 中，也就意味着，此时如果采用手动启动 Tomcat 服务的方式，是无法通过访问 `localhost:8080/myproject` 访问项目的
 
     这里修改 `Artifacts > Output Directory` 为 `webapps/myproject`：
 
-    ![](../img/idea-output.png)
+    ![](../../img/idea-output.png)
 
 4.  **配置web服务器**
     在运行的左边，点击 `Edit Configurations...` 取消 After launch ，我是不喜欢，勾上后点运行会自动打开浏览器
 
-    ![](../img/idea-tomcat.png)
+    ![](../../img/idea-tomcat.png)
 
     下面的网址中在后面加上本项目的名字，这个都知道哈，在 Deployment 中的右栏也写一下
     其他配置像 Tomcat 的路径啊就不说了，简单
 
-    ![](../img/idea-tomcatContext.png)
+    ![](../../img/idea-tomcatContext.png)
 
 PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 Output Layout 里点击 struts2 鼠标右键 `put into lib`
 
@@ -103,7 +103,7 @@ PS：如果使用了框架，比如 struts2 ，在 Artifacts 中的 Output Layou
 
     如果是灰色的或者其他什么问题可以尝试在 **项目设置**中的 Module 中添加 JPA 模块，然后就是选择：**Generate Persistence Mapping ---> By Database Scheme**
 
-    ![](../img/idea-schema.png)
+    ![](../../img/idea-schema.png)
 
 需要注意的是，如果不配置 hibernate 的配置文件（或者 JPA 配置文件）也有可能是不会显示 persistence  工具的，或者生成的时候没法选择 `add to Session Factory` ；这个的意思就是将生成的实体添加 hibernate 的配置文件中
 

@@ -19,7 +19,7 @@ Struts 的讲解网上有很多文章，我学习也是靠这些，这里仅仅�
 
 简单可以理解为，当浏览器请求服务器时，请求交给 Struts 的 ActionServlet 处理，可能会对请求的一些对象进行增强，然后根据事先设置的配置文件交给指定的 Action 处理，处理完后返回给 ActionServlet ，然后可能就是调用相应的 JSP 页面进行显示了，如下图所示：
 
-![struts1](https://github.com/bfchengnuo/MyRecord/blob/master/img%2Fstruts1.jpg)
+![](../../img/struts1.jpg)
 
 ## 前
 
