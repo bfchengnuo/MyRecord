@@ -2,6 +2,8 @@
 
 我们都知道脚本语言非常灵活，在处理某些问题的时候 Java 实现用十几行来写，用 js 可能不到十行就写完，并且非常简洁，那么有没有一种优雅的方式将 Java 与脚本语言结合呢，在 Java SE6（代号 Mustang）中，这将成为现实。
 
+Nashorn，一个新的 JavaScript 引擎随着 Java 8 一起公诸于世，它允许在 JVM 上开发运行某些 JavaScript 应用。Nashorn 就是 `javax.script.ScriptEngine` 的另一种实现，并且它们俩遵循相同的规则，允许 Java 与 JavaScript 相互调用。
+
 ## Mustang 的脚本引擎
 
 **JSR 233** 为 Java 设计了一套脚本语言 API。这一套 API 提供了在 Java 程序中调用**各种脚本语言引擎的接口**。
