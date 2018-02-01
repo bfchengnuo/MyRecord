@@ -1,4 +1,4 @@
-java读取文件的两种方法：java.io和java.lang.ClassLoader （我就知道这两种.....）
+java读取文件的两种方法：java.io 和 java.lang.ClassLoader （我就知道这两种.....）
 
 ``` java
 // java.io:  
@@ -14,6 +14,10 @@ URL  url  =  loader.getResource("...");
 File  file  =  new  File(url.getFile());  
 InputStream  input  =  loader.getResourceAsStream("...");  
 ```
+
+上面这些就是最简单直接的两种用法了。
+
+## 使用 IO
 
 java.io 包中的类总是根据**当前用户目录**来分析相对路径名，也就是说相对路径是否好使，取决于 user.dir 的值。系统属性  user.dir 是 JVM 启动的时候设置的，**通常是 Java 虚拟机的调用目录，即执行 java 命令所在的目录**。
 
@@ -49,6 +53,40 @@ ClassLoader.getResource() **只能使用绝对路径，而且不用以 `/` 开�
 
 通常，ClassLoader  不能读取太大的文件，它适合读取 web 项目的那些配置文件，如果需要读取大文件，还是要用 IO 包下的，可以先通过 ClassLoader 获取到文件的绝对路径，然后传给 File 或者其他对象，用 io 包里的对象去读取会更好些
 
+## 关于文件夹与classpath
+
+这个话题就牵扯到了 package、folder 和 source folder 的区别了。
+
+**folder：**就是普通文件夹，IDE 不会对其进行任何的检查。
+
+**package**：就是 Java 开发过程中的包，其路径就是每一个类的包路径，**其必须存放在一个 source folder 下。**
+
+**source folder** ：是用来存放 Java 源代码的，其下的所有 Java 源文件都会被时时编译成 class 文件。
+
+以 Eclipse 来说，对于 JavaSE 的项目会被编译到项目目录下的 bin 目录下，对于 JavaEE 项目会被编译到相应的 `/WEB-INF/classes` 文件夹中，无论是哪种项目 bin 文件和 classes 文件夹都是不会再 IDE 中显示的，并且上面说到的都是默认的编译路径。
+
+利用这个特性可以建一个 config 的 source folder 文件夹来存放配置文件，使用 classpath 的方式来读取。
+
+---
+
+再说下 Classpath，简单说就是 CLASSPATH 环境变量的作用是指定 Java 类所在的目录。
+
+最典型的，当尝试使用 Java 命令在 cmd 里运行一个 class 文件时，很有可能会提示：`错误: 找不到或无法加载主类 HelloWorld` 这就是 classpath 配置不正确带来的问题。
+
+如果刚装完 JDK，没有配置环境变量，那么缺省的 `%CLASSPATH%` 环境变量的值是`.`，也就是当前目录。
+
+和 path 类似，当配置多个时是从左向右进行搜索，所以一般都把 `.` 配置在最左边。
+
+Java 中通常将环境变量 CLASSPATH 配置为`.;%JAVA_HOME%\lib\tools.jar;%JAVA_HOME%\lib\dt.jar`。
+
+> dt.jar：
+>
+> 运行环境类库，主要是 Swing 包( GUI 相关)，这一点通过用压缩软件打开 dt.jar 也可以看到。如果在开发时候没有用到 Swing 包，那么可以不用将 dt.jar 添加到 CLASSPATH 变量中。
+>
+> tools.jar：
+>
+> 工具类库，它跟我们程序中用到的基础类库没有关系。我们注意到在 Path 中变量值 bin 目录下的各个 exe 工具的大小都很小，一般都在 27 KB左右，这是因为它们实际上仅仅相当于是一层代码的包装，这些工具的实现所要用到的类库都在 tools.jar 中，用压缩软件打开 tools.jar ，你会发现有很多文件是和 bin 目录下的 exe 工具相对的。
+
 ## 附：Spring中ClassPathResource实现
 
 Spring 可以说是 JavaWeb 开发不可或缺的框架，它有提供 ClassPathResource 来读取文件：
@@ -75,6 +113,20 @@ public InputStream getInputStream() throws IOException {
 ```
 
 可以看出 spring 提供的 ClassPathResource，底层使用的就是 Class.getResource 或 ClassLoader.getResource()
+
+## 附2：对于properties的读取
+
+读取 properties 有很多种方法，下面补充个我不太熟悉的：
+
+读取 properties 文件可以尝试 **ResourceBundle**，支持国际化。
+
+路径方面没问题：
+
+在某个包下：`ResourceBundle.getBundle("com/mmq/test");`
+
+在 src 下：`ResourceBundle.getBundle("test");`
+
+// TODO 待补全
 
 ## 参考
 
