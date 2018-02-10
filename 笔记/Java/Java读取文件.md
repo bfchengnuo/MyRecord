@@ -87,6 +87,14 @@ Java 中通常将环境变量 CLASSPATH 配置为`.;%JAVA_HOME%\lib\tools.jar;%J
 >
 > 工具类库，它跟我们程序中用到的基础类库没有关系。我们注意到在 Path 中变量值 bin 目录下的各个 exe 工具的大小都很小，一般都在 27 KB左右，这是因为它们实际上仅仅相当于是一层代码的包装，这些工具的实现所要用到的类库都在 tools.jar 中，用压缩软件打开 tools.jar ，你会发现有很多文件是和 bin 目录下的 exe 工具相对的。
 
+## 关于路径
+
+看到一个问题：
+
+那为什么 Java （IO）中写正斜杠“/”、“//”、“///”，甚至再多都不会有问题呢？
+
+那是因为 Java 中处理流，都会使用到 File 这个类，在 Windows 环境中，File 会使用 WinNTFileSystem 这个工具类处理那些问题，再 WinNTFileSystem 类中，会把所有的正斜杠“/”都处理成反斜杠，再把多余的反斜杠“\”给去掉，最终会表示成转义后的一个反斜杠。
+
 ## 附：Spring中ClassPathResource实现
 
 Spring 可以说是 JavaWeb 开发不可或缺的框架，它有提供 ClassPathResource 来读取文件：
