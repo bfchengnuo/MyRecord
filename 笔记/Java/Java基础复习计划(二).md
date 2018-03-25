@@ -526,6 +526,36 @@ public static void get(int x){
 
 然后 HashSet 内部其实还是使用的是 HashMap，就是做了一层包装，大部分都是直接原封不动的调用 HashMap 的同名方法。
 
+#### TreeSet
+
+有序且唯一的单值类型集合，是 SortedSet 接口的实现。
+
+它有一些专有方法，比如：first()、 last()、 pollFirst()、 pollLast()。
+
+想要放入 TreeSet 集合就必须要实现 Comparable 接口，也就是实现 compareTo 方法，因为要保证有序，所以得和它说按照什么来比较。
+
+compareTo 方法的返回值是 int，**它决定着有序和唯一** ，一般来说 this 指的就是新元素，形参就是老元素。
+
+- 正数
+
+  新元素更大，放在右子树（后面）
+
+- 负数
+
+  新元素更小，放在左子树（前面）
+
+- 零
+
+  元素重复，舍弃
+
+因为 TreeSet 使用的是红黑树来存储的，它是一种自平衡二叉树，每次添加元素会从根依次向下比较，最终找到自己的位置，添加元素后为保证平衡（高效）可能会进行旋转修复，也就是一天是根，不一定永世是根。
+
+PS：优先尊重什么属性就先描述 假如什么属性不同，避免 if 的多层嵌套。
+
+使用 TreeSet 应当尽量保证 compareTo 方法是能返回 0 的，因为它的 remove 方法依赖于 compareTo 的返回值，如果返回值永远不会返回 0（确实有这样的需求），那么就无法通过 remove 删除，只能用迭代器删。
+
+修改元素还是要按照那三个步骤，删除、修改、重新添加；但是在迭代过程中是无法完成添加的，只能先创建一个临时的集合（不一定是 Set，可以是 LinkedList 增删快）将修改的元素加进去，等迭代完成后通过 addAll 方法放进去。
+
 ### 关于迭代器
 
 foreach 的实现就是用的迭代器，并且我们知道用 foreach 遍历如果进行删除（remove）操作是会抛 CME 异常的，这是因为调用 next 的时候发现 modCount 发生了变化。
@@ -541,6 +571,36 @@ public boolean hasNext() {
 所以，当删除倒数第二个元素后，size 会减一，cursor 表示的是当前遍历到第几个了，那么这时 cursor 就等于了 size，认为遍历完成，所以也就不会执行 next 方法，也就不会抛出 CME(并发修改异常)。
 
 这个了解一下就行了。
+
+### 关于比较器
+
+也就是实现了 `Comparator<T>` 接口的类，制定一个类的比较规则，就是如何使用比较器。
+
+需要实现的是 `public int compare(T i1,T i2)` 这个方法，第一个为新元素，第二个为老元素，规则和 Comparable 一样。
+
+使用比较器的地方常见的有两处，一个是 List 系列，使用 `Collections.sort(list, com)` 这个方法只适用于 List 系列；
+
+还有一个就是 Set 系列，在 new 的时候直接传比较器就行了。
+
+或者还可以在 lambda 里用，JDK8  的新特性。
+
+``` java
+//JDK8.0新特性 lambda表达式
+Set<Integer> set = new TreeSet<>((a,b) -> b-a);
+// Set<Integer> set = new TreeSet<>(new QQB());
+Collections.addAll(set,55,33,11,44,22);
+//我要降序
+System.out.println(set);
+
+class QQB implements Comparator<Integer>{
+  @Override		//i1新来的 i2老元素
+  public int compare(Integer i1,Integer i2){
+    return i2 - i1;
+  }
+}
+```
+
+这就是常用的几种形式了，用在需要排序的需求上。
 
 ## 其他
 
