@@ -556,6 +556,74 @@ PS：优先尊重什么属性就先描述 假如什么属性不同，避免 if �
 
 修改元素还是要按照那三个步骤，删除、修改、重新添加；但是在迭代过程中是无法完成添加的，只能先创建一个临时的集合（不一定是 Set，可以是 LinkedList 增删快）将修改的元素加进去，等迭代完成后通过 addAll 方法放进去。
 
+### Map
+
+然后就到键值对集合了，保存的是映射关系，主要的类有两个 HashMap 和 TreeMap。
+
+常用的方法：put(k,v)、get(k)、containsKey(k)、containsValue(v)、remove(k)、putAll(map)
+
+注意最后一个是 putAll 不是 addAll ！！
+
+遍历 Map 的几种方式：keySet() 、values()【Collection】 、entrySet()；无论使用那种方式，得到的其实都不是一个新集合而是原本的 Map 换了个视角而已，也就是说，**如果你在这些集合删除了元素，那么 map 中也会相应的删除**。
+
+Map集合添加新的键值对的时候，如果遭遇了重复的主键，那么**新的主键直接舍弃，新来的值替换原来的值**
+
+#### HashMap
+
+HashMap 它的 put(k,v) 、get(k) 、containsKey(k) 、remove(k)，所有和主键有关的方法都尊重 `hashCode/==/equals` 比较机制，前面 hashSet 的时候已经说明了，毕竟 hashSet 的实现就是用的 hashMap。
+
+包括 new 的时候也可以指定分组和加载因子。
+
+#### TreeMap
+
+它的所有主键相关的方法都尊重 compareTo 或 compare 方法，如果它们不返回 0，则：put() 永远不会舍弃元素、get() 永远直接返回 null，containsKey() 永远返回 false，remove() 永远删除失败。
+
+#### HashMap和Hashtable
+
+着重点就是他们的比较，也就是区别：
+
+- 它们的同步特性不同 [多线程是否安全]
+
+  HashMap 同一时间允许多个线程同时进行操作，效率高，但是是线程不安全的。
+
+  Hashtable 同一时间只允许一个线程进行操作，效率低，但是是线程安全的。
+
+- 它们对于 null 的处理不同
+
+  HashMap 无论主键对象还是值对象都可以添加 null（主键唯一，所以主键只能放一个 null）
+
+  Hashtable 无论主键还是值对象都不可以存放 null，否则直接 NPE
+
+- 它们底层实现有些许区别
+
+  HashMap 底层默认分为 16 个小组，可以指定分组，但是最终结果一定是 2 的 n 次方数。
+
+  Hashtable 底层默认分为 11 个小组，可以随意指定分组，最后是 `% (分组组数)` 实现分组。
+
+- 它们出现的版本不同
+
+  HashMap 在 JDK1.2 出现；Hashtable 在 JDK1.0 出现，鼻祖之一。
+
+再补充些关于高并发的：
+
+> JDK5.0 开始 集合的并发包当中提供了多线程高并发的场景下 更高效的 ConcurrentHashMap
+>
+> 并且出现了一批可以将不安全的集合转换为安全的集合的方法：
+>
+> Collections.synchronizedMap(hashMap);
+>
+> Collections.synchronizedList(arrayList);
+>
+> Collections.synchronizedCollection();
+>
+> Collections.synchronizedSet();
+>
+> Collections.synchronizedSortedSet();
+>
+> Collections.synchronizedSortedMap();
+>
+> 为什么高效？主要体现在锁的机制上，可以简单理解为 Hashtable 的锁是把整张哈希表锁了，而 ConcurrentHashMap 是锁哈希表中的某一列（每一列可以看作是一条 LinkedList），这样不同的列可以同时操作，只有同一列才会等待，既安全又高效（相比 hashtable）
+
 ### 关于迭代器
 
 foreach 的实现就是用的迭代器，并且我们知道用 foreach 遍历如果进行删除（remove）操作是会抛 CME 异常的，这是因为调用 next 的时候发现 modCount 发生了变化。
