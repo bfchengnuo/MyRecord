@@ -247,6 +247,8 @@ Java当中的集合当中只能存放对象在内存当中的地址，也就是�
 > PS： `Integer.parseInt()` 是将字符串转换为 int 类型；`Integer.valueOf()` 是转换为 Integer 类型。
 >
 > 自动装箱默认就是调用的 valueOf ，并且默认会缓存 -128 ~ 127 的数，其他的包装类也类似。
+>
+> 自动拆箱默认调用的是 intValue、floatValue 等等。
 
 总的来说，集合框架可分为两大类，**Collection（单值类型集合）** 和 **Map（键值对集合，主键对象唯一）**；
 
@@ -330,50 +332,50 @@ list.trimToSize();
 
 ``` java
 class MyList{
-	private Object[] data;
-	private int size;
-  
-	public MyList(int x){
-		data = new Object[x];
-	}
+  private Object[] data;
+  private int size;
+
+  public MyList(int x){
+    data = new Object[x];
+  }
   // 默认空间为 10
-	public MyList(){
-		this(10);
-	}
-	
-	public int size(){
-		return size;
-	}
-	
-	public Object get(int x){
-		return data[x];
-	}
-  
-	//添加元素的方法 add()
-	public void add(Object obj){
-		if(size == data.length){
-			Object[] temp = new Object[size*3/2+1];
-			System.arraycopy(data,0,temp,0,size);
-			data = temp;
-		}
-		data[size++] = obj;
-	}
-  
-	//删除元素的方法1 remove(int)
-	public void remove(int x){
+  public MyList(){
+    this(10);
+  }
+
+  public int size(){
+    return size;
+  }
+
+  public Object get(int x){
+    return data[x];
+  }
+
+  //添加元素的方法 add()
+  public void add(Object obj){
+    if(size == data.length){
+      Object[] temp = new Object[size*3/2+1];
+      System.arraycopy(data,0,temp,0,size);
+      data = temp;
+    }
+    data[size++] = obj;
+  }
+
+  //删除元素的方法1 remove(int)
+  public void remove(int x){
     // TODO 需要检查是否越界
-		System.arraycopy(data,x+1,data,x,size-- - x-1);
-	}
-  
-	//删除元素的方法2 remove(Object)
-	public void remove(Object obj){
-		for(int i = 0;i<size;i++){
-			if(obj.equals(data[i])){
-				remove(i);
-				return;
-			}
-		}
-	}
+    System.arraycopy(data,x+1,data,x,size-- - x-1);
+  }
+
+  //删除元素的方法2 remove(Object)
+  public void remove(Object obj){
+    for(int i = 0;i<size;i++){
+      if(obj.equals(data[i])){
+        remove(i);
+        return;
+      }
+    }
+  }
 }
 ```
 
@@ -564,7 +566,21 @@ PS：优先尊重什么属性就先描述 假如什么属性不同，避免 if �
 
 注意最后一个是 putAll 不是 addAll ！！
 
-遍历 Map 的几种方式：keySet() 、values()【Collection】 、entrySet()；无论使用那种方式，得到的其实都不是一个新集合而是原本的 Map 换了个视角而已，也就是说，**如果你在这些集合删除了元素，那么 map 中也会相应的删除**。
+遍历 Map 的几种方式：keySet() 、values() 、entrySet()、forEach()；无论使用那种方式，得到的其实都不是一个新集合而是原本的 Map 换了个视角而已，也就是说，**如果你在这些集合删除了元素，那么 map 中也会相应的删除**。
+
+PS：values() 返回的是  Collection 类型的。
+
+在 JDK8+ 中使用 forEach 更加的简单，官方 API 解释了默认实现：
+
+``` java
+for (Map.Entry<K, V> entry : map.entrySet())
+     action.accept(entry.getKey(), entry.getValue());
+
+// 使用 forEach + lambda
+map.forEach((k,v) -> System.out.println(k + "--" + v));
+```
+
+本质上还是调用的 entrySet，但是写法上真是方便了太多太多。
 
 Map集合添加新的键值对的时候，如果遭遇了重复的主键，那么**新的主键直接舍弃，新来的值替换原来的值**
 
@@ -673,3 +689,5 @@ class QQB implements Comparator<Integer>{
 ## 其他
 
 Java 中没有函数这一叫法，统称为方法。
+
+关于导包，JDK5 以后有一种新形势：`import static java.xxx` 这种相比之前加了一个 static，表示的是只导入此包的静态方法。
