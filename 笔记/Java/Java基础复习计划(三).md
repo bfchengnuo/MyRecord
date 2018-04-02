@@ -114,6 +114,112 @@
 
 ![](../../img/lock.png)
 
+### 关于线程池
+
+关于这一块，之前在 [这里](https://bfchengnuo.com/2017/12/21/JavaSE%E4%BA%8C%E5%91%A8%E7%9B%AE%E8%AE%A1%E5%88%92%EF%BC%88%E4%BA%8C%EF%BC%89/) 已经写过了，这次提提怎么使用就够了：
+
+常规使用，用 ExecutorService 这个接口来写吧，以及线程的几种定义方式：
+
+``` java
+public class TestThreadPool{
+  public static void main(String[] args) throws Exception{
+    ExecutorService es = Executors.newFixedThreadPool(2);
+    //             newCachedThreadPool();
+    //			   newSingleThreadExecutor()
+    ThreadOne t1 = new ThreadOne();
+    es.submit(t1);
+    ThreadTwo t2 = new ThreadTwo();
+    es.submit(t2);
+    ThreadThree t3 = new ThreadThree();
+    Future<String> f = es.submit(t3);
+    System.out.println(f.get());
+    //es.shutdown();
+    es.shutdownNow();
+  }
+}
+class ThreadThree implements Callable<String>{//JDK5.0
+  @Override
+  public String call() throws Exception{
+    for(int i = 0;i<6666;i++){
+      System.out.println("我是第三种方式");
+    }
+    return "End";
+  }
+}
+
+class ThreadTwo implements Runnable{
+  @Override
+  public void run(){
+    for(int i = 0;i<6666;i++){
+      System.out.println("我是第二种方式");
+    }
+  }
+}
+
+class ThreadOne extends Thread{
+  @Override
+  public void run(){
+    for(int i = 0;i<6666;i++){
+      System.out.println("我是第一种方式");
+    }
+  }
+}
+```
+
+线程池的创建官方推荐使用 Executors 来创建，常见的有 newFixedThreadPool、newCachedThreadPool、newSingleThreadExecutor；
+
+第一种就是最简单的，也是最常用的，会事先维护几个线程，等任务来直接执行；
+
+第二种是当有任务的时候再创建线程（避免浪费），任务执行完后会等待一分钟（默认），如果一分钟内没有新任务，那么此线程就会被终结；
+
+第三种是同一时间只允许一个线程执行，其他的任务都排队等着，适合用在秒杀的情况。
+
+> shutdown 和 shutdownNow 的区别：
+>
+> shutdown ：不再接受新的任务，当线程池中的任务（包括等待中的和正在执行的）执行完毕后销毁线程池。
+>
+> shutdownNow：试图停止所有正在执行的活动任务（一般情况正在执行的任务都会正常跑完的），暂停处理正在等待的任务，不再接受新任务，并返回等待执行的任务列表。
+
+还有就是通过实现 `Callable<>` 的 call 方法来定义线程，这种方式定义的线程解决了其他方式无法实现的问题：
+
+- run() 被定义为 void 无法返回数据
+- run() 没有任何 throws 声明
+
+这种方式定义的线程，只能通过线程池的方式来启动，并且 submit 的时候会返回一个 Future 对象，利用这个对象可以获得线程的返回值，就是调用其 get 方法，注意：**当线程未执行完时，此方法一直是阻塞状态**；当线程被意外终止那么 get 方法可能会一直卡在阻塞中（当然有重载可以指定等待的最大时间）。
+
+## IO
+
+### File对象
+
+创建 File 对象的三种常见形式：
+
+``` java
+new File(String 完整路径);
+new File(String 父目录,String 文件名);
+new File(File 父目录对象,String 文件名);
+```
+
+然后介绍常用的几个方法：
+
+- `static listRoots()` : 得到当前计算机所有根目录
+- `String[] list()` : 动态的列出一个目录当中所有的文件名字
+- `File[] listFiles()` : 动态的列出一个目录当中所有的文件对象
+- `exists()` : 判断 File 对象指代的文件或者目录是否存在
+- `isFile()` : 判断 File 对象指代的是不是一个文件
+- `isDirectory()` : 判断 File 对象指代的是不是一个目录
+- `length()` : 得到文件的字节个数；只能对文件调用，对目录调用得到的没有意义
+- `mkdirs()` : 创建多层不存在的目录结构
+- `getName()` : 得到文件或者目录的名字
+- `getParent()` : 得到文件或者目录的父目录
+- `getAbsolutePath()` : 得到文件或者目录的绝对路径
+- `setLastModified()` : 设置文件的最后一次修改时间，设置的是时间戳
+- `lastModified()` : 得到文件的最后一次修改时间
+- `delete()` : 删除目录或者文件
+  如果要删除的是一个目录 则必须保证目录是空的
+- `renameTo()` : 重命名文件或者目录
+  例如：`a.renameTo(c);` a 代表源文件，必须存在；c 代表目标文件，必须不存在；
+  其中 a 和 c 可以是不同的目录结构，从而实现剪切。
+
 ## 原码反码补码
 
 对于一个数, 计算机要使用一定的编码方式进行存储. 原码, 反码, 补码是机器存储一个具体数字的编码方式.
