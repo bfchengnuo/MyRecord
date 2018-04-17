@@ -147,8 +147,10 @@ StringBuffer/StringBuilder 常用方法：
 
 - append()
 - insert()
+
   在指定的**下标**插入内容，使用的其实是 `System.arraycopy()` 来移动“数组”的。
 - reverse()
+
   反转整个字符串
 
 SB 中默认设置 16 个缓冲区，new 的时候可以手动进行指定。

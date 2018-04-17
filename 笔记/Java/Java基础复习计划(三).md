@@ -50,27 +50,39 @@
 控制线程的几种常见方法：
 
 - setPriority(int)
+
   设置线程的优先级，可选范围 1- 10，默认为 5，越大优先级越高；
+
   没什么意义，因为只是概率而已
 - static sleep(long)
 - join()
+
   **当前线程**邀请另一个线程优先执行，比如主线程里写 `xx.join();` 意思就是主线程让 xx 线程执行完成后再执行，否则一直处于阻塞状态。
 - static yield()
+
   让**当前线程**放弃持有的时间片，直接回到就绪，当然也有可能出现放弃时间片后又被 Cpu 选中的情况。 
 - setName() + getName()
 - static activeCount()
+
   得到程序中所有活跃线程的总数，活跃线程：就绪 + 运行 + 阻塞；
+
   这个方法永远不可能返回 0，至少是 1.
 - static currentThread()
+
   得到当前线程对象，比如获得主线程的对象，在 run 方法调用的其他方法中使用；
+
   在 run 方法中没必要，直接 this 就是了。
 - setDaemon(true)
+
   设置成为守护进程，当程序中只剩下守护线程时会自动终结自己；
+
   Java 中著名的守护线程 GC，一般的特性：
+
   1. 通常是无限循环的
   2. 守护线程一般有极低的优先级
   3. 设置守护线程必须在 start 之前
 - interrupt()
+
   中断线程的阻塞状态，比如 sleep 时间还没到可以用 interrupt() 强制唤醒，但是会抛出一个异常。
 
 **线程中所有静态方法不关注谁调用的，而是关注出现在哪里，出现在哪里就是操作那个线程。**
@@ -84,18 +96,24 @@
 然后就需要加锁来保证不会出现错误，通常有两种方案：
 
 - 使用 synchronized 关键字
+
   叫做互斥锁，或者互斥锁标记，它可以修饰方法或者代码块，用在代码块上要显式的声明锁，用在方法上默认是 this。
+
   还有就是 **synchronized 特性本身不会被继承**
 - java.util.concurrent.locks.ReentrantLock
+
   可翻译为可重用锁，JDK1.5 加入的，遵循了 OO 思想，有两个方法：lock() 和 unlock()
 
 锁如果使用不当就会形成死锁，要解决死锁一般需要用到 Object 的三个方法：
 
 - wait()
+
   让当前线程放弃已持有的锁标记，并且进入调用方对象的等待池。
 - notify()
+
   唤醒调用方对象中等待池中的某个线程，是随机的。
 - notifyAll()
+
   唤醒调用方对象中等待池中的全部线程
 
 这三个方法都必须在已经持有锁标记的前提下才能使用，**所以它们都必须出现在synchronized(){当中}**
@@ -189,6 +207,12 @@ class ThreadOne extends Thread{
 
 ## IO
 
+这就是通常我们所说的 IO 流了，流可分为三类：
+
+1. 方向分： 输入流  or  输出流
+2. 单位分： 字节流  or  字符流
+3. 功能分： 节点流  or  过滤流（包装流、处理流）
+
 ### File对象
 
 创建 File 对象的三种常见形式：
@@ -215,10 +239,155 @@ new File(File 父目录对象,String 文件名);
 - `setLastModified()` : 设置文件的最后一次修改时间，设置的是时间戳
 - `lastModified()` : 得到文件的最后一次修改时间
 - `delete()` : 删除目录或者文件
+
   如果要删除的是一个目录 则必须保证目录是空的
 - `renameTo()` : 重命名文件或者目录
+
   例如：`a.renameTo(c);` a 代表源文件，必须存在；c 代表目标文件，必须不存在；
+
   其中 a 和 c 可以是不同的目录结构，从而实现剪切。
+
+### 字节流
+
+首先要认识的两个对象是：InputStream 和 OutputStream，他们分别是：所有字节输入流统一的父（抽象）类、所有字节输出流统一的父（抽象）类。
+
+方法一览：
+
+``` java
+// 一次读一个字节，并返回这个字节
+int read();
+// 一次读一个数组，返回读取的长度
+int read(byte[] data);
+// 一次读一个数组，从 off 开始填充，填充 len 个
+int read(byte[] data,int off,int len);
+
+write(int data);
+write(byte[] data);
+write(byte[] data,int off,int len);
+```
+
+需要注意：一次读一个字节但是返回的是 int，这是为了确保返回值 `-1` 表示文件的结束，假设读到了一个字节是 -1，那么先会进行类型提升到 int，这里的提升是 `&0xff` 来确保前面补的是 0 而不是 1。
+
+读取数组时，如果读到最后不足一个数组的大小，那么返回的 int 就不是 data.length，所以说并不是绝对的。
+
+---
+
+上面说的是顶级的抽象类，下面就来说说最常用的两个具体类：FileInputStream 和 FileOutputStream。
+
+- 它们作为节点流，构造方法可以指定连接 String 文件名 File 对象
+
+- 虽然贵为节点流，但是它们只能连接文件 不能连接目录
+
+- 节点输出流连接的文件即便不存在在，创建流的时候也会被自动创建出来，但是如果连接的目录结构都不存在 则直接异常【File 类还有个 mkdirs()】
+
+- 节点输出流连接的文件即便已经存在，在创建流的一刻 也会被新的空白文件直接替换。
+
+  如果我们的需求是想要在最后追加内容，那么构造方法：`new FileOutputStream("abc.txt",true);`
+
+- FileInputStream 最常用的是 `read(byte[] data);`；FileOutputStream 最常用的却是 `write(byte[],int,int)`
+
+- FileInputStream 以 -1 作为读取结束的标识
+
+下面看经典的复制文件的例子：
+
+``` java
+public class FileCopy{
+  public static void main(String[] args){
+    FileInputStream fis = null;
+    FileOutputStream fos = null;
+    try{
+      fis = new FileInputStream("1.mp3");
+      fos = new FileOutputStream("2.mp3");
+      // 2^10 = 1024 也就是字节 <<10 是 kb，再 <<10 是 mb
+      byte[] data = new byte[5<<20];  // 5MB
+      int len = 0;
+      while((len = fis.read(data)) != -1){
+        fos.write(data,0,len);
+      }
+    }catch(Exception e){
+      e.printStackTrace();
+    }finally{
+      try{
+        fis.close();
+      }catch(Exception e){
+        e.printStackTrace();
+      }finally{
+        try{
+          fos.close();
+        }catch(Exception e){
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+}
+
+// 简写
+public class FileCopy2{
+	public static void main(String[] args){
+		// JDK7+ 特性。
+		try(FileInputStream fis = new FileInputStream("1.mp3");
+			FileOutputStream fos = new FileOutputStream("3.mp3")){
+			byte[] data = new byte[5<<20];
+			int len;
+			while((len = fis.read(data)) != -1){
+				fos.write(data,0,len);
+			}
+		}catch(Exception e){e.printStackTrace();}
+	}
+}
+```
+
+设置缓冲大小使用位运算效率更高哦，只需要记住 x<<20 就是 xMB 大小的缓冲区。
+
+JDK7 后有了特性，就不用在 finally 里写这么恶心的代码了。。。。
+
+### 过滤流
+
+之所以称它们为过滤流是因为他们接收的对象是 stream，并不能直接传 file 或者路径，对于字节流来说，有几个还算用的多的字节流过滤流：
+
+BufferedInputStream、BufferedOutputStream、DataInputStream、DataOutputStream、ObjectInputStream、ObjectOutputStream。
+
+经过过滤（包装）后，后面的操作只需要对这个过滤流操作就行了，因为是装饰（包装）模式，最后关流的时候只关过滤流就 OK 了。
+
+---
+
+前两个：
+
+作为过滤流的它们是为了给原本的节点流添加缓冲空间，从而提高每次读写的吞吐量 进而提高效率。它们构造方法的第二个参数可以指定缓冲空间大小（默认只有8192字节，也就是 8k）；一定记得及时清空缓冲空间 防止数据滞留缓冲区，其中有三种情况会刷新缓冲区：1、当缓存空间满了的时候自动刷新；2、当关闭流操作时会自动刷新；3、手动调用 flush。
+
+这样，即使你调用 read 方法一个字节一个字节的读其实它会一次读指定的大小到缓冲区，然后一个个的给你；写也是，并不是一个个的写，而是写到缓冲区，满了以后一次性 flush 到硬盘。
+
+---
+
+中间两个：
+
+是为了给原本的节点流添加读写基本数据类型的功能；DataInputStream 提供了一组方法 `readXxxx();`，DataOutputStream 提供一组方法 `writeXxxx();` ，这时候不再以 -1 作为读取结束的标识了，而是如果已经到达文件结尾还继续读取，则直接出现 EOFException（End of File）。
+
+``` java
+public static void main(String[] args){
+  try(DataOutputStream dos = new DataOutputStream(new FileOutputStream("t.data"))){
+    dos.writeInt(4545);
+  }catch(Exception e){e.printStackTrace();}
+
+  try(DataInputStream dis = new DataInputStream(new FileInputStream("t.data"))){
+    int x = dis.readInt();
+    System.out.println(x);
+  }catch(Exception e){e.printStackTrace();}
+}
+```
+
+---
+
+最后两个：
+
+给原本的节点流添加读写对象的功能的，与上面类似，对应的方法就是 `readObject();` 和 `writeObject();` 。
+
+同样不以-1作为结束，而也会 EOFException。
+
+要写出的对象必须先要序列化 （implements Serializable），如果要持久化的对象当中有其它引用类型的属性，那么也要进行序列化标识；但是如果某些属性无关紧要，不需要保存（那就相当于是 null 了），**可以直接使用 transient 修饰。**
+
+如果要持久化的是一个使用了比较器的 TreeSet 或者 TreeMap，就连比较器的类型也要实现序列化接口。
 
 ## 原码反码补码
 
