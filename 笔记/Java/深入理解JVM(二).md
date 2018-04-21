@@ -35,11 +35,27 @@ Java 语言中，类型的加载、连接和初始化过程都是在应用程序
 
 PS：这些阶段通常都是互相交叉地混合式进行的，通常会在一个阶段执行的过程中调用、激活另外一个阶段。
 
-![类的生命周期]()
+![类的生命周期](../../img/类生命周期.png)
 
 在 JVM 规范中，严格规定了五种情况必须立即对类进行初始化（而加载、验证、准备自然需要在此之前开始）
 
-1. ​
+1. 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类还没有进行过初始化，则需要先触发其初始化。
+
+   生成这四条指令最常见的 Java 代码场景是：
+
+   使用new关键字实例化对象时、
+
+   读取或设置一个类的静态字段（static）时（被static修饰又被final修饰的，已在编译期把结果放入常量池的静态字段除外）、
+
+   以及调用一个类的静态方法时。
+
+2. 使用 `Java.lang.refect` 包的方法对类进行反射调用时，如果类还没有进行过初始化，则需要先触发其初始化。
+
+3. 当初始化一个类的时候，如果发现其父类还没有进行初始化，则需要先触发其父类的初始化。
+
+4. 当虚拟机启动时，用户需要指定一个要执行的主类，虚拟机会先执行该主类。
+
+5. 当使用 JDK1.5 支持时，如果一个 `java.langl.incoke.MethodHandle` 实例最后的解析结果 REF_getStatic、REF_putStatic、REF_invokeStatic 的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化。
 
 这五种是有且仅有修饰的场景，除此之外，所有引用类的方式都不会触发初始化，称为被动引用，下面举几个例子：
 
@@ -218,7 +234,9 @@ PS：同一个类加载器下，一个类型只会初始化一次。
 
 这些加载器之间的关系一般是：
 
-![]()
+![](../../img/类加载器.png)
+
+![](../../img/类加载器2.png)
 
 这种层次关系称为类加载器的双亲委派模型。
 
@@ -235,7 +253,42 @@ PS：同一个类加载器下，一个类型只会初始化一次。
 双亲委派模型对于保证 Java 程序的稳定运行很重要，但它的实现确非常简单，代码都集中在 ClassLoader 中的 loadClass() 方法中：
 
 ```java
+protected Class<?> loadClass(String name, boolean resolve)
+  throws ClassNotFoundException{
+  synchronized (getClassLoadingLock(name)) {
+    // First, check if the class has already been loaded
+    Class<?> c = findLoadedClass(name);
+    if (c == null) {
+      long t0 = System.nanoTime();
+      try {
+        if (parent != null) {
+          c = parent.loadClass(name, false);
+        } else {
+          c = findBootstrapClassOrNull(name);
+        }
+      } catch (ClassNotFoundException e) {
+        // ClassNotFoundException thrown if class not found
+        // from the non-null parent class loader
+      }
 
+      if (c == null) {
+        // If still not found, then invoke findClass in order
+        // to find the class.
+        long t1 = System.nanoTime();
+        c = findClass(name);
+
+        // this is the defining class loader; record the stats
+        sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
+        sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
+        sun.misc.PerfCounter.getFindClasses().increment();
+      }
+    }
+    if (resolve) {
+      resolveClass(c);
+    }
+    return c;
+  }
+}
 ```
 
 先检查是否已经被加载过，如果没有就调用父类加载器的 loadClass 方法，若父加载器为空（顶层了）则默认使用启动类加载器作为父加载器。

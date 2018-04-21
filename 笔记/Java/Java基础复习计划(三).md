@@ -226,26 +226,81 @@ new File(File 父目录对象,String 文件名);
 然后介绍常用的几个方法：
 
 - `static listRoots()` : 得到当前计算机所有根目录
+
 - `String[] list()` : 动态的列出一个目录当中所有的文件名字
+
 - `File[] listFiles()` : 动态的列出一个目录当中所有的文件对象
+
 - `exists()` : 判断 File 对象指代的文件或者目录是否存在
+
 - `isFile()` : 判断 File 对象指代的是不是一个文件
+
 - `isDirectory()` : 判断 File 对象指代的是不是一个目录
+
 - `length()` : 得到文件的字节个数；只能对文件调用，对目录调用得到的没有意义
+
 - `mkdirs()` : 创建多层不存在的目录结构
+
 - `getName()` : 得到文件或者目录的名字
+
 - `getParent()` : 得到文件或者目录的父目录
+
 - `getAbsolutePath()` : 得到文件或者目录的绝对路径
+
 - `setLastModified()` : 设置文件的最后一次修改时间，设置的是时间戳
+
 - `lastModified()` : 得到文件的最后一次修改时间
+
 - `delete()` : 删除目录或者文件
 
   如果要删除的是一个目录 则必须保证目录是空的
+
 - `renameTo()` : 重命名文件或者目录
 
   例如：`a.renameTo(c);` a 代表源文件，必须存在；c 代表目标文件，必须不存在；
 
   其中 a 和 c 可以是不同的目录结构，从而实现剪切。
+
+#### 过滤器
+
+使用 File 的 listFiles() 方法的时候可以传入一个文件过滤器（FileFilter），用来过滤指定的文件，这样能减轻接下来遍历的压力。
+
+FileFilter 是个接口，并且它只定义了一个方法：`boolean accept(File pathname)` 比如：
+
+``` java
+class JavaFilter implements FileFilter{
+  private JavaFilter(){}
+  private static JavaFilter jf = new JavaFilter();
+  public static JavaFilter getFilter(){
+    return jf;
+  }
+
+  @Override
+  public boolean accept(File f){
+    return f.isFile() && f.getName().toLowerCase().endsWith(".java");
+  }
+}
+
+class DirFilter implements FileFilter{
+  private DirFilter(){}
+  private static DirFilter df = new DirFilter();
+  public static DirFilter getFilter(){
+    return df;
+  }
+
+  @Override
+  public boolean accept(File f){
+    return f.isDirectory();
+  }
+}
+
+// 使用 lambda
+File[] files = file.listFiles(f -> f.isFile() && f.getName().endsWith(".java"));
+File[] dirs = file.listFiles(f -> f.isDirectory());
+if(files == null) return;
+```
+
+一个来过滤 Java 文件，一个来过滤目录，这里使用单例模式就比较适合了，另外，还可以直接使用 lambda 表达式，更加的爽
 
 ### 字节流
 
@@ -342,7 +397,7 @@ public class FileCopy2{
 
 JDK7 后有了特性，就不用在 finally 里写这么恶心的代码了。。。。
 
-### 过滤流
+#### 过滤流
 
 之所以称它们为过滤流是因为他们接收的对象是 stream，并不能直接传 file 或者路径，对于字节流来说，有几个还算用的多的字节流过滤流：
 
@@ -383,11 +438,67 @@ public static void main(String[] args){
 
 给原本的节点流添加读写对象的功能的，与上面类似，对应的方法就是 `readObject();` 和 `writeObject();` 。
 
-同样不以-1作为结束，而也会 EOFException。
+同样不以 -1 作为结束，而也会 EOFException。
 
 要写出的对象必须先要序列化 （implements Serializable），如果要持久化的对象当中有其它引用类型的属性，那么也要进行序列化标识；但是如果某些属性无关紧要，不需要保存（那就相当于是 null 了），**可以直接使用 transient 修饰。**
 
 如果要持久化的是一个使用了比较器的 TreeSet 或者 TreeMap，就连比较器的类型也要实现序列化接口。
+
+### 字符流
+
+和字节流一样，两大鼻祖：Read 和 Writer；接口中定义的方法也和字节流中的那三个对应，就不写了。
+
+两个常用的具体类：FileReader 和 FileWriter，描述也不多说了，和上面 FileInputStream 和 FileOutputStream 一样一样的
+
+#### 过滤流
+
+对于字符流来说，最常用的还是莫过于这里说的过滤流，因为对于字符操作，过滤流提供了更方便的方法。
+
+**BufferedReader 和 BufferedWriter：**
+
+通过对原有的字符流添加缓冲空间，使其可以支持一次读取一行（readLine），和一次写入一个字符串(write + newLine 换行)。其中 BufferReader 使用的非常频繁，必须要熟练的。
+
+**PrintStream 和 PrintWriter：**
+
+像是一对姐妹，他们的方法一致，不同的是一个输出字节，一个输出字符；PrintStream 我们最长见的就是打印语句中的 out，它就是 PrintStream 类型的，然后 PrintWriter 在 IO 操作中用的非常频繁，相比 BufferedWriter 它更加的好用。
+
+既然说好用，那就来看看它的特点吧：
+
+- 既可以作为节点流，又可以作为过滤流；也就是可以直接往构造函数里扔文件对象、路径、节电流
+
+- 既可以连接字节流，又可以连接字符流；是的，构造函数里都可以扔，不需要转换流
+
+- 当做节点流的时候，构造方法第二个参数可以指定字符集
+
+- 当做过滤流的时候，构造方法第二个参数可以指定自动清空缓冲
+
+  例如：`new PrintWriter(new FileWriter("a.txt",true),true);`
+
+  第一个 true 是开启追加模式，第二个是自动刷新（flush）
+
+- 拥有 println() 方法，等价于 write() + newLine()
+
+---
+
+转换流（桥转换器）：InputStreamReader 和 OutputStreamReader ，其中最常用的是 InputStreamReader，实际用法例如：
+
+`new BufferedReader(new InputStreamReader(new FileInputStream("a.txt")))`
+
+而 OutputStreamReader  基本不怎么用，因为有 PrintWriter 啊，它可以字符流字节流通吃，也就是说内部会内置一个转换流，就是这个 OutputStreamReader ，所以让我们方便了。
+
+---
+
+再来补充个 RandomAccessFile 用来支持随机文件的读取和写入，通常可以用它来占空间，然后用流来对其进行写：
+
+``` java
+RandomAccessFile raf = new RandomAccessFile("d:\\abc.mp4","rw");
+File d = new File("d:\\");
+long free = d.getFreeSpace();//得到d盘的剩余空间
+raf.setLength(free);
+raf.close();
+```
+
+这只是个简单的使用，这里先 TODO
 
 ## 原码反码补码
 
@@ -457,3 +568,9 @@ public static void main(String[] args){
 因为机器使用补码, 所以对于编程中常用到的 32 位 int 类型，可以表示范围是: [-231, 231-1] 因为第一位表示的是符号位.而使用补码表示时又可以多保存一个最小值.
 
 出自：https://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.html
+
+## 其他
+
+查找一个字符串出现多少次？
+
+可以使用 `(str + "l").split("abc").length - 1` ，源字符串加任意一个字符防止被 split 的字符在最后会导致少一个，然后它的 length - 1 就是个数。
