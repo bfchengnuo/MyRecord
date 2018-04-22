@@ -1,0 +1,80 @@
+{
+    "snippets": {
+        // 变量
+        "variables": {
+            "lang": "zh-CN",
+            "locale": "zh-CN",
+            "charset": "UTF-8"
+        },
+
+        // HTML 模板
+        "html": {
+            "abbreviations": {
+                // 浏览器内核和渲染
+                "meta:compat": "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge,chrome=1\" />",
+                "meta:rw": "<meta name=\"renderer\" content=\"webkit\" />",
+                "meta:br": "meta:vp+meta:compat+meta:rw",
+                
+                // 站点描述和关键字
+                "meta:description|meta:dt": "<meta name=\"description\" content=\"\" />",
+                "meta:keywords|meta:kt": "<meta name=\"keywords\" content=\"\" />",
+                "meta:dkt": "meta:kt+meta:dt",
+
+                // 移动端适配 META
+                "meta:mso": "<meta name=\"screen-orientation\" content=\"portrait\" />",
+                "meta:msox5": "<meta name=\"x5-orientation\" content=\"portrait\" />",
+                "meta:mfdt": "<meta name=\"format-detection\" content=\"telephone=no\" />",
+                "meta:mmth": "<meta name=\"msapplication-tap-highlight\" content=\"no\" />",
+                "meta:mtc": "<meta name=\"theme-color\" content=\"#000000\" />",
+                "meta:mac": "<meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />",
+                "meta:masbs": "<meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\" />",
+                "meta:app": "meta:mso+meta:msox5+meta:mfdt+meta:mmth+meta:mtc+meta:mac+meta:masbs",
+                    
+                
+                // 带 type 属性的样式表外链标签
+                "link": "<link type=\"text/css\" rel=\"stylesheet\" href=\"\" />",
+                "link:css": "<link type=\"text/css\" rel=\"stylesheet\" href=\"${1:style}.css\" />",
+                
+                // 站点收藏图标
+                "link:favicon": "<link rel=\"shortcut icon\" href=\"${1:favicon.ico}\"/>",
+                "link:xicon": "<link rel=\"icon\" type=\"image/x-icon\" href=\"${1:favicon.ico}\" />",
+                
+                // 带 type 属性的样式和脚本标签
+                "style": "<style type=\"text/css\">",
+                "script:src": "<script type=\"text/javascript\" src=\"\">",
+                "script": "<script type=\"text/javascript\">",
+
+                // 自定义结构
+                "doc": "html>(head>meta[charset=${charset}]+meta:br+title{Document}+meta:dkt+link:xicon+style)+body>(script:src+script)",
+                "html:5": "!!!+doc[lang=${lang}]",
+
+                // 最简单的结构
+                "docSimple": "html>(head>meta[charset=${charset}]+title{Document})+body",
+                "html:5s": "!!!+docSimple[lang=${lang}]",
+
+                // 包含移动端 META 信息的文档
+                "docApp": "html>(head>meta[charset=${charset}]+meta:br+title{Document}+meta:app+link:xicon+style)+body>(script:src+script)",
+                "!:x": "!!!+docApp[lang=${lang}]",
+
+            },
+        }
+    }
+
+}
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+{
+    // Custom snippets definitions, as per https://github.com/emmetio/emmet/blob/master/snippets.json
+    "snippets": {
+        "html": {
+            "abbreviations": {
+                "example": "<div class='example' title='Custom element example'>",
+                "mydoc": "html>(head>meta[charset='utf-8']+title{${1:文档标题}})+body",
+                "!!": "!!!+mydoc[lang='zh-Hans']"
+            }
+        }
+    }
+}
