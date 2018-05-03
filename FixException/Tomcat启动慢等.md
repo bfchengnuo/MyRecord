@@ -78,7 +78,7 @@ zipfs.jar
 
 ## 其他
 
-提高效率的方法还有使用 NIO
+随机数生成导致启动慢？配置JRE使用非阻塞的 Entropy Source：
 
 在 bin 目录下的 catalina.sh 中的最后加入：
 
