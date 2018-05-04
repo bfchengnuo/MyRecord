@@ -30,6 +30,8 @@
 
   tomcat 为每个 App 创建一个 Loader，里面保存着此 WebApp 的 ClassLoader。需要加载 WebApp 下的类时，就取出 ClassLoader 来使用。
 
+- 方法内不能使用 static 修饰变量
+
 
 
 ## 线程
