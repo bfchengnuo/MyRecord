@@ -1,0 +1,21 @@
+其初始空间(即-Xms)是物理内存的1/64，最大空间(-Xmx)是物理内存的1/4。
+可以利用JVM提供的-Xmn -Xms -Xmx等选项可进行设置 
+
+给 Tomcat 配置：
+
+Linux： 
+在/usr/local/apache-tomcat-5.5.23/bin目录下的catalina.sh 
+添加：JAVA_OPTS='-Xms512m -Xmx1024m' 
+要加“m”说明是MB，否则就是KB了，在启动tomcat时会报内存不足。 
+-Xms：初始值 
+-Xmx：最大值 
+-Xmn：最小值
+
+
+Windows 
+在catalina.bat最前面加入 
+set JAVA_OPTS=-Xms128m -Xmx350m 
+如果用startup.bat启动tomcat,OK设置生效.够成功的分配200M内存. 
+但是如果不是执行startup.bat启动tomcat而是利用windows的系统服务启动tomcat服务,上面的设置就不生效了, 
+就是说set JAVA_OPTS=-Xms128m -Xmx350m 没起作用.上面分配200M内存就OOM了..
+
