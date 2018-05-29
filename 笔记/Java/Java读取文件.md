@@ -35,9 +35,13 @@ Class.getResource() 有 2 种方式，绝对路径和相对路径。绝对路径
 
 相对路径是相对当前 class 所在的目录，允许使用 `..` 或 `.` 来定位文件。
 
+---
+
 ClassLoader.getResource() **只能使用绝对路径，而且不用以 `/` 开头**。
 
 这两种方式读取资源文件，不会依赖于 user.dir，也不会依赖于具体部署的环境，是推荐的做法（JavaEE）
+
+使用`this.getClass().getResource()`获得的是代码所在类编译成class文件之后输出文件所在目录位置，而`this.getClass().getClassLoader().getResource()`获得的是class loader所在路径(`.../classes/`)
 
 ## 如何选取
 
@@ -94,6 +98,45 @@ Java 中通常将环境变量 CLASSPATH 配置为`.;%JAVA_HOME%\lib\tools.jar;%J
 那为什么 Java （IO）中写正斜杠“/”、“//”、“///”，甚至再多都不会有问题呢？
 
 那是因为 Java 中处理流，都会使用到 File 这个类，在 Windows 环境中，File 会使用 WinNTFileSystem 这个工具类处理那些问题，再 WinNTFileSystem 类中，会把所有的正斜杠“/”都处理成反斜杠，再把多余的反斜杠“\”给去掉，最终会表示成转义后的一个反斜杠。
+
+## JavaEE
+
+在 JavaEE 中获取路径还有一直方式，那就是 ServletContext 的 getRealPath 方法，它可以获得物理路径。
+
+参数中 `'/'` 就表示当前的工程所在的目录，可以理解为 WebRoot 所在的那个目录。
+
+对于 Web 上运行这些的结果：
+
+``` java
+this.getClass().getClassLoader().getResource("/").getPath();
+this.getClass().getClassLoader().getResource("").getPath(); 
+```
+
+得到的是 ClassPath的绝对URI路径。 如：`/D:/.../WEB-INF/classes/ `
+
+``` java
+this.getClass().getResource("/").getPath();
+this.getClass().getResource("").getPath();
+```
+
+得到的是当前类文件的 URI 目录。不包括自己！ 如：`/D:/.../WEB-INF/classes/com/jebel/helper/ `
+
+``` java
+Thread.currentThread().getContextClassLoader().getResource("/").getPath()
+Thread.currentThread().getContextClassLoader().getResource("").getPath()
+```
+
+得到的是 ClassPath 的绝对URI路径。
+如：`/D:/.../WEB-INF/classes/`
+
+使用 class 的 getResource 的时候可以使用字符串分割来获得路径
+
+```java
+//得到d:/tomcat/webapps/工程名WEB-INF/classes/路径 
+String path=this.getClass().getResource("/").getPath();
+//从路径字符串中取出工程路径
+path=path.substring(1, path.indexOf("WEB-INF/classes"));
+```
 
 ## 附：Spring中ClassPathResource实现
 

@@ -14,6 +14,8 @@ Bootstrap 是基于 HTML5 和 CSS3 开发的，它在 jQuery 的基础上（所�
 
 ## 风格
 
+以 text- 开头的就是处理文本相关的，配合代码提示进行选取吧
+
 -   .text-muted：提示，使用浅**灰色（#999）**
 -   .text-primary：主要，使用**蓝色（#428bca）**
 -   .text-success：成功，使用**浅绿色(#3c763d)**
@@ -64,9 +66,36 @@ Bootstrap 是基于 HTML5 和 CSS3 开发的，它在 jQuery 的基础上（所�
 
   ☑  **.table-responsive**：响应式表格
 
+然后可以给每一行加 class 来改变颜色，达到不同的状态：
+
+| Class      | 描述                                 |
+| ---------- | ------------------------------------ |
+| `.active`  | 鼠标悬停在行或单元格上时所设置的颜色 |
+| `.success` | 标识成功或积极的动作                 |
+| `.info`    | 标识普通的提示信息或动作             |
+| `.warning` | 标识警告或需要用户注意               |
+| `.danger`  | 标识危险或潜在的带来负面影响的动作   |
+
 ### 表单
 
-在Bootstrap框架中，通过定制了一个类名**form-control**，也就是说，如果这几个元素使用了类名“form-control”，将会实现一些设计上的定制效果。
+在 Bootstrap 框架中，通过定制了一个类名 **form-control** (会设置宽度为 100%，并且都会有一个底边距)，也就是说，如果这几个元素使用了类名“form-control”，将会实现一些设计上的定制效果。
+
+一个表单元素一般都会有三部分组成，一个 div（class 为 `form-group`），里面套一个 label 和 input 等：
+
+``` html
+<div class="form-group">
+  <label for="exampleInputEmail1">Email address</label>
+  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+</div>
+```
+
+一般情况，class 名都是以标签名前缀开始的，比如适用于 label 的样式基本都是 `label-` 开头的。
+
+按钮的话就是 btn 开头的，通过 lg、sm 等 class 可以改变其大小。
+
+---
+
+具体的 form-control 样式效果：
 
 **1、宽度变成了100%**
 
@@ -83,7 +112,9 @@ Bootstrap 是基于 HTML5 和 CSS3 开发的，它在 jQuery 的基础上（所�
 ## 网格系统
 
 Bootstrap 提供了一套响应式、移动设备优先的流式网格系统，随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多12列。
+
 网页设计中的网格用于组织内容，让网站易于浏览，并降低用户端的负载。
+
 响应式网格系统随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多12列。
 
 |    \     |   超小设备手机（<768px）    |  小型设备平板电脑（≥768px）   |  中型设备台式电脑（≥992px）   |  大型设备台式电脑（≥1200px）  |
@@ -101,6 +132,10 @@ Bootstrap 提供了一套响应式、移动设备优先的流式网格系统，�
 排版好像有问题，图片：
 
 ![](../../img/栅格.jpg)
+
+使用 meta 标签的 Viewport 可以设置网页的放大比例，初始化大小等信息，至于这个标签的具体介绍这里不贴了，它的作用也仅仅是放大页面而已。
+
+对于响应式开发，在 CSS3 中提供一些支持，比如 `@media` 但是使用起来比较复杂，根据屏幕的大小来切换不同的样式，想了解的可以去 Google。
 
 ## 关于单位
 
