@@ -11,4 +11,7 @@
 
 如果你使用了 hbm 映射文件的话也是要替换的，就是替换前面的网址为 http://hibernate.sourceforge.net/。
 
-原因目前不明，TODO
+## 原因
+
+低版本的 Hibernate 使用了高版本的配置 dtd 约束文件；
+hibernate.sourceforge.net 是老版的.........
