@@ -172,10 +172,34 @@ PS：把一个目录设置位测试目录或者源文件目录只需要在目录
 
 参考：http://blog.csdn.net/gallenzhang/article/details/51932152
 
-只需要注意在新建 Maven 的向导中的 Properties 中添加一个参数 `archetypeCatalog=internal`，不加这个参数，在 maven 生成骨架的时候将会非常慢，有时候直接卡住
+只需要注意在新建 Maven 的向导中的 webapp 别选错了，有两个， Properties 中添加一个参数 `archetypeCatalog=internal`，不加这个参数，在 maven 生成骨架的时候将会非常慢，有时候直接卡住
 
 原因：archetypeCatalog 表示插件使用的 archetype 元数据，不加这个参数时默认为 remote，local，即中央仓库 archetype 元数据，由于中央
-仓库的 archetype 太多了所以导致很慢，指定 internal 来表示仅使用内部元数据
+仓库的 archetype 太多了所以导致很慢，指定 internal 来表示仅使用内部元数据。
+
+比起气人的人在 IDEA2018 的版本，生成的 Maven 项目直接连 resource 文件夹都没了，原来只是没有 Java，现在这两个目录都需要手动创建了。
+
+### 使用 Tomcat 插件
+
+tomcat maven 插件的开发并不活跃，以前 6 版本可以使用 `tomcat:run` 来直接运行，后来开发者好像弃坑了，然后后续版本的接手者也不温不火的，不过对于 tomcat 7、8 版本都可以使用 tomcat7 的插件，命令是：`tomcat7:run`
+
+使用之前需要先配置这个插件：
+
+``` xml
+<plugins>
+  <!-- 配置Tomcat插件 -->
+  <plugin>
+    <groupId>org.apache.tomcat.maven</groupId>
+    <artifactId>tomcat7-maven-plugin</artifactId>
+    <configuration>
+      <port>80</port>
+      <path>/</path>
+    </configuration>
+  </plugin>
+</plugins>
+```
+
+应该也有 tomcat8 的插件，不过用的确实少了，毕竟可以直接扔服务器跑。
 
 ## 设置忽略文件不提交
 
