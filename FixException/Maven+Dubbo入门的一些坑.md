@@ -32,7 +32,7 @@
 
 现在 dubbo 推广使用注解的方式来配置，在 2.5.7 版本后支持，采用的是 @Configuration 大法，
 
-【这个在 web 中，你可以使用 spring 的全 JavaConfig 配置方式（甚至连 web.xml 都不需要了），需要 servlet3.0+ ；或者采用传统的 web.xml 方式，把 @Configuration 当 bean 引入即可】
+【这个在 web 中，你可以使用 spring 的全 JavaConfig 配置方式（甚至连 web.xml 都不需要了），需要 servlet3.0+ ；或者采用传统的 web.xml 方式，把 @Configuration 当 bean 引入即可，同时 @Configuration 注解继承了 @Component，可以使用自动扫描装配（如果配了 xml 的话）】
 
 这里有个大坑是 `<dubbo:annotation>` 不再支持了，在 2.5.8 中应该还能用，但是以后的版本应该都不行了。。。。
 
