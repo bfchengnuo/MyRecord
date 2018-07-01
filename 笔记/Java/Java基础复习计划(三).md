@@ -144,8 +144,8 @@
 public class TestThreadPool{
   public static void main(String[] args) throws Exception{
     ExecutorService es = Executors.newFixedThreadPool(2);
-    //             newCachedThreadPool();
-    //			   newSingleThreadExecutor()
+    //          newCachedThreadPool();
+    //			    newSingleThreadExecutor()
     ThreadOne t1 = new ThreadOne();
     es.submit(t1);
     ThreadTwo t2 = new ThreadTwo();
@@ -205,7 +205,73 @@ class ThreadOne extends Thread{
 - run() 被定义为 void 无法返回数据
 - run() 没有任何 throws 声明
 
-这种方式定义的线程，只能通过线程池的方式来启动，并且 submit 的时候会返回一个 Future 对象，利用这个对象可以获得线程的返回值，就是调用其 get 方法，注意：**当线程未执行完时，此方法一直是阻塞状态**；当线程被意外终止那么 get 方法可能会一直卡在阻塞中（当然有重载可以指定等待的最大时间）。
+这种方式定义的线程，**只能通过线程池的方式来启动**，并且 submit 的时候会返回一个 Future 对象，利用这个对象可以获得线程的返回值，就是调用其 get 方法，注意：**当线程未执行完时，此方法一直是阻塞状态**；当线程被意外终止那么 get 方法可能会一直卡在阻塞中（当然有重载可以指定等待的最大时间）。
+
+``` java
+public class ThreadTest {
+  public static void main(String[] args) {
+    Task task = new Task();
+    // FutureTask<String> fTask = new FutureTask<>(task);
+    FutureTask<String> fTask = new FutureTask<String>(() -> "Loli") {
+      // 异步任务执行完成，回调
+      @Override
+      protected void done() {
+        try {
+          System.out.println("future.done():" + get());
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        } catch (ExecutionException e) {
+          e.printStackTrace();
+        }
+      }
+    };
+
+
+    // 创建线程池（使用了预定义的配置）
+    ExecutorService executor = Executors.newCachedThreadPool();
+    executor.execute(fTask);
+
+
+    try {
+      String result = fTask.get();
+      System.out.println(result);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    }
+  }
+
+  // 异步任务
+  static class Task implements Callable<Integer> {
+    // 返回异步任务的执行结果
+    @Override
+    public Integer call() throws Exception {
+      int i = 0;
+      for (; i < 10; i++) {
+        try {
+          System.out.println(Thread.currentThread().getName() + "_"
+                             + i);
+          Thread.sleep(500);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+      return i;
+    }
+  }
+}
+```
+
+以上是一个使用 FutureTask 的例子，关于这个类：
+
+> FutureTask 可用于异步获取执行结果或取消执行任务的场景。
+>
+> 通过传入 Runnable 或者 Callable (间接的继承了 Runnable ) 的任务给 FutureTask，直接调用其 run 方法或者放入线程池执行，之后可以在外部通过 FutureTask 的 get 方法异步获取执行结果，因此，FutureTask 非常适合用于耗时的计算，主线程可以在完成自己的任务后，再去获取结果。
+>
+> 另外，FutureTask 还可以确保即使调用了多次 run 方法，它都只会执行一次 Runnable 或者 Callable 任务，或者通过 cancel 取消 FutureTask 的执行等。 
+>
+> https://blog.csdn.net/chenliguan/article/details/54345993
 
 ## IO
 
