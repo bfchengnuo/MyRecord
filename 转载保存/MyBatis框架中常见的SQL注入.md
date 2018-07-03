@@ -154,3 +154,15 @@ PHP的addslashes的源代码在ext/standard/string.c中。遗憾的是，并没�
 ## 0x05 其他语言的客户端prepare
 
 MySQL官方提供了各种语言连接MySQL的Connectors，其他语言的connectors是不是也默认客户端prepare呢？我测试了Python的，结果也是同样。其余Connectors有兴趣的读者可以自行测试。
+
+# 补充
+
+关于 like 模糊查询的防注入，可以采用字符串拼接的方式：
+
+例如：`select * from fack where username like concat('%', ? , '%')`
+
+这样再填充参数就可以了。当然也可以使用 `||` 来进行字符串的连接。
+
+---
+
+或者使用 `like ?` 的形式，在 set 占位符的时候在值的前面和后面加上 “%”，不过这种方式不确定在纯 JDBC 中是否可用，在常见的 DAO 层框架应该是可以的。
