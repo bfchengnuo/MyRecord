@@ -99,7 +99,7 @@ PS：在 2.x 的版本我测试 @PropertySource 基本都可以正确加载 yml 
 
 ~~和优先级有关？和加载顺序有关？~~
 
-### 解决
+### 临时解决
 
 目前还没有弄清楚原因，找到了一个曲线救国的方法：
 
@@ -126,6 +126,30 @@ public class DataSourceConfig {
 ```
 
 解释下，@ConfigurationProperties 如果放在方法上，会根据指定的前缀往方法里的属性填值，经测试这种方案是可行的，并且好像更简单了....
+
+### 完美解决
+
+在 SegmentFault 上提问有人给解决了！
+
+原地址：https://segmentfault.com/q/1010000015454422
+
+原因就在与没有导入依赖：`spring-boot-configuration-processor`
+
+``` xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-configuration-processor</artifactId>
+  <optional>true</optional>
+</dependency>
+```
+
+然后该怎么用就怎么用就行了！
+
+> 官方中对于 spring-boot-configuration-processor 是这么说明的：
+>
+> 通过使用 spring-boot-configuration-processor jar， 你可以从被 @ConfigurationProperties 注解的节点轻松的产生自己的配置元数据文件。该 jar 包含一个在你的项目编译时会被调用的 Java 注解处理器。想要使用该处理器，你只需简单添加 spring-boot-configuration-processor 依赖。
+
+springboot 翻译的中文文档中的附录也有写：[点击查看](https://qbgbook.gitbooks.io/spring-boot-reference-guide-zh/X.%20Appendices/B.2.%20Generating%20your%20own%20meta-data%20using%20the%20annotation%20processor.html)
 
 ## 其他
 
