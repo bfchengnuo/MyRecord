@@ -20,6 +20,8 @@
 
 [Eclipse使用hibernate进行HQL语句查询时，速度慢的原因之一](https://github.com/bfchengnuo/MyRecord/blob/master/FixException/Eclipse%E4%BD%BF%E7%94%A8hibernate%E8%BF%9B%E8%A1%8CHQL%E8%AF%AD%E5%8F%A5%E6%9F%A5%E8%AF%A2%E6%97%B6%EF%BC%8C%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E5%8E%9F%E5%9B%A0%E4%B9%8B%E4%B8%80.md)
 
+[Maven+Dubbo入门的一些坑](https://github.com/bfchengnuo/MyRecord/blob/master/FixException/Maven%2BDubbo%E5%85%A5%E9%97%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91.md)
+
 [MySQL不能创建外键问题（ or hibernate）](https://github.com/bfchengnuo/MyRecord/blob/master/FixException/MySQL%E4%B8%8D%E8%83%BD%E5%88%9B%E5%BB%BA%E5%A4%96%E9%94%AE%E9%97%AE%E9%A2%98%EF%BC%88+or+hibernate%EF%BC%89.md)
 
 [MySQL的Invalid default value错误解决](https://github.com/bfchengnuo/MyRecord/blob/master/FixException/MySQL%E7%9A%84Invalid+default+value%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3.MD)
@@ -28,7 +30,11 @@
 
 [Spring MVC 以.html为后缀名访问获取数据，报406 Not Acceptable错误](https://github.com/bfchengnuo/MyRecord/blob/master/FixException/Spring+MVC+%E4%BB%A5.html%E4%B8%BA%E5%90%8E%E7%BC%80%E5%90%8D%E8%AE%BF%E9%97%AE%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%EF%BC%8C%E6%8A%A5406+Not+Acceptable%E9%94%99%E8%AF%AF.md)
 
+[Spring(Boot)加载外部配置文件为空的问题](https://github.com/bfchengnuo/MyRecord/blob/master/FixException/Spring%28Boot%29%E5%8A%A0%E8%BD%BD%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98.md)
+
 [Spring+SpringMVC 配置事务管理无效原因及解决方案](https://github.com/bfchengnuo/MyRecord/blob/master/FixException/Spring%2BSpringMVC+%E9%85%8D%E7%BD%AE%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E6%97%A0%E6%95%88%E5%8E%9F%E5%9B%A0%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.md)
+
+[SpringData错误总结](https://github.com/bfchengnuo/MyRecord/blob/master/FixException/SpringData%E9%94%99%E8%AF%AF%E6%80%BB%E7%BB%93.md)
 
 [SSH整合的一些问题](https://github.com/bfchengnuo/MyRecord/blob/master/FixException/SSH%E6%95%B4%E5%90%88%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98.md)
 
@@ -139,6 +145,8 @@
 
 [Activity的对话框-AlertDialog-样式](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/Activity%E7%9A%84%E5%AF%B9%E8%AF%9D%E6%A1%86-AlertDialog-%E6%A0%B7%E5%BC%8F.md)
 
+[AndroidHTTP请求方式HttpURLConnection](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/AndroidHTTP%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8FHttpURLConnection.md)
+
 [AndroidStudio中的Gradle](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/AndroidStudio%E4%B8%AD%E7%9A%84Gradle.md)
 
 [AndroidStudio导入jar包和so库](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/AndroidStudio%E5%AF%BC%E5%85%A5jar%E5%8C%85%E5%92%8Cso%E5%BA%93.md)
@@ -151,6 +159,8 @@
 
 [Android图片加载和缓存库Glide](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/Android%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E5%92%8C%E7%BC%93%E5%AD%98%E5%BA%93Glide.md)
 
+[Android定时器的几种实现](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/Android%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0.md)
+
 [Android布局优化](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/Android%E5%B8%83%E5%B1%80%E4%BC%98%E5%8C%96.md)
 
 [Android应用签名的获取](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/Android%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E7%9A%84%E8%8E%B7%E5%8F%96.md)
@@ -162,6 +172,8 @@
 [Android绘图基础](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/Android%E7%BB%98%E5%9B%BE%E5%9F%BA%E7%A1%80.md)
 
 [Android自带测试工具之Monkey](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/Android%E8%87%AA%E5%B8%A6%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B9%8BMonkey.md)
+
+[AsyncTask线程异步加载](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/AsyncTask%E7%BA%BF%E7%A8%8B%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD.md)
 
 [FragmentTransaction addToBackStack 无效问题](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/FragmentTransaction+addToBackStack+%E6%97%A0%E6%95%88%E9%97%AE%E9%A2%98.md)
 
@@ -187,9 +199,13 @@
 
 [SwipeRefreshLayout官方下拉刷新](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/SwipeRefreshLayout%E5%AE%98%E6%96%B9%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0.md)
 
+[ViewPager实现图片轮播广告效果](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/ViewPager%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%AE%E6%92%AD%E5%B9%BF%E5%91%8A%E6%95%88%E6%9E%9C.md)
+
 [View与ViewGroup，Window之间的关系](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/View%E4%B8%8EViewGroup%EF%BC%8CWindow%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.md)
 
 [weight属性解析](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/weight%E5%B1%9E%E6%80%A7%E8%A7%A3%E6%9E%90.md)
+
+[使用新浪微博登录第三方应用](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/%E4%BD%BF%E7%94%A8%E6%96%B0%E6%B5%AA%E5%BE%AE%E5%8D%9A%E7%99%BB%E5%BD%95%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8.md)
 
 [关于onTouch和onClick](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/%E5%85%B3%E4%BA%8EonTouch%E5%92%8ConClick.md)
 
@@ -207,6 +223,8 @@
 
 [让radiobutton的样式随是否选中而变化](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/%E8%AE%A9radiobutton%E7%9A%84%E6%A0%B7%E5%BC%8F%E9%9A%8F%E6%98%AF%E5%90%A6%E9%80%89%E4%B8%AD%E8%80%8C%E5%8F%98%E5%8C%96.md)
 
+[那些掉进过多次的坑](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Android/%E9%82%A3%E4%BA%9B%E6%8E%89%E8%BF%9B%E8%BF%87%E5%A4%9A%E6%AC%A1%E7%9A%84%E5%9D%91.md)
+
 
 #### Java
 
@@ -217,15 +235,7 @@
 
 ##### BlogBackup
 
-[java中的集合框架](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Java/BlogBackup/java%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6.md)
-
-[Java复习之内存](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Java/BlogBackup/Java%E5%A4%8D%E4%B9%A0%E4%B9%8B%E5%86%85%E5%AD%98.md)
-
-[java快速捡起](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Java/BlogBackup/java%E5%BF%AB%E9%80%9F%E6%8D%A1%E8%B5%B7.md)
-
-[抽象类和接口java](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Java/BlogBackup/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3java.md)
-
-[继承，覆盖，抽象类，和多态](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Java/BlogBackup/%E7%BB%A7%E6%89%BF%EF%BC%8C%E8%A6%86%E7%9B%96%EF%BC%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB%EF%BC%8C%E5%92%8C%E5%A4%9A%E6%80%81.md)
+[微信小程序学习笔记](https://github.com/bfchengnuo/MyRecord/blob/master/笔记/Web/BlogBackup/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md)
 
 
 ##### Web
@@ -327,6 +337,8 @@
 [Java中的Class对象](https://github.com/bfchengnuo/MyRecord/blob/master/转载保存/Java%E4%B8%AD%E7%9A%84Class%E5%AF%B9%E8%B1%A1.md)
 
 [Java中类的加载时机](https://github.com/bfchengnuo/MyRecord/blob/master/转载保存/Java%E4%B8%AD%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%97%B6%E6%9C%BA.md)
+
+[JVM启动参数大全及默认值](https://github.com/bfchengnuo/MyRecord/blob/master/转载保存/JVM%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E5%A4%A7%E5%85%A8%E5%8F%8A%E9%BB%98%E8%AE%A4%E5%80%BC.md)
 
 [Linux下使用ip替代ifconfig](https://github.com/bfchengnuo/MyRecord/blob/master/转载保存/Linux%E4%B8%8B%E4%BD%BF%E7%94%A8ip%E6%9B%BF%E4%BB%A3ifconfig.md)
 

@@ -22,17 +22,15 @@
 
 - 关于类加载器的简要分类：
 
-  引导类加载器（bootstrap class loader）：它用来加载 Java 的核心库，是用原生代码来实现的。
+  引导类加载器（bootstrap ClassLoader）：它用来加载 Java 的核心库，是用原生代码来实现的。
 
-  扩展类加载器（extensions class loader）：它用来加载 Java 的扩展库。
+  扩展类加载器（extensions ClassLoader）：它用来加载 Java 的扩展库。
 
-  系统类加载器（system class loader）：它根据 Java 应用的类路径（CLASSPATH）来加载 Java 类。
+  应用程序加载器（Application ClassLoader）：它根据 Java 应用的类路径（CLASSPATH）来加载 Java 类。有时它也被称为 系统类加载器（system ClassLoader）
 
   tomcat 为每个 App 创建一个 Loader，里面保存着此 WebApp 的 ClassLoader。需要加载 WebApp 下的类时，就取出 ClassLoader 来使用。
 
 - 方法内不能使用 static 修饰变量
-
-
 
 ## 线程
 
@@ -48,6 +46,7 @@
 
 1. extends Thread
 2. implements Runnable
+3. implements Callable<>（可有返回值、可抛出异常，但必须由线程池来执行）
 
 控制线程的几种常见方法：
 
@@ -62,7 +61,7 @@
   **当前线程**邀请另一个线程优先执行，比如主线程里写 `xx.join();` 意思就是主线程让 xx 线程执行完成后再执行，否则一直处于阻塞状态。
 - static yield()
 
-  让**当前线程**放弃持有的时间片，直接回到就绪，当然也有可能出现放弃时间片后又被 Cpu 选中的情况。 
+  让**当前线程**放弃持有的时间片，直接回到就绪，当然也有可能出现放弃时间片后又被 CPU 选中的情况。 
 - setName() + getName()
 - static activeCount()
 
@@ -186,7 +185,7 @@ class ThreadOne extends Thread{
 }
 ```
 
-线程池的创建官方推荐使用 Executors 来创建，常见的有 newFixedThreadPool、newCachedThreadPool、newSingleThreadExecutor；
+线程池的创建官方推荐使用 Executors 来创建，常见的调用的静态方法有 newFixedThreadPool、newCachedThreadPool、newSingleThreadExecutor；
 
 第一种就是最简单的，也是最常用的，会事先维护几个线程，等任务来直接执行；
 
