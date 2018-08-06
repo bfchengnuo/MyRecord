@@ -107,7 +107,7 @@ user.setAge(18);
 result = user.updateById();
 
 // 查询 User
-User exampleUser = t1.selectById();
+User exampleUser = user.selectById();
 
 // 查询姓名为‘张三’的所有用户记录
 List<User> userList1 = user.selectList(
@@ -115,7 +115,7 @@ List<User> userList1 = user.selectList(
 );
 
 // 删除 User（即使删除了 0 条数据，只要没异常就算成功）
-result = t2.deleteById();
+result = user.deleteById();
 
 
 // 分页查询 10 条姓名为‘张三’的用户记录
