@@ -115,7 +115,7 @@ List<User> userList1 = user.selectList(
 );
 
 // 删除 User（即使删除了 0 条数据，只要没异常就算成功）
-result = t2.deleteById();
+result = user.deleteById();
 
 
 // 分页查询 10 条姓名为‘张三’的用户记录
