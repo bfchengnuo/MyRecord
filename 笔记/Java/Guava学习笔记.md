@@ -38,9 +38,9 @@ possible.get(); // returns 5
 | T orNull()          | 返回 Optional 所包含的引用，若引用缺失，返回 null            |
 | Set asSet()         | 返回 Optional 所包含引用的单例不可变集，如果引用存在，返回一个只有单一元素的集合，如果引用缺失，返回一个空集合。 |
 
-设置对象为空时的默认值可以使用这个：`Optional.of(first).or(second)`
+设置对象为空时的默认值可以使用这个：`Optional.of(first).or(second)` （测试 of 会快速失败，并不能实现，但是用 fromNullable 可以）
 
-还有其它一些方法专门处理 null 或空字符串：emptyToNull(String)，nullToEmpty(String)，isNullOrEmpty(String)。
+还有其它一些方法专门处理 null 或空字符串（可看看 Strings 类）：emptyToNull(String)，nullToEmpty(String)，isNullOrEmpty(String)。
 
 还有其他的一些静态方法也很实用，例如 checkNotNull。
 
