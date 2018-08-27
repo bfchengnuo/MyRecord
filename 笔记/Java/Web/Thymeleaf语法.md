@@ -72,3 +72,79 @@
 ---
 
 TODO
+
+## 页面抽取
+
+抽取公共片段使用 `th:fragment` 属性，然后给定一个名字即可。
+
+``` html
+<div th:fragment="copy">
+&copy; 2011 The Good Thymes Virtual Grocery
+</div>
+```
+
+然后可以在需要的地方进行导入，导入方式有多种，每一种也可能有多种写法，举个栗子：
+
+``` html
+<!-- 示例 -->
+<div th:insert="~{footer :: copy}"></div>
+
+<!-- 
+	第一种：模板名::选择器，这种不需要定义 fragment 了，
+	模板名就是 HTML 文件名了，不在根路径下需要指明地址
+	~{commons/bar::#idName}
+-->
+~{templatename::selector}
+<!-- 第二种：模板名::片段名 -->
+~{templatename::fragmentname}
+```
+
+- **th:insert**：
+  将公共片段整个**插入到**声明引入的元素中
+- **th:replace**：
+  将声明引入的元素**替换为**公共片段
+- **th:include**：
+  将被引入的片段的内容**包含进**这个标签中（模板最外层的标签会自动去掉，然后再插入进去）
+
+不同的方式效果也有所不同，例如 insert 方式就直接把内容塞到了当前标签里。
+
+> 如果使用 `th:insert` 等属性进行引入，可以不用写 `~{}`
+>
+> 行内写法的话，可以加上，例如：`[[~{}]]` （转义） `[(~{})]` （不转义）
+
+另外，可以使用变量（参数化），来达到灵活控制的目的，例如：
+
+``` html
+<!-- 定义变量，这种形式其实可以忽略 -->
+<div th:fragment="frag (onevar,twovar)">
+  <!-- 使用变量 -->
+	<p th:text="${onevar} + ' - ' + ${twovar}">...</p>
+</div>
+
+<!-- 使用参数 -->
+<div id="sidebar">
+  <a th:class="${activeUri=='main.html'?'nav-link active':'nav-link'}"
+   href="#" th:href="@{/main.html}"/>
+</div>
+<!-- 传入参数 -->
+<div th:replace="commons/bar::#sidebar(activeUri='emps')"></div>
+```
+
+当然，写法有多种，在官方手册的 <kbd>8.2</kbd> 节有详细说明。
+
+## 常用
+
+常用的属性组合
+
+``` html
+<tr th:each="user : ${users}">
+  <!-- 避免NPE，${user != null}?${user.name} -->
+  <td class="username" th:text="${user.name}">Jeremy Grapefruit</td>
+  <td class="usertype" th:text="#{|user.type.${user.type}|}">Normal User</td>
+  <!-- 日期格式化：${#dates.listFormat(datesList, 'yyyy-MM-dd HH:mm:ss')} -->
+</tr>
+
+<!-- if 成立才渲染 -->
+<input th:if="${user != null}"/>
+```
+
