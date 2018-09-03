@@ -327,6 +327,23 @@ Guava 提供了多种 Multiset 的实现，大致对应 JDK 中 Map 的各种实
 
 一般来说，Multimap 接口应该用第一种方式看待，但 asMap() 视图返回 `Map<K, Collection>`，让你可以按另一种方式看待 Multimap。
 
+举个例子：
+
+``` java
+public void testMultimap() {
+  ListMultimap<String, String> myMultimap = ArrayListMultimap.create();
+  myMultimap.put("Fruits", "Bannana");
+  myMultimap.put("Fruits", "Apple");
+  myMultimap.put("Fruits", "Pear");
+  myMultimap.put("Fruits", "Pear");
+  myMultimap.put("Vegetables", "Carrot");
+
+  myMultimap.entries().forEach(entry -> {
+    System.out.println(entry.getKey() + "::" + entry.getValue());
+  });
+}
+```
+
 **重要的是，不会有任何键映射到空集合：一个键要么至少到一个值，要么根本就不在 Multimap 中。**
 
 很少会直接使用 Multimap 接口，更多时候你会用 ListMultimap 或 SetMultimap 接口，它们分别把键映射到 List 或 Set。
