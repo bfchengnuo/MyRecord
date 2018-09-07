@@ -138,6 +138,14 @@ String path=this.getClass().getResource("/").getPath();
 path=path.substring(1, path.indexOf("WEB-INF/classes"));
 ```
 
+## Spring获取文件
+
+如果是在 JavaEE 的环境下，可以通过 request、session 等获取 ServletContext 对象，然后再获取文件的绝对地址：`request.getServletContext().getRealPath("/")` 。
+
+另外，Spring 也提供了相应的工具类（ResourceUtils）来获取文件：
+
+`String path = ResourceUtils.getFile("classpath:static/template/n13Template.xlsx").getAbsolutePath();`
+
 ## 附：Spring中ClassPathResource实现
 
 Spring 可以说是 JavaWeb 开发不可或缺的框架，它有提供 ClassPathResource 来读取文件：
