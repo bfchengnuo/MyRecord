@@ -714,3 +714,22 @@ LoadingCache<Key, Graph> graphs = CacheBuilder.newBuilder()
 ## 其他
 
 还剩下并发、IO 感觉很有必要，待补充。
+
+另外，还提供了一些散列库，常用方法：
+
+``` java
+String input = "hello, world";
+
+// 计算MD5
+String md = Hashing.md5().newHasher().putString(input, Charsets.UTF_8).hash().toString();
+System.out.println(Hashing.md5().hashBytes(input.getBytes()).toString());
+// 计算sha256
+System.out.println(Hashing.sha256().hashBytes(input.getBytes()).toString());
+// 计算sha512
+System.out.println(Hashing.sha512().hashBytes(input.getBytes()).toString());
+// 计算crc32
+System.out.println(Hashing.crc32().hashBytes(input.getBytes()).toString());
+
+System.out.println(Hashing.md5().hashUnencodedChars(input).toString());
+```
+
