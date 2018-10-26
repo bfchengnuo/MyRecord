@@ -10,5 +10,12 @@ IDEA 神级编辑器！
 
 这样 IDEA 就会去 JAVA_HOME 的环境变量寻找 jre。
 
+补充：
+这样做发现会严重影响 IDEA 的速度，原因 IDEA 默认使用的并不是 Oracle JDK，而是 OpenJDK，而输入法不跟随的根本原因就是 JB 使用的 JRE 的 bug，在 2018.2 版本中已经修复，但你可能需要手动更新下，在这个地址能找到 JB 提供的 JDK：
+https://dl.bintray.com/jetbrains/intellij-jdk/
+
+版本号越大的越新，但是建议不要采用过新的，我换用了 8u152b1248.8 这个版本，下载解压后重命名为 jre64 代替之前的文件夹，完美解决！
+
+---
 
 sublime 中也有这个问题，sublime 可以安装 IMESupport 插件解决。
