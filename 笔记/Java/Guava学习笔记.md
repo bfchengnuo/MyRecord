@@ -315,6 +315,38 @@ Guava 提供了多种 Multiset 的实现，大致对应 JDK 中 Map 的各种实
 | ConcurrentHashMap | ConcurrentHashMultiset | 否                             |
 | ImmutableMap      | ImmutableMultiset      | 否                             |
 
+下面是我测试用的一个计数的例子：
+
+``` java
+@Test
+public void mapCount() {
+  HashMultiset<String> multiSet = HashMultiset.create();
+
+  for (int i = 0; i < 5; i++) {
+    multiSet.add("test", i);
+  }
+  System.out.println(multiSet.count("test"));
+}
+
+@Test
+public void mapCount2() {
+  Object object = new Object();
+  HashMultiset<Object> multiSet = HashMultiset.create();
+
+  // 如果存在，加或者减去数量
+  if (multiSet.contains(object)) {
+    multiSet.add(object, 12);
+    // multiSet.remove(object, 10);
+  } else {
+    // 如果不存在，设置初始值
+    multiSet.add(object, 1);
+  }
+
+  // 输出某个对象（key）最终所对应的数值
+  System.out.println(multiSet.count(object));
+}
+```
+
 #### Multimap
 
 每个有经验的 Java 程序员都在某处实现过 `Map<K, List>` 或 `Map<K, Set>`，并且要忍受这个结构的笨拙。Guava 的 Multimap 可以很容易地把一个键映射到多个值。换句话说，Multimap 是把键映射到任意多个值的一般方式。
