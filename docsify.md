@@ -272,6 +272,8 @@
 
 [Java8实战笔记（一）](https://bfchengnuo.com/MyRecord/#/笔记/Java/Java8+/Java8%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89)
 
+[Java8实战笔记（二）函数式数据处理](https://bfchengnuo.com/MyRecord/#/笔记/Java/Java8+/Java8%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E5%87%BD%E6%95%B0%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
+
 
 #### SpringBootStu
 
