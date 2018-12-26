@@ -278,6 +278,8 @@
 
 [Java8实战笔记（四）组合式异步编程](https://bfchengnuo.com/MyRecord/#/笔记/Java/Java8+/Java8%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E7%BB%84%E5%90%88%E5%BC%8F%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B)
 
+[Java8实战笔记（五）终章](https://bfchengnuo.com/MyRecord/#/笔记/Java/Java8+/Java8%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89%E7%BB%88%E7%AB%A0)
+
 
 #### SpringBootStu
 
