@@ -204,6 +204,256 @@ list 就是定义的数组数据，item 是每次遍历的值，index 是索引�
 </body>
 ```
 
+## 组件参数校验
+
+在父子组件之间传值都已经知道了，那么接下来就看看如果子组件要对父组件传递的数据进行校验要怎么办，使用的还是子组件里的 props 属性，只不过这里由本来的字符串数组变成了对象。
+
+``` javascript
+Vue.component('child', {
+  // 不是校验的话可以直接用字符串数组来标识
+  props: {
+    // content: [Number,String]
+    content: {
+      type: String,
+      required: true,
+      default: 'def val',
+      validator: function (value) {
+        return value.length > 5
+      }
+    }
+  },
+  template: "<div>{{content}}</div>"
+})
+
+var vm = new Vue({
+  el: "#root"
+})
+```
+
+补充一下这个 props 特性，也就是如果你在子组件的 props 中接收了传递的属性，那么 Vue 在视图渲染的时候就不会再在 HTML 中加上这个属性了。
+
+在子组件上绑定的事件默认都是自定义事件，也就是说原生的事件可能会失效，例如在子组件标签里使用 `@click` 是无效的，不过你可以在子组件的模板里来绑定，这样就不是自定义事件了。
+
+触发自定义事件就是手动的调用 emit 了；但是有些时候就想用子组件的原生事件，就想让它生效怎么办，也是有办法的，只需要一点点的改动：`@click.native="fun"`。
+
+## 复杂组件之间的传值
+
+这里主要说的就是非父子组件之间的传值，例如父与子的子、兄弟组件，虽然可以间接完成，但是过于麻烦，由于 Vue 的定义轻量级，它并不具备解决这个问题的能力，但是我们可以借助其他的方案。
+
+1. Vue 官方推荐的 VueX 框架。
+2. 发布-订阅模式，也就是总线机制，可以理解为是观察者模式。
+
+这里仅说一下总线的这种方式，其实就是在所有子组件上挂一个 Vue 实例，然后通过这个实例来进行事件的发送与处理。
+
+``` javascript
+// 设置 bus
+Vue.prototype.bus = new Vue();
+
+Vue.component('child', {
+  // 子组件的 data 必须是函数
+  data: function () {
+    return {
+      selfContent: this.content
+    }
+  },
+  props: {
+    content: String
+  },
+  template: "<div @click='handleClick'>{{selfContent}}</div>",
+  methods: {
+    handleClick: function () {
+      // 向总线发送事件
+      this.bus.$emit("change", this.selfContent);
+    }
+  },
+  // 生命周期，挂载时触发
+  mounted: function () {
+    var this_ = this;
+    this.bus.$on("change", function (val) {
+      this_.selfContent = val;
+    })
+  }
+})
+
+var vm = new Vue({
+  el: "#root"
+})
+```
+
+就是通过一个生命周期来完成的。
+
+## 使用插槽
+
+简单来说，当子组件有一部分内容是由父组件传递过来的 dom 来显示的时候，就可以使用插槽来处理。
+
+要解决的问题，之前：
+
+``` javascript
+// <child content="<p>hello</p>">
+Vue.component('child', {
+  props: ['content'],
+  // ES6 语法
+  template: `<div>
+              <p>Dear</p>
+              <div v-html="this.content"></div>
+            </div>`
+})
+
+var vm = new Vue({
+  el: "#root"
+})
+```
+
+之后：
+
+``` html
+<div id="root">
+  <!-- <child content="<p>hello</p>"></child> -->
+  <child>
+    <p>hello</p>
+  </child>
+</div>
+
+<script>
+  Vue.component('child', {
+    props: ['content'],
+    // ES6 语法
+    template: `<div>
+                <p>Dear</p>
+                <slot>默认内容</slot>
+              </div>`
+  })
+
+  var vm = new Vue({
+    el: "#root"
+  })
+</script>
+```
+
+可以看出子组件里的内容会被 slot 标签插入。
+
+如果需要将子组件里内容分片，那么也是可以的：
+
+``` html
+<div id="root">
+  <child>
+    <p slot="one">one</p>
+    <p slot="two">two</p>
+  </child>
+</div>
+
+<script>
+  Vue.component('child', {
+    props: ['content'],
+    // ES6 语法
+    template: `<div>
+                <slot name="one"></slot>
+                <p>Dear</p>
+                <slot name="two"></slot>
+               </div>`
+  })
+
+  var vm = new Vue({
+    el: "#root"
+  })
+</script>
+```
+
+就是稍微改变了下，进行了标识。
+
+---
+
+最后来看一下高级用法-作用域插槽，从例子开始：
+
+``` html
+<div id="root">
+  <show>
+    <!-- 固定写法，template 开始 -->
+    <template slot-scope="props">
+      <h2>{{props.item}}</h2>
+    </template>
+  </show>
+</div>
+
+<script>
+  Vue.component('show', {
+    data: function () {
+      return {
+        list: [1,2,3,4]
+      };
+    },
+    template: `<div>
+                <slot 
+                  v-for="item of list"
+                  :item=item
+                ></slot>
+              </div>`
+  })
+
+  var vm = new Vue({
+    el: "#root"
+  })
+</script>
+```
+
+稍微解释一下，在 template 中，使用 for 来“循环插槽”，将每次循环的数据绑定到了 item 变量，然后视图中通过 slot-scope 来接收。
+
+## 动态组件
+
+这里说的是动态的切换组件，可以手动实现，也可以通过 Vue 提供的 component 标签来实现，例子：
+
+``` html
+<div id="root">
+  <component :is='type'></component>
+
+  <child-one v-if="type === 'child-one'"></child-one>
+  <child-two v-if="type === 'child-two'"></child-two>
+  <button @click="handleClick">change</button>
+</div>
+
+<script>
+  Vue.component('child-one', {
+    template: '<div v-once>one</div>'
+  });
+
+  Vue.component('child-two', {
+    template: '<div v-once>two</div>'
+  });
+
+  var vm = new Vue({
+    el: "#root",
+    data: {
+      type: 'child-one'
+    },
+    methods: {
+      handleClick: function () {
+        this.type = this.type === 'child-one' ? 'child-two' : 'child-one';
+      }
+    }
+  })
+</script>
+```
+
+component 和下面使用 v-if 控制的标签是一样的，因为每次切换都需要销毁、重新创建，所以性能上会有点损耗，可以在模板上使用 v-once 来将实例放到内存中，这样就省去了创建、销毁的时间。
+
+## 注意事项
+
+使用 v-for 无论是遍历数组还是遍历对象，直接使用下标增加、修改数组 View 不一定会刷新，想要视图跟着刷新就必须用方法来增加，例如数组的 pop、push 等方法；对于对象的属性增加，可以使用 Vue 的全局方法 set（`Vue.set(obj, key, val)` 或者使用实例的 set 方法，`vm.$set(obj, key, val)`），当然 set 方法也可以用来修改数组 key 就是下标了。
+
+使用 v-for 的时候，为了不引入多余的 HTML 结构，可以使用 template 标签占位，在这个标签里使用 v-for 这样渲染后就没有痕迹了。
+
+可以通过绑定 class 属性的方式来改变样式，支持对象、数组。
+
+解决组件与 HTML5 规范冲突，可以使用 is 属性来标识其真正的组件。
+
+子组件里，data 属性必须是函数，可以是这个函数返回一个对象，里面包含一些属性；这样也就达到了多个子组件数据互不影响的目的。
+
+必要的操作 Dom 时，通过 ref 属性来标识，在事件中可以 `this.$refs.name` 来获取 Dom 元素；如果 ref 加在了组件上，那么得到的就是这个组件的引用了。
+
+子组件向父组件传值是通过事件的形式，一般来说在子组件中使用 `this.$emit('name', data)` 来进行手动触发；配合子组件的 HTML 标签中使用 `@name="fun"` 来进行监听。
+
+比较混乱，待整理。
+
 ## 模板
 
 当某一块的布局复杂后就需要抽取出来，形成了一个模板，模板又分为全局的和局部的，它们的使用也各不相同，在下面的代码中可以体现出来。
@@ -283,6 +533,34 @@ list 就是定义的数组数据，item 是每次遍历的值，index 是索引�
 ```
 
 PS：**模板中要求只能有一个根标签**
+
+## 动画
+
+最简单的淡出淡然，可以使用 transition 标签进行包裹，作用简单说就是：
+
+在开始前，会给被包裹的标签增加两个 css 样式：v-enter 和 v-enter-active，当动画运行到第二帧的时候会去除 v-enter 这个样式，再增加一个 v-enter-to 样式；最后动画结束时去除所有样式。
+
+在使用 transition 标签的时候，如果加了 name 属性，那么样式就以你定义的名字作为前缀代替 v。
+
+上面说的是显示的动画，隐藏的过度也是类似，只需要把 enter 换成 leave 就可以了。
+
+如果想自定义 css 的名字，可以使用 enter-active-class 属性来定义，其他同理。
+
+或者可以使用 animated.css 提供的样式，快速开发，使用起来非常简单，引入不要的 css 库，然后利用上面所说来自定义 css 名字，格式就是：`animated 动画名` 名字可以在官网找，其实就是封装了下 css3 的 @keyframes 特性。
+
+PS：想要初始化的时候就展示动画需要使用 appear 属性来配合。
+
+---
+
+除了使用 css 来做动画，也可以使用 js 实现，在标签中通过 @before-enter、@enter、@after-enter 等来绑定方法，会传递一个参数过去，也就是包裹的 dom 元素 el。
+
+其中 @enter 会传递两个参数，第一个与上面一样，第二个是个函数引用 done，在动画完成后调用一下它告诉 Vue 动画结束，这样就会再继续执行下面的 after。
+
+如果嫌麻烦，可以使用像 Velocity 这样的 js 动画库。
+
+---
+
+对于列表动画，可以使用 transition-group 标签来包裹，其实它的作用就是将里面的循环每一个都包裹一个 transition 标签。
 
 ## 使用脚手架
 
