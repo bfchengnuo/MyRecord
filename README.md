@@ -33,6 +33,12 @@ Gist 列表，部分是私有的，仅供方便自己查阅（[Open in GithubGis
 - [Emmet 自定义模板](https://gist.github.com/zxhfighter/00c1d140249215efd236)
 
 ---
+个人公众号（非技术输出）：
+
+![](./img/qr.jpg)
+
+---
+
 好玩的一些东西~~
 
 Github 支持的图标：https://www.webpagefx.com/tools/emoji-cheat-sheet/
