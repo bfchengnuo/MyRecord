@@ -4,6 +4,27 @@
 
 中文文档在此：https://es.xiaoleilu.com/010_Intro/00_README.html
 
+为了方便，可能需要用到 elasticsearch-head 插件或者官方提供的 kibana。
+
+> elasticsearch-head 中，粗的表示为主，细线边框为副本，一对用相同的数字标识
+
+启动直接命令行执行 `elasticsearch.bat` 就行，后台启动使用 `-d`
+
+## 基本概念
+
+ES 中主要的就三类：
+
+- 文档
+  最小的数据单元，内含多个字段 ，类似于数据库中的一行数据
+- 索引
+  相同属性的文档集合，相当于数据库的 Database
+- 类型
+  索引可以定义一个或多个类型，文档必须属于一个类型，相当于数据库中的 table
+
+分布式中，必然还少不了分片和备份，类似 kafka 的概念了，一个索引可以分片成多个块，存放在不同的节点，这样既可以提高吞吐量，也可以方便的扩展，降低单节点的压力；备份就不多说了，分布在其他的节点上。
+
+另外 ES 的特性还有：近实时，也就是秒级；分布式架构，方便扩展，简单说就是对 Lucene 的一个封装。
+
 ## 集群
 
 配置集群在 `elasticsearch.yml` 配置文件中加入：
@@ -13,7 +34,7 @@
 cluster.name: bing
 node.name: master
 node.master: true
-network.host：127.0.0.1
+network.host: 127.0.0.1
 
 # 从节点配置
 cluster.name: bing
@@ -35,12 +56,15 @@ discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
 
 创建索引的时候需要指定分片数和副本数（有默认值）。
 
-``` json
+``` javascript
+// 创建索引 (put)：http://127.0.0.1:9200/people
 {
   "settings":{
+    // 分片数和备份数
     "number_of_shards":3,
     "number_of_replicas":1
   },
+  // 标识是否是结构化索引；类似定义字段
   "mappings":{
     "man":{
       "properties":{
@@ -58,7 +82,8 @@ discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
           "format":"yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
         }
       }
-    }
+    },
+    "woman": {}
   }
 }
 ```
@@ -83,13 +108,22 @@ discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
 
 通过 doc 属性指定要修改的内容的 key 和修改后的数据，只会更新你设置的内容
 
+``` javascript
+// 修改数据 (post)：http://127.0.0.1:9200/people/man/1/_update
+{
+  "doc": {
+    "name": "修改后的值"
+  }
+}
+```
+
 脚本方式修改：
 
-``` json
+``` javascript
 {
-  script: {
+  "script": {
     "lang": "painless", // es 内置脚本语言
-    "inline": "ctx._source.age += 10", // ctx 表示上下文, 可使用 params.age 引用值
+    "inline": "ctx._source.age += 10", // ctx 表示上下文, 可使用 params.age 引用下面定义的值
     "params": {
       "age": 10
     }
@@ -124,7 +158,7 @@ discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
 
 请求体格式：
 
-``` json
+``` javascript
 {
   "query": {
     // "match_all": {} // 全部数据
@@ -148,9 +182,10 @@ discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
 
 也可以使用 post 请求哦，格式和上面条件查询是一致，数据格式类似：
 
-``` json
+``` javascript
 {
   "aggs": {
+    // 名字是自定义的
     "group_by_xxx": {
       "terms": {
         "field": "xxx" // 要聚合的字段
@@ -171,20 +206,31 @@ discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
 
 ## 高级查询 QueryContext
 
-相比上面就显得复杂一些了，也是分为好多种，一种一种来看
+相比上面就显得复杂一些了，也是分为好多种，一种一种来看，ES 会计算一个 `_score` 来标识匹配的程度，旨在判断目标文档与查询条件的匹配程度。
 
 最基本的，
 
-- 全文本查询：针对文本类型数据；
-- 字段级别查询：针对结构化数据，如数字、日期等；
-  使用 term 代替 query 里的属性
+- **全文本查询**：针对文本类型数据；
+  最简单的用法使用 match 关键字
+- **字段级别查询**：针对结构化数据，如数字、日期等；
+  最简单的用法：使用 term 代替 query 里的属性
 
-它和条件查询很相似，所以内容参考条件查询，只不过是在条件查询的基础上加一些属性：
+### 全文本查询
 
-``` json
+先来说全文本的查询，它和条件查询很相似，所以内容参考条件查询，只不过是在条件查询的基础上加一些属性：
+
+``` javascript
 "query": {
   // 全匹配
   "match_phrase": {
+    "title": "ElasticSearch入门"
+  }
+}
+
+// 普通模糊查询的关键词：match
+"query": {
+  // 会拆分为 ElasticSearch、入门 两个进行匹配
+  "match": {
     "title": "ElasticSearch入门"
   }
 }
@@ -192,38 +238,59 @@ discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
 
 以下几种查询只给个例子，看例子基本能看懂了，不懂可查官方文档
 
-### 多字段模糊查询
+#### 多字段模糊查询
 
-``` json
-"query":{
-  "multi_match":{
-    "query":"loli",
-    "fields":["title","autor"]
+``` javascript
+{
+  "query":{
+    "multi_match":{
+      "query":"loli",
+      "fields":["title","autor"]
+    }
   }
 }
 ```
 
-### query_string 语法查询
+#### query_string 语法查询
 
 支持通配符、正则等，AND  OR
 
-``` json
-"query": {
-  "query_string": {
-    "query": "(ElasticSearch AND 哈哈哈) OR 入门"
-    // 还可以指定 fields 等
+``` javascript
+{
+  "query": {
+    "query_string": {
+      "query": "(ElasticSearch AND 哈哈哈) OR 入门",
+      // 还可以指定 fields 等
+      "fields":["title","autor"]
+    }
   }
 }
 ```
 
-### 范围查询
+### 字段级别查询
 
-``` json
-"query":{
-  "range":{
-    "count":{
-      "gte":1000, // >= 去掉 e 就是 > ；也可用于日期上
-      "lte":"2000" // <=
+适用于结构化的数据查询，最简单的例子：
+
+``` javascript
+{
+  "query": {
+    "term": {
+      "title": "ElasticSearch入门"
+    }
+  }
+}
+```
+
+#### 范围查询
+
+``` javascript
+{
+  "query":{
+    "range":{
+      "count":{
+        "gte":1000, // >= 去掉 e 就是 > ；也可用于日期上，可使用 now 关键词
+        "lte":"2000" // <=
+      }
     }
   }
 }
@@ -231,16 +298,18 @@ discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
 
 ### Filter Context 数据过滤查询
 
-文档是否满足条件，只有 yes or no
+文档是否满足条件，只有 yes OR no
 
-必须配合 bool 使用，es 会对结果进行缓存，比 query 快一点
+必须配合 bool 使用，es 会对结果进行缓存，比 query 快一点，主要用来做数据过滤的。
 
-``` json
-"query":{
-  "bool":{
-    "filter":{
-      "term":{
-        "count":1000 // 只查询字数为1000的
+``` javascript
+{
+  "query":{
+    "bool":{
+      "filter":{
+        "term":{
+          "count":1000 // 只查询字数为1000的
+        }
       }
     }
   }
@@ -251,4 +320,44 @@ discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
 
 固定分数查询；布尔查询；等等
 
-TODO
+``` javascript
+{
+  "query": {
+    // 固定分数,不支持 match 支持 filter
+    "constant_score": {
+      "filter": {
+        "match": {
+          "title": "ElasticSearch入门"
+        }
+      },
+      "boost": 2
+    }
+  }
+}
+
+// ---------------------
+
+{
+  "query": {
+    // 布尔查询,不支持 match 支持 filter
+    "constant_score": {
+      "bool": {
+        // should 为或的关系；must 为必须（多个条件下）
+        // must_not
+        "should": [{
+          // 可以使用 term
+          "match": {
+            "title": "ElasticSearch入门"
+          } // 可以多个字段
+        }],
+        // 可以配合 filter
+        "filter": [{"term": {"size": 100}}]
+      }
+    }
+  }
+}
+```
+
+所谓固定分数，就是根据那个匹配度的分数来的
+
+SB 整合示例：https://github.com/rstyro/Springboot/tree/master/springboot-elasticsearch
