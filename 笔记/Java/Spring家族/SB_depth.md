@@ -22,9 +22,9 @@ Spring Boot Starter 是个好东西。
 
 ### 关于嵌入式 Web 容器：
 
-**Web Servlet**：Tomcat、Jetty
+**Web Servlet**：Tomcat、Jetty，各自的自动配置都实现 **WebServerFactoryCustomizer** 这个接口。
 
-**Web Reactive**：Netty Web Server
+**Web Reactive**：Netty Web Server，这个可以参考下 **ReactiveWebServerFactoryCustomizer** 这个实现。
 
 PS：Netty 这类异步非阻塞服务器速度并不快，解决的不是速度而是吞吐量问题。
 

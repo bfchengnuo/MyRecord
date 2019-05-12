@@ -57,6 +57,10 @@ Vue 使用后不再需要任何 Dom 操作，Vue 接管了 Dom 的操作。
 
 在挂载点内部的内容，都可以称作是模板内容；同时模板也可以写在 Vue 实例中，效果是一样的。
 
+这里补充一个生命周期的图示：
+
+![Vue生命周期](https://cn.vuejs.org/images/lifecycle.png)
+
 ## 数据&事件&方法
 
 通过两对花括号的方式取值方式我们称之为“插值表达式”.
@@ -139,7 +143,7 @@ Vue 使用后不再需要任何 Dom 操作，Vue 接管了 Dom 的操作。
         }
       },
       watch: {
-        // 侦听器
+        // 侦听器，也会有缓存
         firstName: function () {
           this.count++
         },
@@ -154,13 +158,19 @@ Vue 使用后不再需要任何 Dom 操作，Vue 接管了 Dom 的操作。
 
 PS：不要忘记使用 this，要不然找不到，Vue 会自动处理这个“别名”。
 
+计算属性 computed 可以使用 get 和 set，用来提供获取和设置的情况。
+
 ## 其他指令
 
 来看 v-if 和 v-show
 
 他们**控制标签的显示和隐藏**，当为 true 时就显示，false 时就隐藏，他们的区别在于，v-if 的表现形式是将标签直接删除，v-show 则是通过 display 来实现。
 
+这就带来了 dom 复用的问题，例如 input 框不会清空，这种情况下可以使用 key 值来绑定唯一，这样 Vue 就会不复用了。
+
 **性能上来说，频繁更改的话 v-show 更好，如果只是改一次那么 v-if 可能就更好了。**
+
+其次还支持紧贴 v-if 的 v-else-if 和 v-else
 
 ---
 
@@ -204,6 +214,14 @@ list 就是定义的数组数据，item 是每次遍历的值，index 是索引�
 </body>
 ```
 
+## 样式控制
+
+关于样式的控制，可以使用 class 对象绑定： `:class="{className: isActivated}"` 然后通过控制 isActivated 变量来控制 class 的显示或隐藏。
+
+ 还可以通过 `:class="[activated, className]"` 这样通过 activated 这个变量来控制。
+
+如果是内联样式（`:style`），可以直接引用一个 js 对象，在对象里面定义 css 样式就行，同样也可以使用数组来挂载多个对象。
+
 ## 组件参数校验
 
 在父子组件之间传值都已经知道了，那么接下来就看看如果子组件要对父组件传递的数据进行校验要怎么办，使用的还是子组件里的 props 属性，只不过这里由本来的字符串数组变成了对象。
@@ -235,6 +253,8 @@ var vm = new Vue({
 在子组件上绑定的事件默认都是自定义事件，也就是说原生的事件可能会失效，例如在子组件标签里使用 `@click` 是无效的，不过你可以在子组件的模板里来绑定，这样就不是自定义事件了。
 
 触发自定义事件就是手动的调用 emit 了；但是有些时候就想用子组件的原生事件，就想让它生效怎么办，也是有办法的，只需要一点点的改动：`@click.native="fun"`。
+
+同时，为了解决手机端兼容问题，可以使用类似 `@touchstart.prevent` 的方式阻止事件的默认行为。
 
 ## 复杂组件之间的传值
 
@@ -281,6 +301,98 @@ var vm = new Vue({
 ```
 
 就是通过一个生命周期来完成的。
+
+> 在 Vue 中，类似 `vm.$xx` 这种的调用，后面跟一个 `$` 符号，意思是调用 Vue 实例的方法。
+
+### 使用Vuex
+
+简单说 Vuex 就是一个单向数据的改变流，把需要改变的数据单独存储起来，然后通过指定的流程来进行更改。
+
+![](https://vuex.vuejs.org/vuex.png)
+
+一般情况下，我们在单独的一个 js 中设置 Vuex，例如：
+
+``` javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  state: {
+    name: localStorage.name || "xxx"
+  },
+  actions: {
+    changeName (ctx, name) {
+      // 调用 mutations
+      ctx.commit('changeName', name)
+    }
+  },
+  mutations: {
+    changeCity (state, name) {
+      state.name = name
+      // 本地存储 (低版本浏览器或者隐身模式可能会抛异常)
+      try {
+        localStorage.name = name
+      } catch (e) {}
+    }
+  }
+})
+```
+
+然后在 App 入口 js 中进行引用：
+
+``` javascript
+new Vue({
+  el: '#app',
+  router,
+  store,
+  components: { App },
+  template: '<App/>'
+})
+```
+
+这样在任何子组件中就可以通过 `this.$store.state` 来获取 Vuex 中 state 的数据啦。
+
+``` javascript
+// 触发修改
+this.$store.dispatch('changeName', name)
+// 如果没有异步获取数据逻辑，可以直接调用 mutations
+this.$store.commit('changeName', name)
+```
+
+其中我们还使用了本地存储 localStorage。
+
+实际中，大多会拆分 index.js 将 state、actions、mutations 单独放在一个文件中。
+
+---
+
+另外，Vuex 还提供了高级 API 允许我们更精简的写代码，例如：
+
+``` javascript
+import { mapState, mapActions } from 'vuex'
+...
+methods: {
+  handleClick (name) {
+    // 使用 Vuex 改变全局数据
+    // this.$store.dispatch('changeName', name)
+    this.changeName(name)
+    // 或者可以直接调用 mutations
+    // this.$store.commit('changeName', name)
+    this.$router.push('/')
+  },
+  // 展开运算符，
+  ...mapActions(['changeName'])
+},
+computed: {
+  // 使用 Vuex 的便捷映射, 数组、对象皆可
+  ...mapState({
+    name: 'loli'
+  })
+}
+```
+
+基本的 Vuex 操作就是这些了。
 
 ## 使用插槽
 
@@ -438,20 +550,46 @@ component 和下面使用 v-if 控制的标签是一样的，因为每次切换�
 
 ## 注意事项
 
-使用 v-for 无论是遍历数组还是遍历对象，直接使用下标增加、修改数组 View 不一定会刷新，想要视图跟着刷新就必须用方法来增加，例如数组的 pop、push 等方法；对于对象的属性增加，可以使用 Vue 的全局方法 set（`Vue.set(obj, key, val)` 或者使用实例的 set 方法，`vm.$set(obj, key, val)`），当然 set 方法也可以用来修改数组 key 就是下标了。
+使用 v-for 无论是遍历数组还是遍历对象，直接使用下标增加、修改数组 View 不一定会刷新，**想要视图跟着刷新就必须用方法来增加**，例如数组的 pop、push 等方法；对于对象的属性增加，可以使用 Vue 的全局方法 set（`Vue.set(obj, key, val)` 或者使用实例的 set 方法，`vm.$set(obj, key, val)`），当然 set 方法也可以用来修改数组 key 就是下标了。
+
+---
 
 使用 v-for 的时候，为了不引入多余的 HTML 结构，可以使用 template 标签占位，在这个标签里使用 v-for 这样渲染后就没有痕迹了。
 
+---
+
 可以通过绑定 class 属性的方式来改变样式，支持对象、数组。
 
-解决组件与 HTML5 规范冲突，可以使用 is 属性来标识其真正的组件。
+---
+
+解决组件与 HTML5 规范冲突，可以使用 is 属性来标识其真正的组件，例如：`<tr is:"row"></tr>`。
+
+使用 Vue 提供的标签也是类似，例如：`<router-link tag="li" :to="/index/">`
+
+---
 
 子组件里，data 属性必须是函数，可以是这个函数返回一个对象，里面包含一些属性；这样也就达到了多个子组件数据互不影响的目的。
+
+---
 
 必要的操作 Dom 时，通过 ref 属性来标识，在事件中可以 `this.$refs.name` 来获取 Dom 元素；如果 ref 加在了组件上，那么得到的就是这个组件的引用了。
 特殊情况下，如果 ref 和 v-for 连用，那么使用 `:ref=` 的形式，并且获取的是数组，需要 `name[0]` 使用。
 
+---
+
 子组件向父组件传值是通过事件的形式，一般来说在子组件中使用 `this.$emit('name', data)` 来进行手动触发；配合子组件的 HTML 标签中使用 `@name="fun"` 来进行监听。
+
+---
+
+在导入语法中，使用 `@` 来表示 src 目录；在组件样式编写的时候，如果不想影响到其他组件的样式，在 style 标签里加一个 scoped 即可。
+
+使用 @import 导入 css 变量域，`~` 固定前缀：`@import '~@style/varibles.styl'`
+
+如果使用 stylus 语法，可以使用 `>>>` 来做样式穿透。
+
+---
+
+在 webpack 的配置文件里，可以使用 alias 来定义别名，快速引用文件夹，例如默认的 @ 表示 src 就是这样设置的。
 
 比较混乱，待整理。
 
@@ -535,6 +673,37 @@ component 和下面使用 v-if 控制的标签是一样的，因为每次切换�
 
 PS：**模板中要求只能有一个根标签**
 
+## 路由
+
+使用路由来根据访问 url 动态切换的目的，在 App 主入口加入 `<router-view/>` 即可启用，在 `src\router\index.js` 进行配置路由规则即可。
+
+其中路由规则的 url 映射可以使用变量来进行区分，例如：`/detail/:id` ，然后可以在子组件通过 `this.$route.params.id` 来获得变量。
+
+使用 `<router-link to="/list">跳转</router-link>` 可进行单页应用的跳转，在跳转过程中不需要请求新的 HTML，但是首屏加载会慢一点，SEO 也不是很好。
+
+除了使用标签来路由，在 JS 环境下，可以使用编程式导航：`this.$router.push('/')`
+
+---
+
+为了防止路由调整后滚动条不会重置，官方文档的解决方案是在路由的 js 配置中加入下面的代码：
+
+``` javascript
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: Home
+    }
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return {x: 0, y: 0}
+  }
+})
+```
+
+这样就解决了跳转后滚动条错乱的情况。
+
 ## 动画
 
 最简单的淡出淡然，可以使用 transition 标签进行包裹，作用简单说就是：
@@ -547,7 +716,7 @@ PS：**模板中要求只能有一个根标签**
 
 如果想自定义 css 的名字，可以使用 enter-active-class 属性来定义，其他同理。
 
-或者可以使用 animated.css 提供的样式，快速开发，使用起来非常简单，引入不要的 css 库，然后利用上面所说来自定义 css 名字，格式就是：`animated 动画名` 名字可以在官网找，其实就是封装了下 css3 的 @keyframes 特性。
+或者可以使用 `animated.css` 提供的样式，快速开发，使用起来非常简单，引入不要的 css 库，然后利用上面所说来自定义 css 名字，格式就是：`animated 动画名` 名字可以在官网找，其实就是封装了下 css3 的 @keyframes 特性。
 
 PS：想要初始化的时候就展示动画需要使用 appear 属性来配合。
 
@@ -557,7 +726,7 @@ PS：想要初始化的时候就展示动画需要使用 appear 属性来配合�
 
 其中 @enter 会传递两个参数，第一个与上面一样，第二个是个函数引用 done，在动画完成后调用一下它告诉 Vue 动画结束，这样就会再继续执行下面的 after。
 
-如果嫌麻烦，可以使用像 Velocity 这样的 js 动画库。
+如果嫌麻烦，可以使用像 **Velocity** 这样的 js 动画库。
 
 ---
 
@@ -660,3 +829,38 @@ new Vue({
 然后，App 这个模块中又引入了一个 TodoItem 的模板，就是曾经的子模板，完整的例子到 GitHub 仓库查看。
 
 再次说明，Vue 底层会处理 this 的指向，不需要太过担心，指的就是此实例
+
+## 优化相关
+
+使用 `<keep-alive>` 标签 Vue 会自动帮你进行优化请求，例如 ajax 请求，如果启用了 `<keep-alive>` 标签，当第二次进行 ajax 请求时，会直接从内存里拿数据（mounted 函数不会执行）。
+
+一般就直接在 App.vue 中使用了：
+
+``` html
+<template>
+  <div id="app">
+    <!--启用缓存,重新路由后不再发请求-->
+    <keep-alive exclude="Detail">
+      <router-view/>
+    </keep-alive>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'App'
+}
+</script>
+```
+
+然后有的数据我们是不想进行缓存的，所以就可以使用 exclude 指定组件的名字（就是 name 属性）进行排除。
+
+或者可以使用生命周期函数 activated 来刷新数据（可能需要进行一定的逻辑判断·），这个函数在页面重新加载时执行。
+
+---
+
+默认情况下 webpack-server 是不支持 ip 访问的，如果就想 ip 访问，可以在 **package.json** 文件中的 dev 加一个配置：`"dev": "webpack-dev-server --host 0.0.0.0 --inline --progress --config build/webpack.dev.conf.js"`
+
+## CSS相关
+
+使用 CSS 的 flex （`flex:1`）属性撑开盒模型
