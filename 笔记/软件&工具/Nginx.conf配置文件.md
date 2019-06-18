@@ -328,3 +328,5 @@ http 服务中，某些特定的 URL 对应的一系列配置项。
 `nginx -s stop`	// 停止
 
 `nginx -s reload`  // 重新加载配置
+
+`nginx -t`  // 检查配置文件是否正确，以及可以指定文件，还有例如 `nginx -t -c /usr/local/nginx/conf/nginx.conf`
