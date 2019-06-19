@@ -330,3 +330,41 @@ http 服务中，某些特定的 URL 对应的一系列配置项。
 `nginx -s reload`  // 重新加载配置
 
 `nginx -t`  // 检查配置文件是否正确，以及可以指定文件，还有例如 `nginx -t -c /usr/local/nginx/conf/nginx.conf`
+
+## 反向代理配置模板
+
+建议是分文件夹独立存放，例如新建一个 App 文件夹，在主配置文件中（nginx.conf）导入：
+
+```
+...
+http {
+	include App/*.conf;
+}
+...
+```
+
+然后是具体的一个例子：
+
+```
+server {
+	listen 80;
+	autoindex on;
+	server_name app.bfchengnuo.com;
+	access_log c:/access.log combined;
+	index index.html index.htm index.jsp index.php; 
+	#error_page 404 /404.html;
+	if ( $query_string ~* ".*[\;'\<\>].*" ){
+		return 404;
+	} 
+	location /proxy/ { 
+		proxy_pass http://127.0.0.1:10021/;
+		add_header Access-Control-Allow-Origin *;
+	}
+	
+	location / { 
+		root D:\Web\app;
+		add_header Access-Control-Allow-Origin *;
+	}
+}
+```
+
