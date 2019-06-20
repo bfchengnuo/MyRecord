@@ -16,6 +16,8 @@
 
 [Spring+SpringMVC配置事务管理无效原因及解决方案](FixException/Spring%2BSpringMVC%E9%85%8D%E7%BD%AE%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E6%97%A0%E6%95%88%E5%8E%9F%E5%9B%A0%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
 
+[SpringBoot无法读取自定义YML文件](FixException/SpringBoot%E6%97%A0%E6%B3%95%E8%AF%BB%E5%8F%96%E8%87%AA%E5%AE%9A%E4%B9%89YML%E6%96%87%E4%BB%B6)
+
 [SpringData错误总结](FixException/SpringData%E9%94%99%E8%AF%AF%E6%80%BB%E7%BB%93)
 
 [SpringMVC以.html为后缀名访问获取数据，报406NotAcceptable错误](FixException/SpringMVC%E4%BB%A5.html%E4%B8%BA%E5%90%8E%E7%BC%80%E5%90%8D%E8%AE%BF%E9%97%AE%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%EF%BC%8C%E6%8A%A5406NotAcceptable%E9%94%99%E8%AF%AF)
@@ -23,6 +25,10 @@
 [Tomcat启动慢等](FixException/Tomcat%E5%90%AF%E5%8A%A8%E6%85%A2%E7%AD%89)
 
 [Windows不会将命令行参数传递给从shell执行的Python程序](FixException/Windows%E4%B8%8D%E4%BC%9A%E5%B0%86%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E7%BB%99%E4%BB%8Eshell%E6%89%A7%E8%A1%8C%E7%9A%84Python%E7%A8%8B%E5%BA%8F)
+
+[使用Vue时遇到的样式问题](FixException/%E4%BD%BF%E7%94%A8Vue%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E6%A0%B7%E5%BC%8F%E9%97%AE%E9%A2%98)
+
+[使用pyinstaller将python打包为exe](FixException/%E4%BD%BF%E7%94%A8pyinstaller%E5%B0%86python%E6%89%93%E5%8C%85%E4%B8%BAexe)
 
 [解决Github&Vue等拒绝连接问题](FixException/%E8%A7%A3%E5%86%B3Github%26Vue%E7%AD%89%E6%8B%92%E7%BB%9D%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98)
 
@@ -244,6 +250,10 @@
 ### Web
 
 [Bootstrap笔记](笔记/Web/Bootstrap%E7%AC%94%E8%AE%B0)
+
+[CORS充电笔记](笔记/Web/CORS%E5%85%85%E7%94%B5%E7%AC%94%E8%AE%B0)
+
+[ECMAScript笔记](笔记/Web/ECMAScript%E7%AC%94%E8%AE%B0)
 
 [HTML5常用特性](笔记/Web/HTML5%E5%B8%B8%E7%94%A8%E7%89%B9%E6%80%A7)
 
