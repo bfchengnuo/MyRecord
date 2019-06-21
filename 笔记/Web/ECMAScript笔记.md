@@ -382,7 +382,17 @@ test.getVal(test.dd)
 [1, 2 ,3, 4].forEach(alert);
 
 [1, 2 ,3, 4].forEach((item, index) => {console.log(item)})
+
+arr.forEach(function callback(currentValue, index, array) {
+    //your iterator
+}[, thisArg]);
 ```
+
+> 使用 forEach 函数进行遍历时，中途无法跳过或者退出；
+>
+> 在 forEach 中的 return、break、continue 是无效的。
+>
+> see：https://www.jianshu.com/p/bdf77ee23089
 
 然后遍历除了基本的 fori，还有两种：for...in 和 for...of ，那么他们俩有啥区别呢？
 
