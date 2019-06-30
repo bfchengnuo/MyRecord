@@ -84,3 +84,19 @@ public ResponseEntity<byte[]> download() throws Exception {
             headers, HttpStatus.CREATED);
 }
 ```
+
+再补充一个：
+``` java
+public ResponseEntity<byte[]> download(String templateName) throws IOException {
+    ClassPathResource classPathResource = new ClassPathResource(templateName);
+    String filename = classPathResource.getFilename();
+    @Cleanup InputStream inputStream = classPathResource.getInputStream();
+    byte[] bytes = FileCopyUtils.copyToByteArray(inputStream);
+    // 为了解决中文名称乱码问题
+    String fileName = new String(filename.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+    headers.setContentDispositionFormData("attachment", fileName);
+    return new ResponseEntity<>(bytes, headers, HttpStatus.CREATED);
+}
+```
