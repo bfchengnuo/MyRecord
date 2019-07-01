@@ -439,3 +439,13 @@ for (let [key, value] of map) {
 作用于数组的 `for-in` 循环除了遍历数组元素以外，还会遍历自定义属性。
 
 `for...of` 循环不会循环对象的 key，只会循环出数组的 value，因此 `for...of` 不能循环遍历**普通对象**，对普通对象的属性遍历推荐使用 `for...in`
+
+## 其他
+
+关于 a 标签默认行为（href 跳转）：
+
+常见的阻止默认行为的方式：`<a href="javascript:void(0);"  onclick= "myjs( )">  Click Me  </a>`
+
+函数 onclick 要优于 href 执行，而 void 是一个操作符，`void(0)` 返回 undefined，地址不发生跳转，使用 `javascript:;` 也是一样的效果。
+
+在 onclick 函数中，如果返回的是 true，则认为该链接发生了点击行为；如果返回为 false，则认为未被点击。

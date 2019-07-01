@@ -100,3 +100,20 @@ public ResponseEntity<byte[]> download(String templateName) throws IOException {
     return new ResponseEntity<>(bytes, headers, HttpStatus.CREATED);
 }
 ```
+
+再来一个：
+
+``` java
+public static InputStream getExcelTemplates() throws IOException {
+  PathMatchingResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
+  Resource[] resources = patternResolver.getResources("excel-template/template.xls");
+  if (resources != null && resources.length > 0) {
+    return  resources[0].getInputStream();
+  } else {
+    logger.error("file: excel-template/template.xls not found." );
+    return null;
+  }
+}
+```
+
+https://calfgz.github.io/blog/2017/07/spring-boot-jar-resource.html
