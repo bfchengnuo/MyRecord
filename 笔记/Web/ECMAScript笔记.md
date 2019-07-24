@@ -440,6 +440,37 @@ for (let [key, value] of map) {
 
 `for...of` 循环不会循环对象的 key，只会循环出数组的 value，因此 `for...of` 不能循环遍历**普通对象**，对普通对象的属性遍历推荐使用 `for...in`
 
+## forEach与map
+
+MDN 上的描述：
+
+> `forEach()`：针对每一个元素执行提供的函数 (executes a provided function once for each array element)。
+>
+> `map()`：**创建一个新的数组**，其中每一个元素由调用数组中的每一个元素执行提供的函数得来 (creates a new array with the results of calling a provided function on every element in the calling array)。
+
+`forEach` 方法不会返回执行结果，而是 `undefined`。也就是说，`forEach()` 会修改原来的数组。而 `map()` 方法会得到一个新的数组并返回。
+
+``` javascript
+// 将数组中的数据翻倍
+let arr = [1, 2, 3, 4, 5];
+
+arr.forEach((num, index) => {
+  return (arr[index] = num * 2);
+});
+
+let doubled = arr.map(num => {
+  return num * 2;
+});
+
+// 结果都为： [2, 4, 6, 8, 10]
+```
+
+如果你习惯使用函数是编程，那么肯定喜欢使用 `map()`。因为 `forEach()` 会改变原始的数组的值，而 `map()` 会返回一个全新的数组，原本的数组不受到影响。
+
+总之，能用`forEach()`做到的，`map()`同样可以。反过来也是如此。
+
+一般来说，使用 map 速度会更快，测试地址：https://jsperf.com/map-vs-foreach-speed-test
+
 ## 其他
 
 关于 a 标签默认行为（href 跳转）：
