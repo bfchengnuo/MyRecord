@@ -4,6 +4,14 @@
 
 PS：现在使用 OkHttp 的越来越多了，原先是为 Android 打造的，由于移动端的环境，OkHttp 需要做到高效，进而也收到 JavaEE 开发者的欢迎。
 
+## 基础知识
+
+最常用的 getForEntity 方法的返回值是一个 `ResponseEntity<T>`，`ResponseEntity<T>` 是 Spring 对 HTTP 请求响应的封装，包括了几个重要的元素，如响应码、contentType、contentLength、响应消息体等。
+
+而类似的 getForObject 函数实际上是对 getForEntity 函数的进一步封装，如果你只关注返回的消息体的内容，对其他信息都不关注，此时可以使用 getForObject。
+
+类似的 postForEntity 和 getForEntity 都是特定的请求方式特化，其他的还有 put、delete 、postForLocation 都不怎么常用
+
 ## 体验
 
 先上一段代码来感受下使用是多么的简单：
@@ -28,7 +36,102 @@ RestTemplate 方法的名称遵循命名约定，第一部分指出正在调用�
 
 完整的使用可以参考[官方API](https://link.jianshu.com/?t=http://docs.spring.io/spring-framework/docs/4.3.7.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html)
 
-## 常用API
+## 常用API示例
+
+首先说几个需要注意的地方：
+
+- post 方式如果传参数只能用 **LinkedMultiValueMap**
+- get 请求参数只能手动在 URL 中进行拼接（有多种拼接方式）
+
+目前暂时只发现这俩，尤其是第二个，总感觉应该可以直接传 map，但是真没找到相应的 API
+
+### 使用Get
+
+按照最常用的 getForObject 和 getForEntity 这两个方法。
+
+``` java
+public void testGet(){
+  try {
+    String url = "http://localhost:8080/selectSmallVideo?sdt=20180531&edt=20180531";
+    String result = template.getForObject(url, String.class);
+    System.err.println(result);
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+}
+
+public void testGet2(){
+  try {
+    String url = "http://localhost:8080/selectSmallVideo?sdt=20180531&edt=20180531";
+    ResponseEntity<String> entity = template.getForEntity(url, String.class);
+    HttpStatus code = entity.getStatusCode();
+    System.err.println(code);
+    System.err.println(entity.toString());
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+}
+
+
+// 传递参数的两种方式
+ResponseEntity<String> responseEntity = 
+  restTemplate.getForEntity("http://HELLO-SERVICE/sayhello?name={1}", String.class, "张三");
+
+Map<String, String> map = new HashMap<>();
+map.put("name", "李四");
+ResponseEntity<String> responseEntity = 
+  restTemplate.getForEntity("http://HELLO-SERVICE/sayhello?name={name}", String.class, map);
+```
+
+注意一下传参的方式，get 中一般就这两种了。
+
+### 使用Post
+
+和 get 类似，简单说明
+
+``` java
+public void testPost(){
+  try {
+    String url = "http://localhost:8080/selectSmallVideo2";
+    LinkedMultiValueMap<String, Integer> map = new LinkedMultiValueMap<>();
+    map.add("sdt", 20180531);
+    map.add("edt", 20180531);
+    String result = template.postForObject(url,map, String.class);
+    System.err.println(result);
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+}
+```
+
+传参可以参考最开始的 bean 的方式。
+
+### 使用Exchange
+
+另外还会关注到 RestTemplate 还提供了一个 exchange 方法，这个相当于一个公共的请求模板，使用姿势和 get/post 没有什么区别，只是可以由调用发自己来选择具体的请求方法。
+
+``` java
+public void testPostHeader() {
+  String url = "http://localhost:8080/post";
+  String nick = "一灰灰Blog";
+
+  MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+  params.add("nick", nick);
+
+  HttpHeaders headers = new HttpHeaders();
+  headers.add(HttpHeaders.USER_AGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+              "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+  HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+  RestTemplate restTemplate = new RestTemplate();
+  ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+  System.out.println(response.getStatusCode() + " | " + response.getBody());
+}
+```
+
+例如，你可以用它来给 get 加请求头，进行个性封装等。
+
+### 自定义header
 
 自定义 header 使用 Map 处理参数与返回值的例子：
 
@@ -79,15 +182,6 @@ public String getHello() {
   int statusCodeValue = responseEntity.getStatusCodeValue();
   HttpHeaders headers = responseEntity.getHeaders();
 }
-
-// 传递参数的两种方式
-ResponseEntity<String> responseEntity = 
-  restTemplate.getForEntity("http://HELLO-SERVICE/sayhello?name={1}", String.class, "张三");
-
-Map<String, String> map = new HashMap<>();
-map.put("name", "李四");
-ResponseEntity<String> responseEntity = 
-  restTemplate.getForEntity("http://HELLO-SERVICE/sayhello?name={name}", String.class, map);
 ```
 
 调用地址也可以是一个 URI 对象而不是字符串，参数神马的都包含在 URI 中了，Spring 中提供了 `UriComponents` 来构建 Uri。
@@ -208,5 +302,5 @@ public RestTemplate restTemplate(){
 ## 参考
 
 https://www.jianshu.com/p/c9644755dd5e
-
 https://blog.csdn.net/u012702547/article/details/77917939
+[中级使用篇](https://segmentfault.com/a/1190000016026290#articleHeader4)
