@@ -58,9 +58,11 @@
 - Office
 - Keka
   类似 7-z 压缩解压工具，官网：https://www.keka.io/zh-cn/
+  国人写的免费的 ezip 也不错
 - iMazing
 - ScrollReverser
 - Paragon NTFS
+- Karabiner
 
 ### 推荐软件
 
@@ -73,6 +75,7 @@
 - 有道云笔记
 - Kap
   Gif 录制工具，地址：https://getkap.co/
+  或者考虑下 Capture
 - ScreenFlow
   高级屏幕录制，一般来说自带的 Quicktime 就可以实现简单的屏幕录制需求了。
 - Wine
@@ -86,6 +89,10 @@
 - KeyCue
 - IINA
 - HandBrake（小巧格式转换）
+- dupeGuru（文件查重）
+- AppCleaner（App卸载残留检测）
+- HyperSwitch
+- bear
 
 ### 开发工具
 
@@ -114,6 +121,12 @@
 
 - iStatistica、iStat Menus
 - Dash
+- PopClip
+- Todoist
+- OhMyStar
+- Permute
+- Downie
+- Airserver
 
 ## Fish配置
 
@@ -140,6 +153,29 @@ alias sublime='open -a /Applications/Sublime\ Text.app'
 输入 `fish_config` 会自动打开一个网站，可以进行个性化配置。
 
 PS：另外，如果有需要切换到 bash 来执行某些脚本或者命令的，可以直接输入 bash。
+
+### 环境变量
+
+说一下环境变量的设置，与 bash 不太一样，它不能使用 export 语法，用的是 set：
+
+```shell
+# 当前 shell 生效
+set -x VISUAL vim
+
+# 全局生效
+set -Ux VISUAL vim
+
+# 设置变量
+set name val
+echo $name
+
+# 设置 path
+set PATH /new/path $PATH
+```
+
+fish 里面的 path 是一个路径数组（fish 独有的数组类型），而不是 : 分隔的路径字符串，你可以在 `fish.config` 里面设置；
+
+推荐使用 `set -Ux` 保存常用环境变量， (而不是写到 `config.fish` 文件) 这样你的 app 就算不是从 shell 启动，也会获得这些变量。
 
 ## brew优化
 
@@ -189,10 +225,22 @@ source ~/.bash_profile
 
 `export HOMEBREW_NO_AUTO_UPDATE=true`
 
-效果如果不好，可以再试试中科大的源：
+效果如果不好，可以再试试中科大的源或者清华大学的源：
 
 > https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
 > https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
+
+如果你有代理，你可以试试挂个代理：
+
+``` shell
+# bash
+export ALL_PROXY=socks5://127.0.0.1:1080
+
+# fish
+set -x ALL_PROXY socks5://127.0.0.1:1080
+```
+
+如果效果还不好，那。。。。。
 
 ## iTerm2终端
 
@@ -239,14 +287,113 @@ source ~/.bash_profile
 ```
 13.229.188.59 github.global.ssl.fastly.net
 13.250.177.223 github.com
-#151.101.76.249 global-ssl.fastly.Net
+# 151.101.76.249 global-ssl.fastly.Net
 ```
 
-第一行对应的 ip 是你 ping GitHub 后解析出的地址，一般这个 ip 你ping 不通。
-
-第二行对应的 IP 你可以去 [这个](http://github.global.ssl.fastly.net.ipaddress.com/) 网站测试得出。
+对应的 IP 你可以去 [这个](http://github.global.ssl.fastly.net.ipaddress.com/) 网站测试得出。
 
 具体哪一个快，你可以去某些在线解析域名的看看。
+
+---
+
+更新：
+
+已知问题，ip 可能会失效，失效后会出现 ssl 错误导致直接无法访问。
+
+> 原因：git clone 特别慢是因为 `github.global.ssl.fastly.net` 域名被限制了。
+> 只要找到这个域名对应的 ip 地址，然后在 hosts 文件中加上 ip –> 域名的映射，刷新 DNS 缓存便可。
+
+快捷使用命令查看：
+
+``` shell
+nslookup github.global.ssl.fastly.Net
+nslookup github.com
+
+sudo vim /etc/hosts
+
+# 刷新 DNS 缓存
+sudo killall -HUP mDNSResponder
+# Linux
+sudo /etc/init.d/networking restart
+```
+
+这个还是上一种方法补充说明，个人不是很推荐。
+
+---
+
+其实我最想的是挂代理，毕竟我有 socket 代理，配置 http 协议的代理网上有很多，这里补充一下使用 ssh 协议时如何走代理：
+
+在你用户目录下，建立 `.ssh/config`，在里面添加如下配置：
+
+```
+# 将这里的 User、Hostname、Port 替换成你需要用 ssh 登录的服务器的配置。
+# Host 可以认为像是书签一样的东西，当你用 Host 指明的字符串代替你服务器的 IP/域名 时，
+# 便会应用该节点下的配置。当然你也可以将 Host 和 Hostname 设置成一样。
+Host yourserver.com
+        User    someone
+        Hostname        yourserver.com
+        Port    22
+        Proxycommand    /usr/bin/ncat --proxy 127.0.0.1:1081 --proxy-type socks5 %h %p
+
+# 如果是给某同性社交网站用的（走 ssh 协议），可以直接使用该配置。
+# 其它类似网站的话，替换掉域名（ Host/Hostname）即可。
+# 可以看出，ssh 协议的 git 客户端，配置与 ssh 一模一样。
+# 需要注意的是这里的 User 应该是 git，而不是你在该网站上注册的用户名。
+# （虽然有些提供 git 仓库托管的网站会用其它用户名，这种情况根据网站配置。）
+Host github.com
+        User    git
+        Hostname        github.com
+        Port    22
+        Proxycommand    /usr/bin/ncat --proxy 127.0.0.1:1080 --proxy-type socks5 %h %p
+```
+
+该方式的配置中，如果 Host 设置为 `*`，那么 `Host *` 对应的配置会被应用到所有没有独立配置 的 ssh 连接中，包括使用了 ssh 协议的 git 操作。
+
+终极：为使用 git 协议的 git 配置代理
+
+建立 `/opt/bin/socks5proxywrapper` 文件，并将该文件设置为可执行权限，文件内容如下：
+
+```shell
+#!/bin/sh
+/usr/bin/ncat --proxy 127.0.0.1:1081 --proxy-type socks5 "$@"
+```
+
+配置 git，使其全局使用该代理：
+
+``` shell
+git config --global core.gitProxy '/opt/bin/socks5proxywrapper'
+
+# 也可针对特定域名启用代理，如：
+git config --global core.gitProxy '/opt/bin/socks5proxywrapper for git.kernel.org'
+
+# 临时启用代理而不想将配置保存下来的话，可以使用设置环境变量的方法：
+export GIT_PROXY_COMMAND=/opt/bin/socks5proxywrapper
+```
+
+参考：https://blog.systemctl.top/2017/2017-09-28_set-proxy-for-git-and-ssh-with-socks5/
+
+## 设置快速预览扩展
+
+空格快速预览非常的爽，但是有些文件不能查看，但是不要忘了，它是支持插件的！
+
+``` shell
+# 代码高亮
+brew cask install qlcolorcode
+
+# md 预览
+brew cask install qlmarkdown
+
+# 图片信息
+brew cask install qlimagesize
+
+# zip 压缩包（betterzip）
+brew cask install betterzip
+
+# 更全的视频预览
+brew cask install qlvideo
+```
+
+更全的插件可以去 GitHub 看看：https://github.com/sindresorhus/quick-look-plugins
 
 ## 启动项
 
@@ -260,3 +407,10 @@ source ~/.bash_profile
 /System/Library/LaunchDaemons
 ```
 
+## Tips
+
+临时保持屏幕常亮：
+
+` caffeinate -u -t 100`
+
+单位是秒，cmd + c 结束后恢复默认。
