@@ -92,7 +92,7 @@
 - dupeGuru（文件查重）
 - AppCleaner（App卸载残留检测）
 - HyperSwitch
-- bear
+- bear/lsd
 
 ### 开发工具
 
@@ -241,6 +241,79 @@ set -x ALL_PROXY socks5://127.0.0.1:1080
 ```
 
 如果效果还不好，那。。。。。
+
+## brew常用命令
+
+brew 在 Mac 上的重要性就不必说了，下面来整理下经常用到的一些命令。
+
+``` shell
+# 安装软件
+brew install [name]
+
+# 卸载软件，别名还有 rm/remove
+brew uninstall [name]
+
+# 查看已安装软件列表，别名有 ls
+brew list
+
+# 搜索软件
+brew search [name]
+
+# 更新软件
+brew upgrade [name]
+
+# 查看软件信息
+brew info [name]
+
+# 打开 brew 主页
+brew home
+
+# 查看依赖关系/以树形菜单查看依赖关系
+brew deps [name]
+brew deps --installed --tree [name]
+
+# 删除（单个软件）老版本
+brew cleanup git 
+brew cleanup
+
+# 查看是否有软件需要更新
+brew outdated
+```
+
+服务管理相关：
+
+``` shell
+# 查看使用 brew 安装的服务列表
+brew services list
+
+# 启动服务（仅启动不注册）
+brew services run [formula|--all]
+
+# 启动服务，并注册
+brew services start [formula|--all]
+
+# 停止/重启服务
+brew services stop [formula|--all]
+brew services restart [formula|--all]
+
+# 清除已卸载应用的无用的配置
+brew services cleanup
+
+# 帮助
+brew services --help
+```
+
+cask相关：
+
+cask 可以认为是 Homebrew 的一个模块，`brew cask` 开头的命令一般管理的是带有 GUI 的软件；使用上也和 brew 基本一致：
+
+``` shell
+brew cask install software-name
+brew cask list
+brew cask outdated
+brew cask upgrade
+brew cask uninstall software-name
+```
 
 ## iTerm2终端
 
