@@ -53,7 +53,7 @@
 - Chrome、Firefox
 - SS-NG-R
 - brew
-- FishShell
+- FishShell/tree/lsd
 - Parallels Desktop
 - Office
 - Keka
@@ -92,7 +92,9 @@
 - dupeGuru（文件查重）
 - AppCleaner（App卸载残留检测）
 - HyperSwitch
-- bear/lsd
+- bear（笔记）
+- Proxifier
+- Paintbrush（代替 win 的画图）
 
 ### 开发工具
 
@@ -127,6 +129,7 @@
 - Permute
 - Downie
 - Airserver
+- BestTrace
 
 ## Fish配置
 
