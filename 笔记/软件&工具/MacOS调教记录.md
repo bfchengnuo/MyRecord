@@ -44,7 +44,7 @@
 排名不分先后，反正都得装。
 
 - Snip
-  腾讯出品的一个免费截图工具，大部分情况下自带的就够用了，遇到滚动截取长图就只能靠第三方了，地址：https://snip.qq.com/
+  腾讯出品的一个免费截图工具，不过我现在更推荐 Xnip 了，商店里可直接搜。
   PS：想念 FSCapture，需要注意下，开启滚动截图需要在隐私设置里给它权限。
 - QQ（没有 TIM）
 - WeChat
@@ -60,9 +60,9 @@
   类似 7-z 压缩解压工具，官网：https://www.keka.io/zh-cn/
   国人写的免费的 ezip 也不错
 - iMazing
-- ScrollReverser
-- Paragon NTFS
-- Karabiner
+- Mos（推荐）/ScrollReverser
+- Paragon NTFS/NTFS For Mac
+- Karabiner - 改键神器
 
 ### 推荐软件
 
@@ -71,7 +71,7 @@
 - OBS
 - TV
 - Anki
-- 迅雷、Folx 5
+- 迅雷、Folx 5、Downie3
 - 有道云笔记
 - Kap
   Gif 录制工具，地址：https://getkap.co/
@@ -83,7 +83,7 @@
 - VBOX
 - Telegram
 - Steam
-- Bartender 3
+- ~~Bartender 3~~
 - iterm2
 - Alfred 3
 - KeyCue
@@ -110,11 +110,11 @@
   运行 `mysql_secure_installation`  可以设置密码
 - Docker
 - Eclipse
-- NavicatPremium
+- NavicatPremium/Sequelpro
 - Sublime、VSC
 - Git、SVN
-- 远程桌面
-- WinSCP
+- 远程桌面连接
+- WinSCP/Commander One
 - termius 或者 FinalShell
   Xshell 替代品，或者 iterm2
 - Charles
@@ -127,7 +127,7 @@
 - Todoist
 - OhMyStar
 - Permute
-- Downie
+- Downie3
 - Airserver
 - BestTrace
 
