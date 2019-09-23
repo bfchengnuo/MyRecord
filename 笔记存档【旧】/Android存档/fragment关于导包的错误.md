@@ -1,17 +1,15 @@
----
-title: fragment关于导包的错误
-date: 2016-4-23
-tags: [Android,fragment]
-categories: Android
----
+# fragment关于导包的错误
+
+<br>
+<br>
 
 ## XXXfragment that is not a fragment错误，fragment认不出来
 
 要注意的是fragment其实是有两个版本的，一个是
 
 - import android.support.v4.app.Fragment; 
-  <!-- more -->
-  另外一个是
+
+另外一个是
 
 - import android.app.Fragment; 
 
@@ -39,7 +37,7 @@ android.support.v4.app.Fragment使用
 
 **4.我感觉最重要的，是XML标签的使用 **
 
-android.app.Fragment可以使用`<fragment>`标签的，这点很重要，如果是用`android.support.v4.app.Fragment`的话，是不能是用`<fragment>`标签的，会抛出`android.view.InflateException: Binary XML file line #7: Error inflating class fragment`异常。 
+android.app.Fragment可以使用<fragment>标签的，这点很重要，如果是用android.support.v4.app.Fragment的话，是不能是用<fragment>标签的，会抛出android.view.InflateException: Binary XML file line #7: Error inflating class fragment异常。 
 
 因为这个标签的使用还是比较简单的，所以还是比较倾向前者
 
@@ -47,5 +45,4 @@ android.app.Fragment可以使用`<fragment>`标签的，这点很重要，如果
 
 ## android app报错Binary XML file line #6: Error inflating class fragment
 
-如果是v4的fragment，那么 acitivity 也要继承 FragmentActivity 才行，只是为了兼容 3.0 以前的版本，本质和继承 Activity 没有什么区别
-不过继承 AppCompatActivity 也是可以的，因为它就是 FragmentActivity 的子类，这样就省事了
+如果是v4的fragment，那么acitivity也要继承FragmentActivity才行
