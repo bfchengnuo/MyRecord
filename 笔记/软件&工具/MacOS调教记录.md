@@ -389,6 +389,8 @@ sudo vim /etc/hosts
 
 # 刷新 DNS 缓存
 sudo killall -HUP mDNSResponder
+sudo dscacheutil -flushcache
+
 # Linux
 sudo /etc/init.d/networking restart
 ```

@@ -34,6 +34,7 @@ Ctrl + Shift `--->` Command + Shift
 | Ctrl + Shift + F/R | Command + Shift + F  |
 | Ctrl + Shift + N   | Command + Shift + O  |
 | Ctrl + Shift + B   | <kbd>Control</kbd> + Shift + B  |
+| Ctrl + Shift + i | Command + Y |
 
 
 

@@ -17,6 +17,8 @@
 | 同一域名，不同二级域名（同上） | 不允许（cookie 这种情况下也不允许访问） |
 | 不同域名                       | 不允许                                  |
 
+> 注意：Cookies 不区分端口
+
 下面就来讲一下这一种跨域解决方案：CORS（Cross-origin resource sharing）也就是：跨来源资源共享。
 
 ## 快速入门CORS
