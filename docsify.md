@@ -4,9 +4,13 @@
 
 [Maven+Dubbo入门的一些坑](FixException/Maven%2BDubbo%E5%85%A5%E9%97%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91)
 
+[Maven打包导致静态资源文件损坏问题](FixException/Maven%E6%89%93%E5%8C%85%E5%AF%BC%E8%87%B4%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E6%8D%9F%E5%9D%8F%E9%97%AE%E9%A2%98)
+
 [MySQL不能创建外键问题（hibernate）](FixException/MySQL%E4%B8%8D%E8%83%BD%E5%88%9B%E5%BB%BA%E5%A4%96%E9%94%AE%E9%97%AE%E9%A2%98%EF%BC%88hibernate%EF%BC%89)
 
 [MySQL的InvalidDefaultValue错误解决](FixException/MySQL%E7%9A%84InvalidDefaultValue%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3)
+
+[Nginx配置相关问题](FixException/Nginx%E9%85%8D%E7%BD%AE%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98)
 
 [NoClassDefFoundError-javax.el.ELManager错误](FixException/NoClassDefFoundError-javax.el.ELManager%E9%94%99%E8%AF%AF)
 
@@ -77,6 +81,8 @@
 
 [了解HTML5](微信公众号存档/%E4%BA%86%E8%A7%A3HTML5)
 
+[事件驱动模型(Node.js复盘)](微信公众号存档/%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B%28Node.js%E5%A4%8D%E7%9B%98%29)
+
 [什么是BT](微信公众号存档/%E4%BB%80%E4%B9%88%E6%98%AFBT)
 
 [什么是Hadoop](微信公众号存档/%E4%BB%80%E4%B9%88%E6%98%AFHadoop)
@@ -121,10 +127,14 @@
 
 [认知偏误系列（一）](微信公众号存档/%E8%AE%A4%E7%9F%A5%E5%81%8F%E8%AF%AF%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89)
 
+[防火墙](微信公众号存档/%E9%98%B2%E7%81%AB%E5%A2%99)
+
 
 ## 笔记
 
 [Docker化你的程序](笔记/Docker%E5%8C%96%E4%BD%A0%E7%9A%84%E7%A8%8B%E5%BA%8F)
+
+[Tips](笔记/Tips)
 
 [分布式文件系统FastDFS](笔记/%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9FFastDFS)
 
@@ -231,6 +241,8 @@
 
 [Struts2常用的constant总结](笔记/Java/类库相关/Struts2%E5%B8%B8%E7%94%A8%E7%9A%84constant%E6%80%BB%E7%BB%93)
 
+[Swagger2简单使用手册](笔记/Java/类库相关/Swagger2%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)
+
 [通用Mapper使用](笔记/Java/类库相关/%E9%80%9A%E7%94%A8Mapper%E4%BD%BF%E7%94%A8)
 
 
@@ -280,6 +292,8 @@
 
 [Elasticsearch入门](笔记/数据库/Elasticsearch%E5%85%A5%E9%97%A8)
 
+[MySQL中的函数](笔记/数据库/MySQL%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0)
+
 [MySQL优化](笔记/数据库/MySQL%E4%BC%98%E5%8C%96)
 
 [分布式如何保证数据一致性](笔记/数据库/%E5%88%86%E5%B8%83%E5%BC%8F%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7)
@@ -288,6 +302,16 @@
 
 
 ### 科普
+
+[App跨平台方案的发展](笔记/科普/App%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%96%B9%E6%A1%88%E7%9A%84%E5%8F%91%E5%B1%95)
+
+[CGI进化史](笔记/科普/CGI%E8%BF%9B%E5%8C%96%E5%8F%B2)
+
+[CPU架构](笔记/科普/CPU%E6%9E%B6%E6%9E%84)
+
+[HTML5中的视频播放](笔记/科普/HTML5%E4%B8%AD%E7%9A%84%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE)
+
+[Socks协议](笔记/科普/Socks%E5%8D%8F%E8%AE%AE)
 
 [关于区块链](笔记/科普/%E5%85%B3%E4%BA%8E%E5%8C%BA%E5%9D%97%E9%93%BE)
 
@@ -309,13 +333,19 @@
 
 [CentOS安装RabbitMQ](笔记/软件&工具/CentOS%E5%AE%89%E8%A3%85RabbitMQ)
 
+[EarthWorm使用手册](笔记/软件&工具/EarthWorm%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)
+
 [Eclipse安装Hibernate Tools](笔记/软件&工具/Eclipse%E5%AE%89%E8%A3%85Hibernate+Tools)
 
 [Eclipse配置Tomcat服务器](笔记/软件&工具/Eclipse%E9%85%8D%E7%BD%AETomcat%E6%9C%8D%E5%8A%A1%E5%99%A8)
 
 [IDEA使用](笔记/软件&工具/IDEA%E4%BD%BF%E7%94%A8)
 
+[IDEA快捷键对照表](笔记/软件&工具/IDEA%E5%BF%AB%E6%8D%B7%E9%94%AE%E5%AF%B9%E7%85%A7%E8%A1%A8)
+
 [IDEA打包的多种方式](笔记/软件&工具/IDEA%E6%89%93%E5%8C%85%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F)
+
+[MacOS调教记录](笔记/软件&工具/MacOS%E8%B0%83%E6%95%99%E8%AE%B0%E5%BD%95)
 
 [Nginx.conf配置文件](笔记/软件&工具/Nginx.conf%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
 
@@ -335,6 +365,8 @@
 [ETCD应用场景](转载保存/ETCD%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF)
 
 [Emmet快捷键](转载保存/Emmet%E5%BF%AB%E6%8D%B7%E9%94%AE)
+
+[JS运行机制最全面的一次梳理](转载保存/JS%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E6%9C%80%E5%85%A8%E9%9D%A2%E7%9A%84%E4%B8%80%E6%AC%A1%E6%A2%B3%E7%90%86)
 
 [JVM启动参数大全及默认值](转载保存/JVM%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E5%A4%A7%E5%85%A8%E5%8F%8A%E9%BB%98%E8%AE%A4%E5%80%BC)
 
