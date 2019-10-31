@@ -299,6 +299,93 @@ public RestTemplate restTemplate(){
 
 然后，RestTemplate 还支持设置拦截器，没用到过，暂时就不看了。
 
+## 可能存在的问题
+
+### 乱码问题
+
+对于这个问题，最常见的就是让你重新定义消息转换器  StringHttpMessageConverter ，因为它默认使用的是 ISO_8859_1。
+
+``` java
+private static RestTemplate setRestTemplateEncode(RestTemplate restTemplate) {
+  if (null == restTemplate || ObjectUtils.isEmpty(restTemplate.getMessageConverters())) {
+    return null;
+  }
+
+  List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
+  for (int i = 0; i < messageConverters.size(); i++) {
+    HttpMessageConverter<?> httpMessageConverter = messageConverters.get(i);
+    if (httpMessageConverter.getClass().equals(StringHttpMessageConverter.class)) {
+      messageConverters.set(i, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+      return restTemplate;
+    }
+  }
+
+  return restTemplate;
+}
+
+
+// 另一种常见的粗暴的方法
+RestTemplate restTemplate = new RestTemplate();
+restTemplate.getMessageConverters()
+  .set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+```
+
+目前，源码不发生变化的情况下，StringHttpMessageConverter 是位于 index 为 1 的位置，要不然第二种粗暴的方法就不好用了。
+
+然后下面配合一个使用 apache 的 httpclient 的例子：
+
+``` java
+@Configuration
+public class RestConfiguration {
+  @Bean
+  public RestTemplate httpClientRestTemplate() {
+    // 使用 HttpClient，支持GZIP
+    RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+    return setRestTemplateEncode(restTemplate);
+  }
+
+  private static RestTemplate setRestTemplateEncode(RestTemplate restTemplate) {
+    if (null == restTemplate || ObjectUtils.isEmpty(restTemplate.getMessageConverters())) {
+      return null;
+    }
+
+    List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
+    for (int i = 0; i < messageConverters.size(); i++) {
+      HttpMessageConverter<?> httpMessageConverter = messageConverters.get(i);
+      if (httpMessageConverter.getClass().equals(StringHttpMessageConverter.class)) {
+        messageConverters.set(i, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+        return restTemplate;
+      }
+    }
+
+    return restTemplate;
+  }
+}
+```
+
+不过还需要添加 httpclient 的依赖。
+
+``` xml
+<dependency>
+  <groupId>org.apache.httpcomponents</groupId>
+  <artifactId>httpclient</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.apache.httpcomponents</groupId>
+  <artifactId>httpcore</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.apache.httpcomponents</groupId>
+  <artifactId>httpmime</artifactId>
+</dependency>
+```
+
+以上，仅供参考。
+
+---
+
+在需要自定义 Accept-Charset 头的情况下，需要设置 ` stringHttpMessageConverter.setWriteAcceptCharset(false); ` 要不然你设置 httpHeaders 也不会有效。
+
 ## 参考
 
 https://www.jianshu.com/p/c9644755dd5e
