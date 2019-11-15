@@ -386,6 +386,89 @@ public class RestConfiguration {
 
 在需要自定义 Accept-Charset 头的情况下，需要设置 ` stringHttpMessageConverter.setWriteAcceptCharset(false); ` 要不然你设置 httpHeaders 也不会有效。
 
+### put&delete无返回值
+
+默认的 put 与 delete 是没有返回值的，为了符合需求，一般会基于底层的 exchange 进行重写，例如这里有一个例子：
+
+``` java
+public class RestTester {
+  private final String url;
+
+  private final Map<String, String> params = new HashMap<>();
+
+  public void set(String key, String value) {
+    params.add(key, value);
+  }
+
+  /**
+     * 构造方法,请求url.
+     *
+     * @param url 请求地址
+     */
+  public RestTester(String url) {
+    super();
+    this.url = url;
+  }
+
+  /**
+     * 发送get请求.
+     *
+     * @return 返回请求结果
+     */
+  public <T> T get(Class<T> cls) {
+    String fullUrl = UriComponentsBuilder.fromHttpUrl(url).queryParams(params).build().toUriString();
+    RestTemplate restTemplate = new RestTemplate();
+    ResponseEntity<T> resultEntity =  restTemplate.getForEntity(fullUrl, cls);
+    return resultEntity.getBody();
+  }
+
+  /**
+     * 发送post请求.
+     *
+     * @return 返回请求结果
+     */
+  public <T> T post(Class<T> cls) {
+    String fullUrl = UriComponentsBuilder.fromHttpUrl(url).build().toUriString();
+    RestTemplate restTemplate = new RestTemplate();
+    ResponseEntity<T> resultEntity = restTemplate.postForEntity(fullUrl, params, cls);
+    return resultEntity.getBody();
+  }
+
+  /**
+     * 发送/获取 服务端数据(主要用于解决发送put,delete方法无返回值问题).
+     *
+     * @param url      绝对地址
+     * @param method   请求方式
+     * @param bodyType 返回类型
+     * @param <T>      返回类型
+     * @return 返回结果(响应体)
+     */
+  public <T> T exchange(String url, HttpMethod method, Class<T> bodyType) {
+    // 请求头
+    HttpHeaders headers = new HttpHeaders();
+    MimeType mimeType = MimeTypeUtils.parseMimeType("application/json");
+    MediaType mediaType = new MediaType(mimeType.getType(), mimeType.getSubtype(), Charset.forName("UTF-8"));
+    // 请求体
+    headers.setContentType(mediaType);
+    //提供json转化功能
+    ObjectMapper mapper = new ObjectMapper();
+    String str = null;
+    try {
+      if (!params.isEmpty()) {
+        str = mapper.writeValueAsString(params);
+      }
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+    // 发送请求
+    HttpEntity<String> entity = new HttpEntity<>(str, headers);
+    RestTemplate restTemplate = new RestTemplate();
+    ResponseEntity<T> resultEntity = restTemplate.exchange(url, method, entity, bodyType);
+    return resultEntity.getBody();
+  }
+}
+```
+
 ## 参考
 
 https://www.jianshu.com/p/c9644755dd5e
