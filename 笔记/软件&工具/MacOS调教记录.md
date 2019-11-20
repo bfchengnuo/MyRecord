@@ -1,99 +1,135 @@
 # MacOS调教记录
 
-最近终于下了决心，斥资买了 MBP，怀着激动的心情来把玩一下向往已久的 MacOS。
-不知道到熟练使用的程度需要多久，甚至我还买了一本书 o(￣▽￣*)ゞ))￣▽￣*)o，windows 感觉已经厌倦了，应该也可以说是熟练各种骚操作，接下来就是 MacOS，主要应该就是快捷键需要适应，能培养出肌肉记忆就更好了。
+之前随便写了写，现在来重新组织一下，快捷键不要自定义，键盘和触摸板（一定要开三指拖移，尽量使用按压的方式触发单击）要慢慢适应，最终形成肌肉记忆就好了，和 Windows 之前无缝切换。
 
 ## Mac键盘符号
 
-| 图标 | 介绍                   |
-| ---- | ---------------------- |
-| ⌘    | Command                |
-| ⇧    | Shift                  |
-| ⇪    | Caps Lock              |
-| ⌥    | Option = Alt           |
-| ⌃    | Control                |
-| ↩    | Enter                  |
-| ⌫    | Delete                 |
-| ⌦    | Fn + Delete            |
-| ↑    | 上箭头                 |
-| ↓    | 下箭头                 |
-| ←    | 左箭头                 |
-| →    | 右箭头                 |
-| ⇞    | Fn + ↑ = Page Up       |
-| ⇟    | Fn + ↓ = Page Down     |
-| Home | Fn + ←                 |
-| End  | Fn + →                 |
-| ⇥    | Tab = 右制表符         |
-| ⇤    | Shift + Tab = 左制表符 |
-| ⎋    | Esc = Escape           |
-| ⏏    | 电源开关键             |
+| 图标 | 介绍               |
+| ---- | ------------------ |
+| ⌘    | Command            |
+| ⇧    | Shift              |
+| ⇪    | Caps Lock          |
+| ⌥    | Option = Alt       |
+| ⌃    | Control            |
+| ↩    | Enter              |
+| ⌫    | Delete             |
+| ⌦    | Fn + Delete        |
+| ⇞    | Fn + ↑ = Page Up   |
+| ⇟    | Fn + ↓ = Page Down |
+| Home | Fn + ←             |
+| End  | Fn + →             |
 
 ## 个性化配置
 
-记录一下我自己的系统偏好设置，因为是刚开始用，后期没准会再修改，最终趋于稳定，会同时更新这里的记录（如果记得的话）
+系统偏好设置看着自己喜欢来就行了。。。
+
 说实话，也没怎么配置，基本默认的就够了，除了加一个触发角，屏幕保护我习惯设置立即需要密码了。
-修改计算机名是这共享里面，打开非官方商店的应用可以试试按住 cmd，否则可能提示损坏。
 
-## 软件预备
+修改计算机名是这共享里面；打开非官方商店的应用可以试试按住 cmd，否则可能提示损坏。
 
-首先列一下准备安装的软件，非常简单的傻瓜式安装的软件就不多介绍，有些复杂点的会展开来记录一下，个性化设置相关了。
+## 软件应用
+
+首先列一下准备安装的软件，非常简单的傻瓜式安装的软件就不多介绍
 
 ### 必备软件
 
-无需太多解释，终究是逃不过的。。。
-排名不分先后，反正都得装。
+无需太多解释，终究是逃不过的。。。排名不分先后，反正都得装。
 
-- Snip
-  腾讯出品的一个免费截图工具，不过我现在更推荐 Xnip 了，商店里可直接搜。
+某些收费软件有钱当然正版的好，没钱只能去 Xclient 这种网站看看了。
+
+- ~~Snip~~ 、Xnip
+  Snip 是腾讯出品的一个免费截图工具，不过我现在更推荐 Xnip 了，商店里可直接搜。
+  
   PS：想念 FSCapture，需要注意下，开启滚动截图需要在隐私设置里给它权限。
+  
 - QQ（没有 TIM）
+
 - WeChat
+
 - 网易云音乐
+
 - Typora
+
+  最喜欢的 MD 写作软件
+
 - Chrome、Firefox
-- SS-NG-R
+
+- SS-NG-R、V2ray
+
 - brew
-- FishShell/tree/lsd
+
+  这个难道有不装的么？神器！
+
 - Parallels Desktop
+
 - Office
+
 - Keka
+  
   类似 7-z 压缩解压工具，官网：https://www.keka.io/zh-cn/
+  
   国人写的免费的 ezip 也不错
+  
 - iMazing
+
 - Mos（推荐）/ScrollReverser
+
+  从此鼠标非常顺滑
+
 - Paragon NTFS/NTFS For Mac
+
 - Karabiner - 改键神器
+
+- iStat Menus
+
+- tree、lsd、 Annie、autojump、frp、qrgo、ncmdump
+
+  一些命令行实用工具，可以在 Github 上搜到
 
 ### 推荐软件
 
 我偶尔会用到的一些，在某些场景还是非常有存在感的。
 
 - OBS
+
 - TV
+
 - Anki
-- 迅雷、Folx 5、Downie3
+
+- 迅雷、Motrix、~~Folx 5、Downie3~~
+
 - 有道云笔记
-- Kap
-  Gif 录制工具，地址：https://getkap.co/
-  或者考虑下 Capture
+
+- ~~Kap~~、Capture
+  
+  Gif 录制工具，感觉 Capture 更好用一点
+  
 - ScreenFlow
+  
   高级屏幕录制，一般来说自带的 Quicktime 就可以实现简单的屏幕录制需求了。
-- Wine
-- iText
+  
+- Wine（Windows 环境模拟）
+
+- iText（OCR 识别）
+
 - VBOX
+
 - Telegram
+
 - Steam
+
 - ~~Bartender 3~~
+
 - iterm2
+
 - Alfred 3
-- KeyCue
-- IINA
-- HandBrake（小巧格式转换）
-- dupeGuru（文件查重）
-- AppCleaner（App卸载残留检测）
-- HyperSwitch
-- bear（笔记）
+
+- IINA（视频播放器）
+
+- HandBrake（小巧格式转换、压缩）
+
 - Proxifier
+
 - Paintbrush（代替 win 的画图）
 
 ### 开发工具
@@ -101,35 +137,55 @@
 由于主力 Java，必要的 JB 全家桶不能少，前端也是必修，相关软件一个都不能少，偶尔还要搞搞 py 之类的。
 
 - Jetbrains 全家桶
+
 - Python
+
 - Node
+
 - Mysql
+  
   这里为选择的是使用 brew 来进行安装：
+  
   运行 `brew service start mysql`  可以后台启动 mysql
+  
   运行 `mysql.server start` 前台启动 mysql
+  
   运行 `mysql_secure_installation`  可以设置密码
+  
 - Docker
+
 - Eclipse
+
 - NavicatPremium/Sequelpro
+
 - Sublime、VSC
+
 - Git、SVN
+
 - 远程桌面连接
+
 - WinSCP/Commander One
+
 - termius 或者 FinalShell
+  
   Xshell 替代品，或者 iterm2
+  
 - Charles
 
 ### 其他
 
-- iStatistica、iStat Menus
 - Dash
-- PopClip
+- ~~PopClip~~
 - Todoist
-- OhMyStar
-- Permute
-- Downie3
+- ~~OhMyStar~~
+- Permute（格式转换）
 - Airserver
-- BestTrace
+- BestTrace（追踪解析，玩具）
+- KeyCue（快捷键查询）
+- bear（笔记软件）
+- dupeGuru（文件查重）
+- AppCleaner（App卸载残留检测）
+- HyperSwitch（窗口切换显示预览，我没用）
 
 ## Fish配置
 
