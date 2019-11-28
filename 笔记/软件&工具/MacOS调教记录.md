@@ -27,6 +27,10 @@
 
 修改计算机名是这共享里面；打开非官方商店的应用可以试试按住 cmd，否则可能提示损坏。
 
+## 小技巧
+
+对于 TauchBar，快速调节亮度和音量，可以直接在对应的按钮上快速左右滑动，每次会增加或者减少一格，当然按住不动也可以。
+
 ## 软件应用
 
 首先列一下准备安装的软件，非常简单的傻瓜式安装的软件就不多介绍
@@ -38,7 +42,10 @@
 某些收费软件有钱当然正版的好，没钱只能去 Xclient 这种网站看看了。
 
 - ~~Snip~~ 、Xnip
+  
   Snip 是腾讯出品的一个免费截图工具，不过我现在更推荐 Xnip 了，商店里可直接搜。
+  
+  或者试试开源的 Snipaste？
   
   PS：想念 FSCapture，需要注意下，开启滚动截图需要在隐私设置里给它权限。
   
@@ -47,6 +54,8 @@
 - WeChat
 
 - 网易云音乐
+
+- CotEditor
 
 - Typora
 
@@ -82,7 +91,7 @@
 
 - iStat Menus
 
-- tree、lsd、 Annie、autojump、frp、qrgo、ncmdump
+- tree、lsd、 Annie、autojump、frp、qrgo、ncmdump、exiftool
 
   一些命令行实用工具，可以在 Github 上搜到
 
@@ -110,7 +119,9 @@
   
 - Wine（Windows 环境模拟）
 
-- iText（OCR 识别）
+- Captuocr
+
+  OCR 识别，配套的有 alfredworkflow 版，见 v2ex
 
 - VBOX
 
@@ -131,6 +142,8 @@
 - Proxifier
 
 - Paintbrush（代替 win 的画图）
+
+- BetterTouchTool（Touch Bar 增强，要配合规则）
 
 ### 开发工具
 
@@ -374,6 +387,50 @@ brew cask upgrade
 brew cask uninstall software-name
 ```
 
+## 开发相关
+
+这里列举我目前用到的一些软件，例如 Nginx、Redis、Docker
+
+### Redis
+
+安装参考官网，下载后 mark 一下，不用担心，挺快的，然后执行  `./redis-server` 即可，暂时也不需要配置，用默认的就够了。
+
+### Nginx
+
+反代还是很有必要的，这里我直接使用 brew 安装的，安装完成后会提示你一些关键信息：
+
+``` 
+Docroot is: /usr/local/var/www
+
+The default port has been set in /usr/local/etc/nginx/nginx.conf to 8080 so that
+nginx can run without sudo.
+
+nginx will load all files in /usr/local/etc/nginx/servers/.
+
+To have launchd start nginx now and restart at login:
+  brew services start nginx
+Or, if you don't want/need a background service you can just run:
+  nginx
+==> Summary
+🍺  /usr/local/Cellar/nginx/1.17.2: 25 files, 2MB
+==> Caveats
+==> nginx
+Docroot is: /usr/local/var/www
+
+The default port has been set in /usr/local/etc/nginx/nginx.conf to 8080 so that
+nginx can run without sudo.
+
+nginx will load all files in /usr/local/etc/nginx/servers/.
+
+To have launchd start nginx now and restart at login:
+  brew services start nginx
+Or, if you don't want/need a background service you can just run:
+  nginx
+
+```
+
+我的话就习惯将配置文件改一下，换成 80，然后配置文件 include 一个方便的文件夹位置，便于以后添加配置。
+
 ## iTerm2终端
 
 常用命令一览：
@@ -467,7 +524,7 @@ Host yourserver.com
         User    someone
         Hostname        yourserver.com
         Port    22
-        Proxycommand    /usr/bin/ncat --proxy 127.0.0.1:1081 --proxy-type socks5 %h %p
+        Proxycommand    ncat --proxy 127.0.0.1:1081 --proxy-type socks5 %h %p
 
 # 如果是给某同性社交网站用的（走 ssh 协议），可以直接使用该配置。
 # 其它类似网站的话，替换掉域名（ Host/Hostname）即可。
@@ -478,10 +535,15 @@ Host github.com
         User    git
         Hostname        github.com
         Port    22
-        Proxycommand    /usr/bin/ncat --proxy 127.0.0.1:1080 --proxy-type socks5 %h %p
+        Proxycommand    ncat --proxy 127.0.0.1:1080 --proxy-type socks5 %h %p
+        # Proxycommand    nc -X 5 -x 127.0.0.1:1080 %h %p
 ```
 
 该方式的配置中，如果 Host 设置为 `*`，那么 `Host *` 对应的配置会被应用到所有没有独立配置 的 ssh 连接中，包括使用了 ssh 协议的 git 操作。
+
+> 尴尬的是，需要使用 netcat 这个软件，这软件有两个分支，GNU 和 OPEN BSD 版本，然而我的 Mac 只能通过 brew 安装 GNU 版的，查了一个小时资料，真的用不了，哎。
+>
+> 直到，我翻到了[这个帖子](https://apple.stackovernet.com/cn/q/5470)，知道了 ncat 其实是 Nmap，可以理解为是 netcat 的升级版，果断测试使用 brew 安装，完美！（怪我没看原文的前置条件，自己傻了）
 
 终极：为使用 git 协议的 git 配置代理
 
