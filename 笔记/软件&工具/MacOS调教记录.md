@@ -137,6 +137,8 @@
 
 - IINA（视频播放器）
 
+- XLD（音乐格式必备，brew 记得用 cask）
+
 - HandBrake（小巧格式转换、压缩）
 
 - Proxifier
