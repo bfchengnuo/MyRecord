@@ -63,6 +63,8 @@
 
 [MD5](微信公众号存档/MD5)
 
+[NAT与桥接](微信公众号存档/NAT%E4%B8%8E%E6%A1%A5%E6%8E%A5)
+
 [OAuth](微信公众号存档/OAuth)
 
 [SSH协议](微信公众号存档/SSH%E5%8D%8F%E8%AE%AE)
@@ -127,6 +129,8 @@
 
 [认知偏误系列（一）](微信公众号存档/%E8%AE%A4%E7%9F%A5%E5%81%8F%E8%AF%AF%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89)
 
+[谈谈端对端加密](微信公众号存档/%E8%B0%88%E8%B0%88%E7%AB%AF%E5%AF%B9%E7%AB%AF%E5%8A%A0%E5%AF%86)
+
 [防火墙](微信公众号存档/%E9%98%B2%E7%81%AB%E5%A2%99)
 
 
@@ -187,6 +191,8 @@
 
 #### Spring家族
 
+[RedisTemplate笔记](笔记/Java/Spring家族/RedisTemplate%E7%AC%94%E8%AE%B0)
+
 [RestTemplate使用笔记](笔记/Java/Spring家族/RestTemplate%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0)
 
 [SB_depth](笔记/Java/Spring家族/SB_depth)
@@ -243,6 +249,8 @@
 
 [Swagger2简单使用手册](笔记/Java/类库相关/Swagger2%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)
 
+[jackson使用笔记](笔记/Java/类库相关/jackson%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0)
+
 [通用Mapper使用](笔记/Java/类库相关/%E9%80%9A%E7%94%A8Mapper%E4%BD%BF%E7%94%A8)
 
 
@@ -275,6 +283,8 @@
 
 [webpack笔记](笔记/Web/webpack%E7%AC%94%E8%AE%B0)
 
+[布局首选方案之Flex布局](笔记/Web/%E5%B8%83%E5%B1%80%E9%A6%96%E9%80%89%E6%96%B9%E6%A1%88%E4%B9%8BFlex%E5%B8%83%E5%B1%80)
+
 
 #### BlogBackup 
 
@@ -295,6 +305,10 @@
 [MySQL中的函数](笔记/数据库/MySQL%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0)
 
 [MySQL优化](笔记/数据库/MySQL%E4%BC%98%E5%8C%96)
+
+[MySQL使用技巧](笔记/数据库/MySQL%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7)
+
+[PostgreSQL笔记](笔记/数据库/PostgreSQL%E7%AC%94%E8%AE%B0)
 
 [分布式如何保证数据一致性](笔记/数据库/%E5%88%86%E5%B8%83%E5%BC%8F%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7)
 
@@ -320,6 +334,8 @@
 [内网穿透相关](笔记/科普/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E7%9B%B8%E5%85%B3)
 
 [理解RESTful架构](笔记/科普/%E7%90%86%E8%A7%A3RESTful%E6%9E%B6%E6%9E%84)
+
+[鉴别邮件伪造](笔记/科普/%E9%89%B4%E5%88%AB%E9%82%AE%E4%BB%B6%E4%BC%AA%E9%80%A0)
 
 
 ### 计算机基础
@@ -347,6 +363,8 @@
 
 [MacOS调教记录](笔记/软件&工具/MacOS%E8%B0%83%E6%95%99%E8%AE%B0%E5%BD%95)
 
+[NPM与Yarn](笔记/软件&工具/NPM%E4%B8%8EYarn)
+
 [Nginx.conf配置文件](笔记/软件&工具/Nginx.conf%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
 
 [Postman使用](笔记/软件&工具/Postman%E4%BD%BF%E7%94%A8)
@@ -358,6 +376,8 @@
 [同一客户端下使用多个git账号](笔记/软件&工具/%E5%90%8C%E4%B8%80%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8B%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AAgit%E8%B4%A6%E5%8F%B7)
 
 [手机投屏](笔记/软件&工具/%E6%89%8B%E6%9C%BA%E6%8A%95%E5%B1%8F)
+
+[持续集成Jenkins](笔记/软件&工具/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90Jenkins)
 
 
 ## 转载保存
