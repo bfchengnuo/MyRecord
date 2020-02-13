@@ -31,6 +31,8 @@
 
 对于 TauchBar，快速调节亮度和音量，可以直接在对应的按钮上快速左右滑动，每次会增加或者减少一格，当然按住不动也可以。
 
+在访达中，可以使用快捷键 `cmd + shift + .` 快速查看隐藏文件或者目录。
+
 ## 软件应用
 
 首先列一下准备安装的软件，非常简单的傻瓜式安装的软件就不多介绍
@@ -91,7 +93,7 @@
 
 - iStat Menus
 
-- tree、lsd、 Annie、autojump、frp、qrgo、ncmdump、exiftool
+- tree、lsd、 Annie、autojump、frp、qrgo、ncmdump、exiftool、lrzsz、tmux
 
   一些命令行实用工具，可以在 Github 上搜到
 
@@ -104,6 +106,8 @@
 - TV
 
 - Anki
+
+- Magnet
 
 - 迅雷、Motrix、~~Folx 5、Downie3~~
 
@@ -471,6 +475,171 @@ Or, if you don't want/need a background service you can just run:
 30. ⌘ + shift + h 会列出剪切板历史
 ```
 
+## Tmux速查
+
+启动新会话：
+
+```shell
+tmux [new -s 会话名 -n 窗口名]
+```
+
+恢复会话：
+
+```shell
+tmux at [-t 会话名]
+```
+
+列出所有会话：
+
+```shell
+tmux ls
+```
+
+关闭会话：
+
+```shell
+tmux kill-session -t 会话名
+```
+
+关闭所有会话：
+
+```shell
+tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs kill
+```
+
+### 快捷键
+
+Tmux 中快捷键操作的前缀是 `ctrl+b`
+
+#### 会话
+
+```
+:new<回车>  启动新会话
+s           列出所有会话
+$           重命名当前会话
+d						分离会话
+```
+
+#### 窗口 (标签页)
+
+```
+c  创建新窗口
+w  列出所有窗口
+n  后一个窗口
+p  前一个窗口
+f  查找窗口
+,  重命名当前窗口
+&  关闭当前窗口
+```
+
+#### 调整窗口排序
+
+```
+swap-window -s 3 -t 1  交换 3 号和 1 号窗口
+swap-window -t 1       交换当前和 1 号窗口
+move-window -t 1       移动当前窗口到 1 号
+```
+
+#### 窗格
+
+```
+%  垂直分割
+"  水平分割
+o  交换窗格
+x  关闭窗格
+⍽  左边这个符号代表空格键 - 切换布局
+q 显示每个窗格是第几个，当数字出现的时候按数字几就选中第几个窗格
+{ 与上一个窗格交换位置
+} 与下一个窗格交换位置
+z 切换窗格最大化/最小化
+
+Ctrl+o：当前窗格上移。
+Alt+o：当前窗格下移。
+!：将当前窗格拆分为一个独立窗口。
+Ctrl+<arrow key>：按箭头方向调整窗格大小。
+<arrow key>：光标切换到其他窗格。<arrow key>是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键↓。
+```
+
+### 配置选项：
+
+```
+# 鼠标支持 - 设置为 on 来启用鼠标(与 2.1 之前的版本有区别，请自行查阅 man page)
+* set -g mouse on
+
+# 设置默认终端模式为 256color
+set -g default-terminal "screen-256color"
+
+# 启用活动警告
+setw -g monitor-activity on
+set -g visual-activity on
+
+# 居中窗口列表
+set -g status-justify centre
+
+# 最大化/恢复窗格
+unbind Up bind Up new-window -d -n tmp \; swap-pane -s tmp.1 \; select-window -t tmp
+unbind Down
+bind Down last-window \; swap-pane -s tmp.1 \; kill-window -t tmp
+```
+
+### 参考配置文件（~/.tmux.conf）：
+
+下面这份配置是我使用 Tmux 几年来逐渐精简后的配置，请自取。
+
+```
+# -----------------------------------------------------------------------------
+# Tmux 基本配置 - 要求 Tmux >= 2.3
+# 如果不想使用插件，只需要将此节的内容写入 ~/.tmux.conf 即可
+# -----------------------------------------------------------------------------
+
+# C-b 和 VIM 冲突，修改 Prefix 组合键为 Control-Z，按键距离近
+set -g prefix C-z
+
+set -g base-index         1     # 窗口编号从 1 开始计数
+set -g display-panes-time 10000 # PREFIX-Q 显示编号的驻留时长，单位 ms
+set -g mouse              on    # 开启鼠标
+set -g pane-base-index    1     # 窗格编号从 1 开始计数
+set -g renumber-windows   on    # 关掉某个窗口后，编号重排
+
+setw -g allow-rename      off   # 禁止活动进程修改窗口名
+setw -g automatic-rename  off   # 禁止自动命名新窗口
+setw -g mode-keys         vi    # 进入复制模式的时候使用 vi 键位（默认是 EMACS）
+
+# -----------------------------------------------------------------------------
+# 使用插件 - via tpm
+#   1. 执行 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+#   2. 执行 bash ~/.tmux/plugins/tpm/bin/install_plugins
+# -----------------------------------------------------------------------------
+
+setenv -g TMUX_PLUGIN_MANAGER_PATH '~/.tmux/plugins'
+
+# 推荐的插件（请去每个插件的仓库下读一读使用教程）
+set -g @plugin 'seebi/tmux-colors-solarized'
+set -g @plugin 'tmux-plugins/tmux-pain-control'
+set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tpm'
+
+# tmux-resurrect
+set -g @resurrect-dir '~/.tmux/resurrect'
+
+# tmux-prefix-highlight
+set -g status-right '#{prefix_highlight} #H | %a %Y-%m-%d %H:%M'
+set -g @prefix_highlight_show_copy_mode 'on'
+set -g @prefix_highlight_copy_mode_attr 'fg=white,bg=blue'
+
+# 初始化 TPM 插件管理器 (放在配置文件的最后)
+run '~/.tmux/plugins/tpm/tpm'
+
+# -----------------------------------------------------------------------------
+# 结束
+# -----------------------------------------------------------------------------
+```
+
+参考：https://gist.github.com/ryerh/14b7c24dfd623ef8edc7
+
 ## Git克隆速度慢
 
 这个是通病，我虽然设置了 git 的代理，但是效果不好，也就 http 协议有效，而主流已经是 ssh 了，根本原因就是那个的问题，所以找一个好的 ip 很关键，我们使用 host 大法：
@@ -534,11 +703,10 @@ Host yourserver.com
 # 需要注意的是这里的 User 应该是 git，而不是你在该网站上注册的用户名。
 # （虽然有些提供 git 仓库托管的网站会用其它用户名，这种情况根据网站配置。）
 Host github.com
-        User    git
-        Hostname        github.com
-        Port    22
-        Proxycommand    ncat --proxy 127.0.0.1:1080 --proxy-type socks5 %h %p
-        # Proxycommand    nc -X 5 -x 127.0.0.1:1080 %h %p
+  User    git
+  Hostname github.com
+  ProxyCommand    ncat --proxy 127.0.0.1:1080 --proxy-type socks5 %h %p
+  # Proxycommand    nc -X 5 -x 127.0.0.1:1080 %h %p
 ```
 
 该方式的配置中，如果 Host 设置为 `*`，那么 `Host *` 对应的配置会被应用到所有没有独立配置 的 ssh 连接中，包括使用了 ssh 协议的 git 操作。
