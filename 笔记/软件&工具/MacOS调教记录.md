@@ -356,6 +356,12 @@ brew cleanup
 
 # 查看是否有软件需要更新
 brew outdated
+
+# 更新 brew 本身
+brew update
+
+# 重新设置下 brew 的配置（更新后 GG 的时候用）
+brew update-reset
 ```
 
 服务管理相关：
@@ -436,6 +442,22 @@ Or, if you don't want/need a background service you can just run:
 ```
 
 我的话就习惯将配置文件改一下，换成 80，然后配置文件 include 一个方便的文件夹位置，便于以后添加配置。
+
+### python3
+
+由于默认带的是 python2 版本，安装 python3 我目前暂时使用 brew，然后重新设置别名，pip 的话到时候用 pip3 就行了。
+
+``` shell
+# 这种绝对路径的写法很蛋疼，升级后
+alias python="/usr/local/Cellar/python/3.7.4/bin/python3"
+
+# 后来改成了这样
+alias python="/usr/local/bin/python3"
+```
+
+可以使用 which 命令看一下位置。
+
+参考：https://blog.csdn.net/qq_37429553/article/details/88556147
 
 ## iTerm2终端
 
