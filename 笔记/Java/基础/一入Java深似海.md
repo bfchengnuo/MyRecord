@@ -685,6 +685,307 @@ private static boolean isConcrete(Class<?> type) {
 
 PS：小马哥[源码参考](https://github.com/mercyblitz/segmentfault-lessons/blob/master/%E3%80%8C%E4%B8%80%E5%85%A5%20Java%20%E6%B7%B1%E4%BC%BC%E6%B5%B7%20%E3%80%8D/%E4%BB%A3%E7%A0%81/segmentfault/deep-in-java/stage-7/stage-7-lesson-3/src/main/java/com/segementfalut/deep/in/java/annotation/processing/RepositoryAnnotationProcessor.java)
 
+## 第八期-I/O
+
+关于 IO 的类在设计的时候使用了大量的装饰模式，不过主要说一下序列化相关。
+
+在 ArrayList 的源码可见，内部的存储元素的数组被标注的是不可序列化的，至于原因是在序列化的时候，如果是数组（确实比较特殊）除了内部的元素要进行序列化，数组本身这个壳也得写出去，但是这是没必要的，并且浪费空间。
+
+所以，这个壳被标注为瞬时，配合序列化的一个 UUID 进行比对，这个号码的意义就在于判断是不是兼容，当你类结构修改后这个号码也是应该相应的变化的；如果号码不变，这说明数组这种对象的壳肯定也是有的，直接把数据搞进去就行了。
+
+还有，静态方法也不需要序列化，毕竟它是属于类的不是具体对象。
+
+### 文件系统
+
+在创建文件对象时，会发现路径的容错率很高，它有一个 normalize 规范化的方法，会把你多余的东西去掉，例如 `//abc/a//b` 这种斜线反斜线都会处理（所以 win 平台都可以），在文件的 eq 方法，也是对比的文件路径。
+
+尽量别手写路径，分隔符的使用 `File.pathSeparator` 这种无系统差异的。
+
+jar 包跟 zip 其实没什么区别，在 Java 中，如果使用 zipFile 来读取，内容是扁平化的，避免了递归，虽然你解压后是目录结构。
+
+### NIO2新文件系统
+
+这里的 N 指的是 New 的意思，不是非阻塞 IO，在 Java 中基本所有的 IO 都是阻塞的。
+
+这个 NIO 的概念是从 Java7 开始的，其中新增了一个 Path 接口，对应 Paths 工具类（可以记录分层路径，支持合并、比较等），并且开始流行：
+
+1. Fluent API（Builder API、Chain API）
+2. 工具 API（Objects、Files 这类加 s 的）
+
+另外，对于获取工程路径的推荐写法：
+
+``` java
+public class Demo {
+  private static final String userDir = System.getProperty("user.dir")
+}
+```
+
+因为 getProperties 方法是同步的，为了避免线程竞争，还是放到类静态变量里比较好。
+
+---
+
+Java 7 中，最让人记得住的特性之一应该是 try-with-resources，省去了不少复杂的代码，本质也是字节码提升，其他的例如 switch 支持 string 的也还挺知名的。
+
+那么，它是如何做到的，就要说起新增的一个 Closeable 接口，这个接口又继承自 AutoCloseable。
+
+---
+
+下面是一个 Java7 NIO 读取文件的例子：
+
+``` java
+public static void main(String[] args) {
+  Charset charset = Charset.forName("UTF-8");
+  Path pomXmlPath = Paths.get(USER_DIR_LOCATION, "pom.xml");
+  Path pomCopyXmlPath = Paths.get(USER_DIR_LOCATION, "pom-copy.xml");
+  try (SeekableByteChannel sourceByteChannel = Files.newByteChannel(pomXmlPath);
+       SeekableByteChannel targetByteChannel = Files.newByteChannel(pomCopyXmlPath, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
+      ) {
+    // 最好是 8 的倍数，和机械硬盘扇区有关，尽量少读跨区
+    ByteBuffer byteBuffer = ByteBuffer.allocate(16);  // 16 个字节 byte
+    while (sourceByteChannel.read(byteBuffer) > 0) {
+      // 游标复位
+      byteBuffer.flip();
+      //  System.out.print(charset.decode(byteBuffer));
+      targetByteChannel.write(byteBuffer);
+      byteBuffer.clear(); // 并不会清空内容
+    }
+  } catch (IOException e) {}
+}
+```
+
+看着比传统的稍微复杂点，这也是 NIO2 的基础。总之，NIO 都是用 Path 作为基础的，跟传统的相比。
+
+### NIO
+
+这里的主要三个内容：
+
+1. 缓冲（Buffers）
+
+   capacity：最大容量
+
+   limit：限定大小
+
+   position：游标索引
+
+   mark：记录当前位置（与游标的区别是，它只会指向当前位置，游标是可以手动来移动的）
+
+   数值关系：0 <= mark <= position <= limit <= capacity
+
+2. 管道（Channels）
+
+3. 选择器（Selectors）
+
+针对于缓冲，对于游标的操控，常用的有：
+
+- 抛出（flip），从头开始到此时的 position 处。
+
+  limit 设置为 position
+
+  position 设置为 0
+
+  mark 设置为 -1
+
+- 倒带（rewind），从头开始
+
+  position 设置为 0
+
+  mark 设置为 -1
+
+其他的，还有压缩（compact）、标记（mark，mark 设置为 position）、复制（duplicate）等操作。
+
+抛出的作用即当内容未填充满 buffer 的时候，调用 flip 能缩短 limit 到 position，省去了后面不必要的循环，提高效率；如果时申请的 heap 里的空间也许不明显，即使几 KB 也很快，如果时堆外空间，需要 Unsafe 的调用 JVM 的交换信息，这开销就大了。
+
+---
+
+对于管道，对应的是之前的输入输出流。同样，它也有对应的工具类 Channels。
+
+下面是一个管道与传统 IO 的对比示例：
+
+``` java
+public static void main(String[] args) throws IOException {
+  // 传统 InputStream 和 OutputStream
+  // copy(System.in, System.out);
+
+  ReadableByteChannel readableByteChannel = Channels.newChannel(System.in);
+  WritableByteChannel writableByteChannel = Channels.newChannel(System.out);
+  copy(readableByteChannel, writableByteChannel);
+}
+
+private static void copy(ReadableByteChannel readableByteChannel, WritableByteChannel writableByteChannel) throws IOException {
+  ByteBuffer buffer = ByteBuffer.allocate(4 * 1024); // 4 K字节数组（堆内存）
+  while (readableByteChannel.read(buffer) != -1) {
+    buffer.flip(); // 记录当前 buffer limit = position (已读数据长度）
+    // 优化写入
+    if (buffer.hasRemaining()) {
+      writableByteChannel.write(buffer);
+    }
+    buffer.clear();
+  }
+
+}
+
+private static void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
+  byte[] buffer = new byte[4 * 1024]; // 4 K字节数组（堆内存）
+  int readLength = -1;
+  while ((readLength = inputStream.read(buffer)) != -1) {
+    outputStream.write(buffer, 0, readLength);
+  }
+}
+```
+
+使用管道，因为内含了 position 所以不需要手动来记录了。这一块内容并不简单，也很复杂，深入还需要下很大的精力。
+
+下面是一个 Socket 的例子：
+
+``` java
+/**
+ * 服务端
+ */
+public class ChannelServerDemo {
+  // select 和 epoll
+  public static void main(String[] args) throws IOException, InterruptedException {
+    // 服务端 SocketChannel
+    try (ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();) {
+      // 绑定服务端
+      serverSocketChannel.socket().bind(new InetSocketAddress(8080));
+      // 设置为非阻塞
+      serverSocketChannel.configureBlocking(false);
+      System.out.println("当前服务器地址：" + serverSocketChannel.socket().getLocalSocketAddress());
+      String message = "Hello,World";
+      ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
+
+      while (true) {
+        SocketChannel socketChannel = serverSocketChannel.accept();
+        if (socketChannel != null) {
+          // 当连接建立时
+          System.out.printf("接受客户端[%s] 的连接...%n", socketChannel.getRemoteAddress());
+          buffer.rewind();
+          socketChannel.write(buffer); // 写入管道到发送 Socket 请求客户端
+          socketChannel.close();
+
+        } else { // 非阻塞时，执行逻辑
+          Thread.sleep(500);
+        }
+      }
+    }
+  }
+}
+
+
+/**
+ * 客户端
+ */
+public class ChannelClientDemo {
+  // select 和 epoll
+  public static void main(String[] args) throws IOException, InterruptedException {
+    // 客户端 SocketChannel
+    try (SocketChannel socketChannel = SocketChannel.open();) {
+      // 设置为非阻塞
+      socketChannel.configureBlocking(false);
+      // 连接服务端
+      socketChannel.connect(new InetSocketAddress(8080));
+      while (!socketChannel.finishConnect()) {
+        System.out.println("等待连接到达...");
+      }
+      ByteBuffer buffer = ByteBuffer.allocate(8);
+      while (socketChannel.read(buffer) != -1) {
+        buffer.flip();
+        while (buffer.hasRemaining()) {
+          System.out.print((char)buffer.get());
+        }
+        buffer.clear();
+      }
+    }
+  }
+}
+```
+
+它与 Selectors 的实现方式还是有一定相似的，也可以对比传统实现来看，重要区别是非阻塞吧。
+
+---
+
+对于选择器，这里有一个简单的例子，分服务端与客户端，依赖于底层的 SPI：
+
+``` java
+/**
+ * 服务端
+ */
+public class SelectorServerDemo {
+  public static void main(String[] args) throws IOException {
+    // 服务端 SocketChannel
+    try (ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();) {
+      // 绑定服务端
+      serverSocketChannel.socket().bind(new InetSocketAddress(8080));
+      // 设置为非阻塞
+      serverSocketChannel.configureBlocking(false);
+      System.out.println("当前服务器地址：" + serverSocketChannel.socket().getLocalSocketAddress());
+      // 打开 Selector
+      Selector selector = Selector.open();
+      // 注册 OP_ACCEPT
+      serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+      while (true) {
+        int n = selector.select();
+        if (n == 0) {
+          continue;
+        }
+        Set<SelectionKey> keys = selector.selectedKeys();
+        Iterator<SelectionKey> iterator = keys.iterator();
+        while (iterator.hasNext()) {
+          SelectionKey key = iterator.next();
+          if (key.isAcceptable()) {
+            ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
+            SocketChannel socketChannel = ssc.accept();
+            if (socketChannel == null) {
+              continue;
+            }
+            System.out.printf("接受客户端[%s] 的连接...%n", socketChannel.getRemoteAddress());
+            ByteBuffer buffer = ByteBuffer.allocate(8);
+            // 将服务器当前 timestamp 传递到客户端
+            buffer.putLong(System.currentTimeMillis());
+            buffer.flip();
+            while (buffer.hasRemaining()) {
+              socketChannel.write(buffer);
+            }
+            socketChannel.close();
+            System.out.println("当前服务器时间已发送到客户端");
+          }
+          iterator.remove(); // 移除已接受 SelectionKey
+        }
+      }
+    }
+  }
+}
+
+
+/**
+ * 客户端
+ */
+public class SelectorClientDemo {
+  public static void main(String[] args) throws IOException {
+    // 客户端 SocketChannel
+    try (SocketChannel socketChannel = SocketChannel.open();) {
+      // 设置为非阻塞
+      socketChannel.configureBlocking(false);
+      // 连接服务端
+      socketChannel.connect(new InetSocketAddress(8080));
+      while (!socketChannel.finishConnect()) {
+        System.out.println("等待连接到达...");
+      }
+      ByteBuffer buffer = ByteBuffer.allocate(8);
+      while (socketChannel.read(buffer) != -1) {
+        buffer.flip();
+        while (buffer.hasRemaining()) {
+          System.out.print(new Date(buffer.getLong()));
+        }
+        buffer.clear();
+      }
+    }
+  }
+}
+```
+
+这就是通过 Socket 的使用方式，让我想起了 WebSocket 吧，现在用的其实也还可以，不过大部分还是没赶上。
+
 ## 其他
 
 assert 是 Java1.4 新增的关键字或者说功能，使我们可以使用断言，但是一般情况是关闭的，需要使用 `-ea` 参数来开启。
