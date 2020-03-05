@@ -19,7 +19,7 @@ Alt `--->` Option
 | Alt + Insert  | Command + N       |
 | Alt + 方向键  | <kbd>Control</kbd> + 方向键  |
 | Alt + 1,2,3.. | Command + 1,2,3.. |
-|               |                   |
+| Alt + J | Ctrl + G |
 
 ## 组合键
 
