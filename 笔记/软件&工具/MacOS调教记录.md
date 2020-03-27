@@ -93,7 +93,7 @@
 
 - iStat Menus
 
-- tree、lsd、 Annie、autojump、frp、qrgo、ncmdump、exiftool、lrzsz、tmux
+- tree、lsd、 Annie、autojump、frp、qrgo、ncmdump、exiftool、lrzsz、tmux、ffmpeg
 
   一些命令行实用工具，可以在 Github 上搜到
 
