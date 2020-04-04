@@ -1,6 +1,6 @@
-![](https://github.com/bfchengnuo/MyRecord/blob/master/img%2Flove.png)
+<img src="./img%2Flove.png" style="zoom:67%;" />
 
-> 无意间看到了 docsify，感觉逼格很高，阅读体验也不错，于是本库启用了 docsify；
+> 无意间看到了 docsify，感觉逼格很高，阅读体验也不错，于是本库启用了 docsify；目录更新随意，~~考虑 Actions 中~~
 >
 > 欢迎预览：https://bfchengnuo.com/MyRecord/
 
@@ -13,6 +13,27 @@
 :zap: [笔记](https://github.com/bfchengnuo/MyRecord/tree/master/%E7%AC%94%E8%AE%B0) 就是笔记啊，一般是书中或者好的博文里的摘录，稍微整理了一下这样子
 
 :zap: [TechImages](https://github.com/bfchengnuo/MyRecord/tree/master/TechImages) 有用的图片，比如流程图，自己看书当笔记画的“思维导图”
+
+---
+
+[博客园存档](https://www.cnblogs.com/bfchengnuo/)：
+
+- [关于Socks](https://www.cnblogs.com/bfchengnuo/p/12101107.html)
+- [App跨平台方案的发展](https://www.cnblogs.com/bfchengnuo/p/12101080.html)
+- [代构建高可用分布式系统的利器——Netty](https://www.cnblogs.com/bfchengnuo/p/9193024.html)
+- [IDEA快捷键Win与Mac对照](https://www.cnblogs.com/bfchengnuo/p/12101042.html)
+- [JavaEE复习计划-servlet](https://www.cnblogs.com/bfchengnuo/p/9193019.html)
+
+- [OBS 直播优化配置](https://www.cnblogs.com/bfchengnuo/articles/8393958.html)
+- [NPM与Yarn](https://www.cnblogs.com/bfchengnuo/articles/12101019.html)
+- [JS运行机制最全面的一次梳理](https://www.cnblogs.com/bfchengnuo/articles/12101003.html)
+- [Linux下使用ip替代ifconfig](https://www.cnblogs.com/bfchengnuo/articles/12100966.html)
+- [关于同步、异步、并行、并发等](https://www.cnblogs.com/bfchengnuo/articles/8421639.html)
+- [语法糖](https://www.cnblogs.com/bfchengnuo/articles/8298785.html)
+- [图灵测试](https://www.cnblogs.com/bfchengnuo/articles/8296700.html)
+- [Janino介绍](https://www.cnblogs.com/bfchengnuo/articles/8146634.html)
+- [JavaScript深入之创建对象的多种方式以及优缺点](https://www.cnblogs.com/bfchengnuo/articles/8137911.html)
+- [IDEA打包的多种方式](https://www.cnblogs.com/bfchengnuo/articles/8138308.html)
 
 ---
 
@@ -35,7 +56,7 @@ Gist 列表，部分是私有的，仅供方便自己查阅（[Open in GithubGis
 ---
 个人公众号（非技术输出）：
 
-![](./img/qr.jpg)
+<img src="./img/qr.jpg" style="zoom:50%;" />
 
 ---
 
