@@ -539,7 +539,7 @@ Tmux 中快捷键操作的前缀是 `ctrl+b`
 :new<回车>  启动新会话
 s           列出所有会话
 $           重命名当前会话
-d						分离会话
+d           分离会话
 ```
 
 #### 窗口 (标签页)
@@ -619,9 +619,15 @@ set -g prefix C-z
 
 set -g base-index         1     # 窗口编号从 1 开始计数
 set -g display-panes-time 10000 # PREFIX-Q 显示编号的驻留时长，单位 ms
-set -g mouse              on    # 开启鼠标
 set -g pane-base-index    1     # 窗格编号从 1 开始计数
 set -g renumber-windows   on    # 关掉某个窗口后，编号重排
+
+set -g default-terminal "screen-256color" # 设置默认终端模式为 256color
+set-option -g mouse on # 开启鼠标，等价于下面 4 个：
+#     setw -g mode-mouse on # 支持鼠标选取文本等 
+#     setw -g mouse-resize-pane on # 支持鼠标拖动调整面板的大小(通过拖动面板间的分割线) 
+#     setw -g mouse-select-pane on # 支持鼠标选中并切换面板 
+#     setw -g mouse-select-window on # 支持鼠标选中并切换窗口(通过点击状态栏窗口名称)
 
 setw -g allow-rename      off   # 禁止活动进程修改窗口名
 setw -g automatic-rename  off   # 禁止自动命名新窗口
