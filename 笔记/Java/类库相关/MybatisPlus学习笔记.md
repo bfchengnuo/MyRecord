@@ -19,9 +19,11 @@
 
 ## 快速开始
 
-首先，还是需要进行定义接口：`public interface UserMapper extends BaseMapper<User> { }`
+首先，还是需要进行定义接口：`public interface UserMapper extends BaseMapper<User> {}`
 
 到这里，准备工作就全部完了（其实就是继承了一个 BaseMapper 类），接口方法不需要定义，甚至 XML 也不需要配置。
+
+并且 MP 还提供了 Service 的抽象，IService 接口和 ServiceImpl 类。
 
 基本操作演示：
 
@@ -64,6 +66,15 @@ List<User> userList = userMapper.selectPage(
   .eq("sex", 0)
   .between("age", "18", "50")
 );
+
+// lambda 语法
+IPage<User> page = userService.page(new Page<>(1, 3), Wrappers.<User>lambdaQuery().ne(User::getAge, 24));
+page.getRecords().forEach(System.out::println);
+
+userService.lambdaQuery()
+  .ne(User::getAge, 24)
+  .page(new Page<>(1, 3))
+  .getRecords().forEach(System.out::println);
 ```
 
 官方文档称 我们提供了多达 17 个方法给大家使用，可以极其方便的实现单一、批量、分页等操作。
@@ -245,11 +256,14 @@ int buyCount = selectCount(Condition.create()
                            .eq("weal", 1));
 ```
 
+当然，现在更推荐使用 lambda 语法和 Wrappers 工具类。
+
 ### 自定义 SQL 方法如何使用 Wrapper
 
 mapper java 接口方法
 
 ```java
+@Select("select * from mysql_data ${ew.customSqlSegment}")
 List<User> selectMyPage(RowBounds rowBounds, @Param("ew") Wrapper<T> wrapper);
 ```
 
@@ -265,6 +279,8 @@ mapper xml 定义
 ```
 
 关于 `${ew.sqlSegment}` 使用了 `$` 不要误以为就会被 sql 注入，请放心使用 mp 内部对 wrapper 进行了字符转义处理！
+
+3.x 的版本尽量使用 ew.customSqlSegment
 
 ### 条件参数说明
 
@@ -343,3 +359,48 @@ Mapper 对应的 XML 文件可以正常书写，不需要关注分页了：
 ```
 
 可以看出的是想要分页需要传入一个 Page 对象，如果不开启分页插件默认使用的是内存分页，注册分页插件后就是物理分页了，并且在执行分页查询后，Page 对象会被填充一些分页相关的数据，你可以获取它。
+
+## 其他
+
+### 逻辑删除
+
+在记录的字段上加上 [@TableLogic](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/TableLogic.java) 注解即可，3.x 的版本不需要配置相关 Bean 即可生效，标识值可以在配置文件中指定。
+
+### 定制查询
+
+使用 [@TableField](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/TableField.java) 的 select 属性可以控制是否查询。
+
+### 自动填充
+
+使用 [@TableField](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/TableField.java) 的 fill 属性指定什么时候填充，然后写一个 Handle 处理器来做这些事：
+
+``` java
+@Slf4j
+@Component
+public class MyMetaObjectHandler implements MetaObjectHandler {
+
+  @Override
+  public void insertFill(MetaObject metaObject) {
+    log.info("start insert fill ....");
+    this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
+    this.fillStrategy(metaObject, "createTime", LocalDateTime.now()); // 也可以使用(3.3.0 该方法有bug请升级到之后的版本如`3.3.1.8-SNAPSHOT`)
+    /* 上面选其一使用,下面的已过时(注意 strictInsertFill 有多个方法,详细查看源码) */
+    //this.setFieldValByName("operator", "Jerry", metaObject);
+    //this.setInsertFieldValByName("operator", "Jerry", metaObject);
+  }
+
+  @Override
+  public void updateFill(MetaObject metaObject) {
+    log.info("start update fill ....");
+    this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
+    this.fillStrategy(metaObject, "updateTime", LocalDateTime.now()); // 也可以使用(3.3.0 该方法有bug请升级到之后的版本如`3.3.1.8-SNAPSHOT`)
+    /* 上面选其一使用,下面的已过时(注意 strictUpdateFill 有多个方法,详细查看源码) */
+    //this.setFieldValByName("operator", "Tom", metaObject);
+    //this.setUpdateFieldValByName("operator", "Tom", metaObject);
+  }
+}
+```
+
+### 动态表名
+
+运行时确定表名，然后进行替换  TBD
