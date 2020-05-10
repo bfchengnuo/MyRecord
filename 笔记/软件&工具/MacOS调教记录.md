@@ -362,6 +362,14 @@ brew update
 
 # 重新设置下 brew 的配置（更新后 GG 的时候用）
 brew update-reset
+
+# 查看依赖关系
+brew deps --installed --tree
+
+# 锁定某个包
+brew pin $FORMULA      
+# 取消锁定
+brew unpin $FORMULA  
 ```
 
 服务管理相关：

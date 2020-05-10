@@ -56,6 +56,26 @@ ffmpeg -f concat -i join.txt -c copy output.mp4
 # file /home/sk/myvideos/part3.mp4
 ```
 
+## 直播录制
+
+是的，FFmpeg 可以录制直播流，也支持 RTMP 流，直播推流也完全可以，emmm
+
+``` sh
+#观看测试：
+ffplay "url"
+#录制：
+ffmpeg -i "url" -c copy xxx.flv
+
+# 其他参数：
+# -user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3554.0 Safari/537.36"
+# -headers "origin: https://glive.gaodun.com" -headers "referer: https://xxx.com/space.html"
+# -t 60 指定录制时间（秒）
+```
+
+如果 CPU 消耗高，可以使用 `-c:v copy -c:a copy` 代替 `-c` 来避免转码。
+
+输入 q 退出
+
 ## 参考
 
 https://zhuanlan.zhihu.com/p/67878761
