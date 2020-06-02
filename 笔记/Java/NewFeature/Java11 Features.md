@@ -1,6 +1,6 @@
 # Java11 Features
 
-就在不久，Java 14 出来了，现在 Java8 已经是非常普遍了，也有很多的人已经用上 Java11 了，意识到再不学就晚了，赶紧看看 Java11 的特性，我的认知还停留在 Java9 的模块化 2333；
+就在不久，Java 14 出来了，现在 Java8 已经是非常普遍了，也有很多的人已经用上 Java11 了，意识到再不学就晚了，赶紧看看 Java 9 - 11 的特性，我的认知还停留在 Java9 的模块化 2333；
 
 虽然 Java11 没有 Java8 那么大的『进化』，但是技术必然要向前，并且要快步向前，要不然被其他语言吃掉也有可能，隔壁 JS 生态就非常恐怖，后来的 Go 也非常出彩，学吧，反正核心都差不多。
 
@@ -13,6 +13,28 @@
 Java 10 引入了一个新的语言关键字 `var`，这个关键字肯定不陌生，它可以在声明**局部变量**时替换类型信息，当编译器不能正确识别出变量的数值类型时，`var` 将不被允许使用；
 
 var 最大的价值就是定义复杂类型的时候，例如 List 泛型的深层次嵌套；从 Java 11 开始，lambda 表达式的参数也允许使用 var 关键字，这样使得你可以为这些参数添加注解标识；
+
+## 集合与字符串
+
+集合框架新增了一系列的 of 方法来产生不可变对象：
+
+``` java
+public class CollectionApi {
+  public static void main(String[] args) {
+    // 创建的是不可变集合
+    var list = List.of("A", "B", "C");
+    // copy 的结果也是不可变
+    var copy = List.copyOf(list);
+    // true， 如果 copy 的不是不可变对象，会得到一个新实例
+    System.out.println(list == copy);
+
+    var map = Map.of("A", 1, "B", 2);
+    System.out.println(map);
+  }
+}
+```
+
+字符串新增了 isBlank、lines、strip 等方法；strip 与 trim 的区别是它能去除 Unicode 空白符，例如中文全角的空格。
 
 ## HTTP Client
 
@@ -189,7 +211,17 @@ Java11 进行了很多瘦身工作，移除了很多较少使用的模块，不�
 
 ---
 
-**响应式流（Reactive Streams) API**: Java 9中引入了新的响应式流 API 来支持 Java 9 中的响应式编程。
+**响应式流（Reactive Streams) API**: Java 9 中引入了新的响应式流 API 来支持 Java 9 中的响应式编程，或者叫做 Flow API，基于发布订阅模式。
+
+区别是新增背压的概念，就是我能处理多少就跟你要多少，你不要多给我，区别于传统的消息订阅模型。
+
+## 需要注意
+
+从 Java9 开始，OpenJDK 官方已经移除了 JDK 的 tools.jar、rt.jar、dt.jar，用到其中的相关类就没法编译了，使用模块化实现。
+
+过去它们分别的作用是：编译相关的基础库（bin 下的可执行文件实际调用的程序本体，包括服务器编译 JSP）、Java 标准库的 class、swing 相关。
+
+总之，可以理解为 9 之后，默认情况下，大多数 JDK 的内部 API 都不可访问。
 
 ## 参考
 
