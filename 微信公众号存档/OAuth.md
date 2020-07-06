@@ -104,3 +104,9 @@ C 步骤中，授权码的的有效期应该很短，通常设为 10 分钟，�
 
 PS:
 在请求过程中，注意请求头的 Authorization 字段，它一般用于认证，携带认证信息，有时通过 Base64 解码能解出 `账号:密码` 的形式，这个我们以后单独再说
+
+## 其他
+
+> Bearer Token ([RFC 6750](http://www.rfcreader.com/#rfc6750)) 用于OAuth 2.0授权访问资源，任何Bearer持有者都可以无差别地用它来访问相关的资源，而无需证明持有加密key。一个Bearer代表授权范围、有效期，以及其他授权事项；一个Bearer在存储和传输过程中应当防止泄露，需实现Transport Layer Security (TLS)；一个Bearer有效期不能过长，过期后可用Refresh Token申请更新。
+
+一般是通过请求头携带 Bearer token 的方式。
