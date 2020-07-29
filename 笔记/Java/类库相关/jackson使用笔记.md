@@ -42,6 +42,18 @@ Map<String, Object> jsonMap = objectMapper.readValue(jsonObject,
 
 以上，基本够用了。
 
+## 序列化
+
+其中使用比较多的是 @JsonIgnore 注解，加在字段上，反序列化、序列化都忽略；
+
+还有一些情况需要忽略部分，指的是忽略序列化，或者忽略反序列化；这时候可以加在对应的 getter、setter 方法上；
+
+Jackson 的新版本为 @JsonProperty 添加了 `READ_ONLY` 和 `WRITE_ONLY` 注释参数；
+
+例如：`@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)`
+
+这种也可以达到忽略部分的效果。
+
 ## 参考
 
 https://www.jianshu.com/p/67b6da565f81

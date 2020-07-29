@@ -4,7 +4,7 @@
 
 需要在 pom 文件中使用 maven-resources-plugin 插件进行处理
 
-### 使用resources插件
+## 使用resources插件
 ``` xml
 <build>
   <plugins>
@@ -30,19 +30,9 @@
 
 还有另外几种方案就是排除这些静态文件，个人比较倾向于使用插件
 
-### 过滤器：
-``` xml
-<build>
-  <resources>
-    <resource>
-      <directory>src/main/resources</directory>
-      <filtering>true</filtering>
-    </resource>
-  </resources>
-</build>
-```
+## resources 标签
 
-### resources 标签：
+示例：
 
 ``` xml
 <build>  
@@ -62,6 +52,30 @@
 ```
 
 另外，IDE 一般也是有相应的操作支持排除。
+
+---
+
+将 Src 中的 xml 资源引入：
+
+``` xml
+<build>  
+  <resources>  
+    <resource>  
+      <directory>src/main/resource</directory>  
+      <filtering>true</filtering>
+    </resource>
+    
+    <resource>  
+      <directory>src/main/java</directory>  
+      <includes>  
+        <include>**/*.xml</include>  
+      </includes>
+    </resource> 
+  </resources>  
+</build>  
+```
+
+相当于是进行了一个映射操作，例如 mapper 文件。
 
 
 ## 其他问题

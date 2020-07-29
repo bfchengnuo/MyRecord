@@ -205,3 +205,7 @@ MySQL从 4.1 版本开始支持子查询，使用子查询进行 SELECT 语句�
   插入数据之前执行禁止事务的自动提交，数据插入完成后再恢复，可以提高插入速度。
   禁用：`SET autocommit = 0;`
   开启：`SET autocommit = 1;`
+
+## 其他
+
+[Binlog 介绍](http://laijianfeng.org/2019/03/MySQL-Binlog-%E4%BB%8B%E7%BB%8D/)
