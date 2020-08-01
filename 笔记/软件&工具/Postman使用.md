@@ -32,6 +32,46 @@ Get 方式其实没什么可说的，因为它本身就很简单，在使用过�
 
 PS:说个小技巧，在地址栏里输入好数据后右键有 encode/decode 选项，自动编码
 
+## 全局变量
+
+开发中，目前很流行使用 token 认证，在 http 请求头里加上 token 来进行认证；
+
+如果在 postman 中每个接口都加一下，太麻烦了，可以巧用全局变量来自动添加。
+
+首先熟悉下两个概念：
+
+- Pre-request-Script
+
+  在请求发送之前执行的脚本
+
+- Tests
+
+  在请求完成之后执行的脚本
+
+对于我们上面简单的需求，我们可以在登陆接口完成后将 token 保存到全局变量中，发其他请求的时候自己带上；
+
+Test 脚本：
+
+``` js
+// 是否请求成功
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+var jsonDate = JSON.parse(responseBody) //将响应体转换为 JSON 格式的字符串
+pm.globals.set("token", jsonDate.data.token); // 获取Token 值，并设置到全局变量
+```
+
+这样可以在右上角里面查看变量。
+
+使用的话，我这里使用比较简单方式，在需要的地方直接使用 `{{token}}` 来引用变量。
+
+PS：postman 的界面右边有大量的脚本提示，并且给你准备好了模版，点一下就能用。
+
 ## 环境
 
 在 Postman 右上角哪里是可以选择自定义的环境，关于环境的详细使用等用到再说，先挖坑
+
+## 压力测试
+
+TBD
