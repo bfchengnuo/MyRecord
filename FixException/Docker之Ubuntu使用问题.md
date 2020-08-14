@@ -35,3 +35,17 @@ set encoding=utf-8
 未验证
 
 参考：https://www.jianshu.com/p/22a5529eb7c8
+
+---
+
+编辑 `/var/lib/locales/supported.d/local` 文件，添加字符集，如下：
+
+``` 
+en_US.UTF-8 UTF-8
+zh_CN.UTF-8 UTF-8
+zh_CN.GBK GBK
+zh_CN GB2312
+```
+
+保存后，执行命令：`sudo locale-gen`
+
