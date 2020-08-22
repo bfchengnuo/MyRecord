@@ -404,3 +404,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 ### 动态表名
 
 运行时确定表名，然后进行替换  TBD
+
+## 坑
+
+使用 MP 3.0.x 的一个版本进行调试，IDEA 2020.2（这个版本坑太多），不知道是不是 IDEA 的问题，还是 MP 的问题，使用计算器计算表达式的时候，例如 baseMapper#selectList 方法，手动构建了个 Lambda 的 Wrapper，抛参数错误异常，但是在代码里写是没问题的。
