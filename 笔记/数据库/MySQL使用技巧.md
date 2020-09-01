@@ -90,7 +90,7 @@ ON DUPLICATE KEY UPDATE `class`.`course`=`class1`.`course`
 
 另外，大量更新时，开启事务，处理完一批再提交会提高速度。
 
-### 锁
+## 锁
 
 > 读锁又称为共享锁，简称 S 锁，顾名思义，共享锁就是多个事务对于同一数据可以共享一把锁，都能访问到数据，但是只能读不能修改。
 >
@@ -100,7 +100,7 @@ ON DUPLICATE KEY UPDATE `class`.`course`=`class1`.`course`
 
 如果加排他锁可以使用 `select ...for update` 语句，加共享锁可以使用 `select ... lock in share mode` 语句。
 
-#### for update
+### for update
 
 有些需求需要在查询的时候进行加锁，保证数据的准确，常见的有悲观锁：
 
@@ -118,6 +118,8 @@ for update;
 ---
 
 for update 是一种行级锁，又叫排它锁，一旦用户对某个行施加了行级加锁，则该用户可以查询也可以更新被加锁的数据行，其它用户只能查询但不能更新被加锁的数据行．
+
+如果其他查询也是 for update 类型，那就也只能等待了。
 
 如果其它用户想更新该表中的数据行，则也必须对该表施加行级锁．即使多个用户对一个表均使用了共享更新，但也不允许两个事务同时对一个表进行更新，真正对表进行更新时，是以独占方式锁表，一直到提交或复原该事务为止。行锁永远是独占方式锁。
 
@@ -141,13 +143,13 @@ https://mp.weixin.qq.com/s/hOdEMgRqjZAg1ND5nqwFQA
 
 https://www.cnblogs.com/banma/p/11797560.html
 
-#### lock in share mode
+### lock in share mode
 
 用法跟 for update 一样，说下它的效果；
 
 使用其语法后，无锁查 OK，共享查 OK，排它锁（for update）No。
 
-### 动态SQL的运用
+## 动态SQL的运用
 
 起因：
 
@@ -171,7 +173,7 @@ mysql 中，当你在 trigger、function 中编写动态的 sql 时，编译时�
 
 function、trigger 还是不支持动态 sql 语句，你硬要将动态语句写入 trigger、function 的话，我建议可以考虑写在存储过程中，然后用程序去调用存储过程.
 
-### 参考
+## 参考
 
 http://blog.sae.sina.com.cn/archives/3491
 
