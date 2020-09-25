@@ -173,8 +173,40 @@ mysql 中，当你在 trigger、function 中编写动态的 sql 时，编译时�
 
 function、trigger 还是不支持动态 sql 语句，你硬要将动态语句写入 trigger、function 的话，我建议可以考虑写在存储过程中，然后用程序去调用存储过程.
 
+## 联表查询
+
+例如下面的两种写法：
+
+第一种：
+
+```sql
+SELECT
+    * 
+FROM 
+    ( SELECT * FROM t_a WHERE xx=1 ) a 
+    LEFT JOIN t_b b ON a.id = b.bid
+```
+
+第二种：
+
+```sql
+SELECT 
+    *
+FROM
+    t_a a 
+    LEFT JOIN t_b b ON a.id = b.bid
+WHERE
+    a.xx = 1
+```
+
+理论上两者的**效率一样**，因为 mysql 优化器会将第一种写法优化成第二种（mysql 5.7.16）。
+
+测试下，使用`explain`和`show warnings`
+
 ## 参考
 
 http://blog.sae.sina.com.cn/archives/3491
 
 https://segmentfault.com/a/1190000002527333
+
+https://segmentfault.com/q/1010000023915144
