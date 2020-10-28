@@ -24,6 +24,37 @@ nginx 平滑重启：`kill -HUP pid`
 
 TODO
 
+## 通用配置
+
+在主配置文件的 http 节点下（其他地方也可，看配置文件的内容）使用 `include vhost/*.conf;` 可以导入 conf 下 vhost 中的自定义 server。
+
+``` conf
+server {
+  listen 80;
+  autoindex on;
+  server_name mall.bfchengnuo.com;
+  access_log c:/access.log combined;
+  index index.html index.htm index.jsp index.php; 
+  #error_page 404 /404.html;
+  if ( $query_string ~* ".*[\;'\<\>].*" ){
+    return 404;
+  } 
+
+  location / { 
+    proxy_pass http://127.0.0.1:8080/xxx; 
+    add_header Access-Control-Allow-Origin *;
+    proxy_set_header   Host $host;
+  }
+
+  location / { 
+    root E:\www\SS_Static;
+    add_header Access-Control-Allow-Origin *;
+  }
+}
+```
+
+以上，是最简单的反代规则。
+
 ## 负载均衡
 
 常见的 Nginx 负载均衡有：轮询、权重、ip 哈希、uri 哈希（第三方）、fair（第三方）
