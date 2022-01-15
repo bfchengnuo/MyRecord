@@ -14,9 +14,12 @@ PS： CSS 样式什么的最讨厌啦，让我写动画岂不是噩梦？相比�
 
 这个之前说过，但是这一次遇到的是 less 语法（sass 和 less 是一样的），上面的写法不支持，查了一下，是这样写：
 
-> 父样式名 /deep/ 子样式名
+> <strike>父样式名 /deep/ 子样式名 </strike>
 
 see http://sfau.lt/b5be0Vr
+
+#### 注意：
+> sass 的 /deep/ 写法已经被废弃，高版本不再支持之前 sass 的那种 /deep/ 写法，需要统一改为 `::v-deep` 的写法，别担心，它是兼容 /deep/ 的。
 
 ## calc问题
 
