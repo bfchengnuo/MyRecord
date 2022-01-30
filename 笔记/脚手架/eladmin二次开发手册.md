@@ -199,7 +199,80 @@ import pagination from '@crud/Pagination'
 
 关于样式，这里提一嘴，基本的 crud 组件那一套是有全局样式的，在 `src/assets/styles` 文件夹下可以清楚看到，然后你查找引用的话就会发现在 main.js 中被 import 了，采用的是 scss 语法。
 
-接下来就是最核心的 crud.js 这个文件了，
+接下来就是最核心的 crud.js 这个文件了。
+
+## Curd组件封装
+
+每个页面几乎都用到了这个组件，相关内容可以在 JS 看到：
+
+``` js
+import CRUD, { presenter, header, form, crud } from '@crud/crud'
+
+const defaultForm = { id: null, mark: null, name: null, gender: null, createBy: null }
+export default {
+  name: 'User',
+  components: { pagination, crudOperation, rrOperation, udOperation },
+  mixins: [presenter(), header(), form(defaultForm), crud()],
+  dicts: ['gender'],
+  cruds() {
+    return CRUD({ title: 'XX管理', url: 'api/user', idField: 'id', sort: 'id,desc', crudMethod: { ...crudStudent }})
+  },
+  data() {
+    return {
+      permission: {
+        add: ['admin', 'commonRole'],
+        edit: ['admin', 'commonRole'],
+        del: ['admin', 'commonRole']
+      },
+      rules: {
+        name: [
+          { required: true, message: '姓名不能为空', trigger: 'blur' }
+        ]
+      },
+      queryTypeOptions: [
+        { key: 'gender', display_name: '性别' }
+      ]
+    }
+  },
+  methods: {
+    // 钩子：在获取表格数据之前执行，false 则代表不获取数据
+    [CRUD.HOOK.beforeRefresh]() {
+      return true
+    }
+  }
+}
+```
+
+其中，defaultForm 是表单对应的字段、dicts 用于全局字典加载、permission 是封装的几个操作权限、rules 是表达校验相关、queryTypeOptions 是模糊搜索相关、methods 里只有一些钩子函数，这些一看就明白不需要细说了；
+
+先看导入，从 `@crud/crud` 中导入了几个组件，导入的语法就不说了标准的 ES6，进入核心 crud js，又导入了一些 url 请求处理相关的工具类，这个没啥特别说的；
+
+接下来是 CRUD 函数的定义，开始做了一个配置 merge 操作，之后定义了一个 data 对象进行一些参数的初始化；
+其中使用到了 get 关键字语法，不熟悉的我举个例子：
+
+``` js
+const obj = {
+  log: ['a', 'b', 'c'],
+  get latest() {
+    if (this.log.length === 0) {
+      return undefined;
+    }
+    return this.log[this.log.length - 1];
+  }
+};
+
+console.log(obj.latest);
+// expected output: "c"
+```
+
+简单说就是 get 语法将对象属性绑定到查询该属性时将被调用的函数上，很便捷的一个语法。
+在 crud 中的 status 中用来判断添加和编辑的状态（cu）和动态标题（使用了一个模板字符串的语法）。
+
+到这里 data 方法基本就结束了，也没啥太复杂的内容，所以继续往下看。
+
+---
+
+在 methods 中定义了一些友好提示，主要是使用到了 crud 这个对象的属性，后面会说；
 
 ## 参考
 
