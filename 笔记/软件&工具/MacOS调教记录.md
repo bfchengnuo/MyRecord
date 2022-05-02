@@ -43,7 +43,7 @@
 
 某些收费软件有钱当然正版的好，没钱只能去 Xclient 这种网站看看了。
 
-- ~~Snip~~ 、Xnip
+- ~~Snip~~ 、Xnip、Picsee
   
   Snip 是腾讯出品的一个免费截图工具，不过我现在更推荐 Xnip 了，商店里可直接搜。
   
@@ -65,7 +65,7 @@
 
 - Chrome、Firefox
 
-- SS-NG-R、V2ray
+- ~~SS-NG-R、V2ray~~、ClashX Pro
 
 - brew
 
@@ -93,7 +93,9 @@
 
 - iStat Menus
 
-- tree、lsd、 Annie、autojump、frp、qrgo、ncmdump、exiftool、lrzsz、tmux、ffmpeg
+- Unshaky
+
+- tree、lsd、lux、autojump、frp、qrgo、ncmdump、exiftool、lrzsz、tmux、ffmpeg、cmatrix、mtr、nmap、thefuck、tldr
 
   一些命令行实用工具，可以在 Github 上搜到
 
@@ -149,6 +151,10 @@
 
 - Paintbrush（代替 win 的画图）
 
+- App Cleaner & Uninstaller
+
+- Background Music、BlackHole
+
 - BetterTouchTool（Touch Bar 增强，要配合规则）
 
 ### 开发工具
@@ -183,13 +189,15 @@
 
 - 远程桌面连接
 
-- WinSCP/Commander One
+- WinSCP/Commander One、Transmit
 
 - termius 或者 FinalShell
   
   Xshell 替代品，或者 iterm2
   
 - Charles
+
+- paw/postman
 
 ### 其他
 
@@ -199,12 +207,15 @@
 - ~~OhMyStar~~
 - Permute（格式转换）
 - Airserver
+- DaisyDisk
+- WiFi Explorer Pro 3
 - BestTrace（追踪解析，玩具）
 - KeyCue（快捷键查询）
 - bear（笔记软件）
 - dupeGuru（文件查重）
 - AppCleaner（App卸载残留检测）
 - HyperSwitch（窗口切换显示预览，我没用）
+- 弹弹play
 
 ## Fish配置
 
